@@ -5,30 +5,34 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.example.erashop.Fragment.CategoryFragment;
 import com.example.erashop.Fragment.HomeFragment;
+import com.example.erashop.Fragment.WishlistFragment;
 import com.example.erashop.R;
 import com.example.erashop.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ActivityMainBinding binding;
+    public static ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
         getSupportActionBar().hide();
 
         initView();
@@ -51,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_category:
                         selectedFragment = new CategoryFragment();
                         break;
+                    case R.id.nav_history:
+                        selectedFragment = new WishlistFragment();
+                        break;
                 }
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.framLayout,
@@ -61,6 +68,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         //binding.bottomNav.setSelectedItemId(R.id.nav_home);
+
+
+
+        binding.viewCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this,CartActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
     }

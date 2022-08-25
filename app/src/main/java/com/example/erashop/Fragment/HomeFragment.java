@@ -85,7 +85,7 @@ public class HomeFragment extends Fragment {
         addDotsIndicator(array_imgs.length, 0);
 
         binding.pagerSlider.addOnPageChangeListener(listener);
-        startAutoSlider(array_imgs.length);
+//        startAutoSlider(array_imgs.length);
 
         catagoryList();
         homeCatagoryAdapter = new HomeCatagoryAdapter(getActivity(),homeCatagoryModels);
@@ -190,19 +190,19 @@ public class HomeFragment extends Fragment {
     };
 
 
-    public void startAutoSlider(final int count) {
-        runnable = new Runnable() {
-            @Override
-            public void run() {
-                int pos = binding.pagerSlider.getCurrentItem();
-                pos = pos + 1;
-                if (pos >= count) pos = 0;
-                binding.pagerSlider.setCurrentItem(pos);
-                handler.postDelayed(runnable, 3000);
-            }
-        };
-        handler.postDelayed(runnable, 3000);
-    }
+//    public void startAutoSlider(final int count) {
+//        runnable = new Runnable() {
+//            @Override
+//            public void run() {
+//                int pos = binding.pagerSlider.getCurrentItem();
+//                pos = pos + 1;
+//                if (pos >= count) pos = 0;
+//                binding.pagerSlider.setCurrentItem(pos);
+//                handler.postDelayed(runnable, 3000);
+//            }
+//        };
+//        handler.postDelayed(runnable, 3000);
+//    }
 
 
     private List<HomeCatagoryModel> catagoryList()

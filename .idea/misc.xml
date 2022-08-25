@@ -26,10 +26,21 @@
         <entry key="..\:/Android Sani/EraShop/app/src/main/res/layout/single_trending_offer.xml" value="0.16574074074074074" />
         <entry key="..\:/Android Sani/EraShop/app/src/main/res/layout/slider_layout.xml" value="0.20416666666666666" />
         <entry key="..\:/Android Sani/EraShop/app/src/main/res/menu/bottom_nav_menu.xml" value="0.20416666666666666" />
+        <entry key="..\:/GOURAB/Design/grocery/app/src/main/res/drawable-v24/check_out_bg.xml" value="0.1" />
+        <entry key="..\:/GOURAB/Design/grocery/app/src/main/res/drawable-v24/round_home.xml" value="0.1" />
+        <entry key="..\:/GOURAB/Design/grocery/app/src/main/res/drawable/background_white.xml" value="0.1265" />
+        <entry key="..\:/GOURAB/Design/grocery/app/src/main/res/layout/activity_cart.xml" value="0.18" />
+        <entry key="..\:/GOURAB/Design/grocery/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/GOURAB/Design/grocery/app/src/main/res/layout/custom_cart_item.xml" value="0.33" />
+        <entry key="..\:/GOURAB/Design/grocery/app/src/main/res/layout/custom_wish_list.xml" value="0.33" />
+        <entry key="..\:/GOURAB/Design/grocery/app/src/main/res/layout/fragment_home.xml" value="0.20416666666666666" />
+        <entry key="..\:/GOURAB/Design/grocery/app/src/main/res/layout/fragment_wishlist.xml" value="0.22" />
+        <entry key="..\:/GOURAB/Design/grocery/app/src/main/res/layout/single_all_catagory.xml" value="0.67" />
+        <entry key="..\:/GOURAB/Design/grocery/app/src/main/res/menu/bottom_nav_menu.xml" value="0.33" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

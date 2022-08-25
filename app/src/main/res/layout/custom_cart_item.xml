@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:numberpicker="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
+    app:ignore="NamespaceTypo"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/background_white"
+        android:layout_marginVertical="@dimen/_5sdp"
+        >
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_5sdp"
+                >
+
+
+                <ImageView
+                    android:id="@+id/image"
+                    android:layout_width="@dimen/_70sdp"
+                    android:layout_height="@dimen/_70sdp"
+                    android:src="@drawable/img_man_shirt"
+                    android:layout_gravity="center"
+                    android:padding="@dimen/_5sdp"
+                    />
+
+
+
+            </androidx.cardview.widget.CardView>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="QTY : 1"
+                android:textSize="@dimen/_10ssp"
+                android:textColor="@color/colorText"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:fontFamily="@font/sans_regular"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:background="@drawable/round_home"
+                android:padding="@dimen/_5sdp"/>
+
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginHorizontal="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            app:ignore="MissingClass">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Redmi 9A"
+                android:textSize="@dimen/_12ssp"
+                android:textColor="@color/colorBlack"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:fontFamily="@font/sans_regular"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="By MI"
+                android:textSize="@dimen/_10ssp"
+                android:textColor="@color/colorText"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:fontFamily="@font/sans_regular"/>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="₹15000"
+                    android:textSize="@dimen/_12ssp"
+                    android:textColor="@color/colorBlack"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:fontFamily="@font/sans_regular"/>
+
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="₹18000"
+                    android:textSize="@dimen/_10ssp"
+                    android:textColor="@color/colorText"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:fontFamily="@font/sans_regular"
+                    android:layout_marginLeft="@dimen/_8sdp"/>
+
+
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="20%"
+                    android:textSize="@dimen/_12ssp"
+                    android:textColor="@color/colorRed"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:fontFamily="@font/sans_regular"
+                    android:layout_marginLeft="@dimen/_8sdp"/>
+
+
+            </LinearLayout>
+
+
+<!--            <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton-->
+<!--                android:id="@+id/number_button"-->
+<!--                android:layout_width="@dimen/_80sdp"-->
+<!--                android:layout_height="@dimen/_25sdp"-->
+<!--                app:backGroundColor="@color/colorPrimary"-->
+<!--                app:textSize="8sp"-->
+<!--                android:layout_marginTop="18dp"-->
+<!--                android:layout_centerHorizontal="true"-->
+<!--                />-->
+
+<!--            <com.huynn109.IncreaseDecreaseButton-->
+<!--                android:id="@+id/inDeButton"-->
+<!--                app:activeIconColor="@color/increase_decrease_lib_active"-->
+<!--                app:minNumber="1"-->
+<!--                app:maxNumber="10"-->
+<!--                app:initNumber="2"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"/>-->
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                xmlns:numberpicker="http://schemas.android.com/apk/res-auto"
+                tools:context="com.travijuu.numberpicker.sample.MainActivity">
+
+                <com.travijuu.numberpicker.library.NumberPicker
+                    android:id="@+id/number_picker"
+                    android:layout_width="130dp"
+                    android:layout_height="40dp"
+                    numberpicker:min="0"
+                    numberpicker:max="999999999"
+                    numberpicker:value="-5"
+                    numberpicker:unit="1"
+                    numberpicker:focusable="false"/>
+
+            </LinearLayout>
+
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#E9EDF6"
+                android:layout_marginTop="@dimen/_10sdp"/>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+
+                <ImageView
+                    android:layout_width="@dimen/_15sdp"
+                    android:layout_height="@dimen/_15sdp"
+                    android:src="@drawable/img_wishlist"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/_3sdp"/>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Move wishlist"
+                    android:textSize="@dimen/_12ssp"
+                    android:textColor="@color/colorBlack"
+                    android:fontFamily="@font/sans_regular"
+                    android:padding="@dimen/_10sdp"
+                    android:textAlignment="center"/>
+
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorGray"/>
+
+
+                <ImageView
+                    android:layout_width="@dimen/_15sdp"
+                    android:layout_height="@dimen/_15sdp"
+                    android:src="@drawable/img_delete"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/_5sdp"/>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Remove"
+                    android:textSize="@dimen/_12ssp"
+                    android:textColor="@color/colorBlack"
+                    android:fontFamily="@font/sans_regular"
+                    android:padding="@dimen/_10sdp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>
