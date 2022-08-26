@@ -12,9 +12,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EraShop">
         <activity
+            android:name=".Activity.SingleProduct"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.AddAddessActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.MyAddressActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.WishlistActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.MyOrdersActivity"
+            android:exported="false"
+            android:parentActivityName=".Activity.MainActivity" />
+        <activity
             android:name=".Activity.CartActivity"
             android:exported="false"
-            android:parentActivityName=".Activity.MainActivity"/>
+            android:parentActivityName=".Activity.MainActivity" />
         <activity
             android:name=".Activity.RegisterActivity"
             android:exported="false"

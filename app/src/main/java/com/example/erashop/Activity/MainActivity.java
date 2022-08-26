@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,10 +16,13 @@ import android.widget.Toast;
 
 import com.example.erashop.Fragment.CategoryFragment;
 import com.example.erashop.Fragment.HomeFragment;
+import com.example.erashop.Fragment.ProfileFragment;
 import com.example.erashop.Fragment.WishlistFragment;
 import com.example.erashop.R;
 import com.example.erashop.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,9 +31,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 //                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -57,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.nav_history:
                         selectedFragment = new WishlistFragment();
+                        break;
+                    case R.id.nav_profile:
+                        selectedFragment = new ProfileFragment();
                         break;
                 }
 

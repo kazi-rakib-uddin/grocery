@@ -56,4 +56,6 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.13.2'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.13.2'
 
+    implementation 'com.weiwangcn.betterspinner:library:1.1.0'
+
 }

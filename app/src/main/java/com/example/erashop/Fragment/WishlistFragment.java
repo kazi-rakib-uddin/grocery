@@ -2,63 +2,52 @@ package com.example.erashop.Fragment;
 
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.example.erashop.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link WishlistFragment#newInstance} factory method to
- * create an instance of this fragment.
- *
- */
+import com.example.erashop.Adapter.WishlistAdapter;
+import com.example.erashop.Model.CategoryModel;
+import com.example.erashop.Model.WishlistModel;
+import com.example.erashop.R;
+import com.example.erashop.databinding.FragmentWishlistBinding;
+
+import java.util.ArrayList;
+
 public class WishlistFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment WishlistFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static WishlistFragment newInstance(String param1, String param2) {
-        WishlistFragment fragment = new WishlistFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    public WishlistFragment() {
-        // Required empty public constructor
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    FragmentWishlistBinding binding;
+    WishlistModel[] wishlistModel;
+    WishlistAdapter wishlistAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_wishlist, container, false);
+
+        LayoutInflater layoutInflater = LayoutInflater.from(getContext());
+        binding = FragmentWishlistBinding.inflate(layoutInflater,container,false);
+
+        wishlistModel = new WishlistModel[]{
+                new WishlistModel("Banana","1","14","28","50",R.drawable.banana),
+                new WishlistModel("Banana","1","14","28","50",R.drawable.apple),
+                new WishlistModel("Banana","1","14","28","50",R.drawable.graps),
+                new WishlistModel("Banana","1","14","28","50",R.drawable.banana),
+                new WishlistModel("Banana","1","14","28","50",R.drawable.apple),
+                new WishlistModel("Banana","1","14","28","50",R.drawable.graps),
+                new WishlistModel("Banana","1","14","28","50",R.drawable.banana)
+        };
+
+        wishlistAdapter = new WishlistAdapter(getActivity(),wishlistModel);
+        binding.rvWishlist.setHasFixedSize(true);
+        binding.rvWishlist.setLayoutManager(new LinearLayoutManager(getActivity()));
+        binding.rvWishlist.setAdapter(wishlistAdapter);
+
+
+
+        return binding.getRoot();
     }
 }
