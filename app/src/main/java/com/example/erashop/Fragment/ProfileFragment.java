@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.erashop.Activity.EditProfile;
 import com.example.erashop.Activity.MyAddressActivity;
 import com.example.erashop.Activity.MyOrdersActivity;
 import com.example.erashop.Activity.WishlistActivity;
@@ -46,6 +47,14 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), MyAddressActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        binding.editProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), EditProfile.class);
                 startActivity(intent);
             }
         });

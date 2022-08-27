@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EraShop">
         <activity
+            android:name=".Activity.EditProfile"
+            android:exported="false" />
+        <activity
             android:name=".Activity.SingleProduct"
             android:exported="false" />
         <activity

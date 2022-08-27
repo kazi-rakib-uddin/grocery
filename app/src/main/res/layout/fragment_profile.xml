@@ -69,6 +69,7 @@
 
 
                     <TextView
+                        android:id="@+id/edit_profile"
                         android:layout_width="@dimen/_50sdp"
                         android:layout_height="@dimen/_30sdp"
                         android:text="EDIT"

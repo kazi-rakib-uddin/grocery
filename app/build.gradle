@@ -58,4 +58,6 @@ dependencies {
 
     implementation 'com.weiwangcn.betterspinner:library:1.1.0'
 
+    implementation 'com.github.amarjain07:StickyScrollView:1.0.2'
+
 }

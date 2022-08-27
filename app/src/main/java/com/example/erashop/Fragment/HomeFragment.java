@@ -71,6 +71,9 @@ public class HomeFragment extends Fragment {
 
         binding = FragmentHomeBinding.inflate(inflater,container,false);
 
+//        binding.searchCard.setGravity(0);
+        binding.searchCard.bringChildToFront(binding.searchCard);
+
         initView();
 
         return binding.getRoot();
@@ -188,22 +191,6 @@ public class HomeFragment extends Fragment {
 
         }
     };
-
-
-//    public void startAutoSlider(final int count) {
-//        runnable = new Runnable() {
-//            @Override
-//            public void run() {
-//                int pos = binding.pagerSlider.getCurrentItem();
-//                pos = pos + 1;
-//                if (pos >= count) pos = 0;
-//                binding.pagerSlider.setCurrentItem(pos);
-//                handler.postDelayed(runnable, 3000);
-//            }
-//        };
-//        handler.postDelayed(runnable, 3000);
-//    }
-
 
     private List<HomeCatagoryModel> catagoryList()
     {

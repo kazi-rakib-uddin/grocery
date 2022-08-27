@@ -28,7 +28,6 @@ public class SingleProduct extends AppCompatActivity {
     ArrayList<CategoryModel> arrayList_top_brand = new ArrayList<>();
     ArrayList<CategoryModel> arrayList_banner_faction = new ArrayList<>();
     ActivitySingleProductBinding binding;
-    RecyclerView rv_top_brand;
     BottomSheetDialog bottomSheetDialog;
     RecyclerView rv_view_similar;
     ImageView img_cancel;

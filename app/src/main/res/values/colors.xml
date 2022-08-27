@@ -20,4 +20,5 @@
     <color name="colorRed">#FF0000</color>
     <color name="colorGray">#969797</color>
     <color name="colorBG">#F2F4FA</color>
+    <color name="actionbar">#FFFFFF</color>
 </resources>
