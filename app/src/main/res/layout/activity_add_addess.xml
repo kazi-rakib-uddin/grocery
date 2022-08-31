@@ -270,7 +270,7 @@
             android:layout_weight="1"
             android:background="@drawable/check_out_bg"
             android:fontFamily="@font/sans_medium"
-            android:text="Add Address" />
+            android:text="Edit Address" />
 
 
     </LinearLayout>

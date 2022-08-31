@@ -49,9 +49,7 @@ public class MyAddressActivity extends AppCompatActivity {
 
     private void myaddress() {
         myAddressModels= new MyAddressModel[]{
-                new MyAddressModel("Something das","7894561230","something@mail.com","789456","5-C","Something Apartment","Near something","WB","Office",true),
-                new MyAddressModel("Something das","7894561230","something@mail.com","789456","5-C","Something Apartment","Near something","WB","Home",true),
-                new MyAddressModel("Something das","7894561230","something@mail.com","789456","5-C","Something Apartment","Near something","WB","Office",true),
+                new MyAddressModel("Something das","7894561230","something@mail.com","789456","5-C","Something Apartment","Near something","WB","Office",true)
         };
         myAddressAdapter = new MyAddressAdapter(this,myAddressModels);
         binding.rvAddress.setHasFixedSize(true);

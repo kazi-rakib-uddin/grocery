@@ -1,5 +1,6 @@
 package com.example.erashop.Fragment;
 
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 
@@ -7,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
@@ -20,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.erashop.Activity.OnBoardingActivity;
+import com.example.erashop.Activity.SearchActivity;
 import com.example.erashop.Adapter.AutoImageSliderAdapter;
 import com.example.erashop.Adapter.HomeBannerAdapter;
 import com.example.erashop.Adapter.HomeCatagoryAdapter;
@@ -71,8 +74,49 @@ public class HomeFragment extends Fragment {
 
         binding = FragmentHomeBinding.inflate(inflater,container,false);
 
-//        binding.searchCard.setGravity(0);
-        binding.searchCard.bringChildToFront(binding.searchCard);
+        binding.HomeCatViewAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment newFragment = new CategoryFragment();
+                // consider using Java coding conventions (upper first char class names!!!)
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+                // Replace whatever is in the fragment_container view with this fragment,
+                // and add the transaction to the back stack
+                transaction.replace(R.id.framLayout, newFragment);
+                transaction.addToBackStack(null);
+
+                // Commit the transaction
+                transaction.commit();
+            }
+        });
+        binding.HomeFruitViewAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(),SearchActivity.class));
+            }
+        });
+        binding.HomeTeaViewAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(),SearchActivity.class));
+            }
+        });
+        binding.HomeOilViewAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(),SearchActivity.class));
+            }
+        });
+
+
+//        binding.nestedScroll.setZ(-30);
+        binding.searchCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), SearchActivity.class));
+            }
+        });
 
         initView();
 
@@ -110,7 +154,7 @@ public class HomeFragment extends Fragment {
         binding.rvBanner.setAdapter(homeBannerAdapter);
         binding.rvOil.setAdapter(homeRecomendedAdapter_oil);
 
-        homeTrendingOfferAdapter = new HomeTrendingOfferAdapter();
+        homeTrendingOfferAdapter = new HomeTrendingOfferAdapter(getContext());
         binding.rvTrendingOffer.setAdapter(homeTrendingOfferAdapter);
 
         final int[] state = new int[1];

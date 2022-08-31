@@ -1,6 +1,7 @@
 package com.example.erashop.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.erashop.Activity.SearchActivity;
 import com.example.erashop.Model.HomeCatagoryModel;
 import com.example.erashop.databinding.SingleHomeCatagoryBinding;
 
@@ -37,6 +39,12 @@ public class HomeCatagoryAdapter extends RecyclerView.Adapter<HomeCatagoryAdapte
 
         holder.binding.name.setText(homeCatagoryModels.get(position).getName());
         holder.binding.image.setImageResource(homeCatagoryModels.get(position).getImage());
+        holder.binding.HomeTopCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                context.startActivity(new Intent(context, SearchActivity.class));
+            }
+        });
 
     }
 

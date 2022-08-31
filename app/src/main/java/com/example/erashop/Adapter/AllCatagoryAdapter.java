@@ -1,12 +1,15 @@
 package com.example.erashop.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.erashop.Activity.SearchActivity;
 import com.example.erashop.Model.HomeCatagoryModel;
 import com.example.erashop.databinding.SingleAllCatagoryBinding;
 import com.example.erashop.databinding.SingleHomeCatagoryBinding;
@@ -18,10 +21,9 @@ public class AllCatagoryAdapter extends RecyclerView.Adapter<AllCatagoryAdapter.
     private Context context;
     private List<HomeCatagoryModel> homeCatagoryModels;
 
-   /* public AllCatagoryAdapter(Context context, List<HomeCatagoryModel> homeCatagoryModels) {
+    public AllCatagoryAdapter(Context context) {
         this.context = context;
-        this.homeCatagoryModels = homeCatagoryModels;
-    }*/
+    }
 
     @NonNull
     @Override
@@ -36,6 +38,14 @@ public class AllCatagoryAdapter extends RecyclerView.Adapter<AllCatagoryAdapter.
 
         //holder.binding.name.setText(homeCatagoryModels.get(position).getName());
         //holder.binding.image.setImageResource(homeCatagoryModels.get(position).getImage());
+
+        holder.binding.AllCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                context.startActivity(new Intent(context, SearchActivity.class));
+            }
+        });
+
     }
 
     @Override

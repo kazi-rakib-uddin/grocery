@@ -9,6 +9,7 @@
 
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/TrendingOfferCard"
             android:layout_width="@dimen/_100sdp"
             android:layout_height="wrap_content"
             app:cardUseCompatPadding="true"

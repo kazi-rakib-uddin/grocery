@@ -11,17 +11,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.erashop.Model.CategoryModel;
 import com.example.erashop.R;
-import com.example.erashop.databinding.CustomBannerBinding;
-import com.example.erashop.databinding.CustomCartItemBinding;
+import com.example.erashop.databinding.CustomItemsInCartBinding;
 
 import java.util.ArrayList;
 
-public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> {
+public class CheckOutCartAdapter extends RecyclerView.Adapter<CheckOutCartAdapter.MyViewHolder> {
 
     ArrayList<CategoryModel> arrayList_catagory;
     Context context;
 
-    public CartAdapter(Context context, ArrayList<CategoryModel> arrayList_catagory) {
+    public CheckOutCartAdapter(Context context, ArrayList<CategoryModel> arrayList_catagory) {
         this.arrayList_catagory = arrayList_catagory;
         this.context=context;
     }
@@ -31,8 +30,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        CustomCartItemBinding customCartItemBinding = CustomCartItemBinding.inflate(layoutInflater,parent,false);
-        return new MyViewHolder(customCartItemBinding);
+        View view = layoutInflater.inflate(R.layout.custom_items_in_cart,parent,false);
+        return new MyViewHolder(view);
     }
 
     @Override
@@ -56,11 +55,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        CustomCartItemBinding binding;
+        CustomItemsInCartBinding binding;
 
-        public MyViewHolder(@NonNull CustomCartItemBinding binding) {
-            super(binding.getRoot());
-            this.binding=binding;
+        public MyViewHolder(@NonNull View itemView) {
+            super(itemView);
+            binding = CustomItemsInCartBinding.bind(itemView);
+
         }
     }
 }

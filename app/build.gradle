@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.erashop"
-        minSdk 21
+        minSdk 29
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -59,5 +59,15 @@ dependencies {
     implementation 'com.weiwangcn.betterspinner:library:1.1.0'
 
     implementation 'com.github.amarjain07:StickyScrollView:1.0.2'
+
+    implementation "com.airbnb.android:lottie:5.2.0"
+
+    implementation 'com.github.vipulasri:timelineview:1.1.5'
+
+    implementation 'com.github.huynn109:increase_decrease_button:1.0.3'
+
+//    implementation 'com.cepheuen.elegant-number-button:lib:1.0.2'
+
+    implementation 'com.github.travijuu:numberpicker:1.0.7'
 
 }

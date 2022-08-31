@@ -29,6 +29,20 @@ public class CartActivity extends AppCompatActivity {
 //        getSupportActionBar().setTitle("Cart");
         getSupportActionBar().hide();
 
+        binding.cartBtnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(CartActivity.this,MainActivity.class));
+            }
+        });
+
+        binding.btnCheckout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(CartActivity.this,CheckOutActivity.class));
+            }
+        });
+
         TopBrand();
 
     }
@@ -36,10 +50,7 @@ public class CartActivity extends AppCompatActivity {
     private void TopBrand()
     {
         arrayList_top_brand.add(new CategoryModel("Redmi 9A 32 GB","https://m.media-amazon.com/images/I/71hEzQGO5qL._SL1500_.jpg"));
-        arrayList_top_brand.add(new CategoryModel("Realme C11 32 GB","https://m.media-amazon.com/images/I/618UBhFmaQS._SL1500_.jpg"));
-        arrayList_top_brand.add(new CategoryModel("Tecno Spark 7 32 GB","https://m.media-amazon.com/images/I/71qdbEfle6S._SL1500_.jpg"));
         binding.rvCart.setAdapter(new CartAdapter(this,arrayList_top_brand));
-
     }
 
 }
