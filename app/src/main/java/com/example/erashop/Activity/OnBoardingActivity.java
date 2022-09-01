@@ -24,8 +24,7 @@ public class OnBoardingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         binding = ActivityOnBoardingBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         getSupportActionBar().hide();
@@ -58,7 +57,7 @@ public class OnBoardingActivity extends AppCompatActivity {
             mDots[i] = new TextView(this);
             mDots[i].setText(Html.fromHtml("&#8226"));
             mDots[i].setTextSize(35);
-            mDots[i].setTextColor(getResources().getColor(R.color.transparent));
+            mDots[i].setTextColor(getResources().getColor(R.color.yellow));
 
             binding.linDots.addView(mDots[i]);
 
@@ -66,7 +65,7 @@ public class OnBoardingActivity extends AppCompatActivity {
 
         if (mDots.length > 0)
         {
-            mDots[position].setTextColor(getResources().getColor(R.color.white));
+            mDots[position].setTextColor(getResources().getColor(R.color.purple_500));
         }
     }
 

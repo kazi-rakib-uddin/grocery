@@ -7,7 +7,6 @@
     tools:context=".Activity.SingleProduct">
 
 
-
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nes"
         android:layout_width="match_parent"
@@ -151,8 +150,7 @@
                         android:fontFamily="@font/sans_regular"
                         android:text="3 Kg"
                         android:textColor="@color/colorText"
-                        android:textSize="@dimen/_12ssp"
-                        />
+                        android:textSize="@dimen/_12ssp" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -188,14 +186,16 @@
                 </LinearLayout>
 
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
                     android:layout_marginTop="@dimen/_10sdp"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal">
 
 
                     <TextView
+                        android:id="@+id/price_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sans_regular"
@@ -208,7 +208,9 @@
                         android:id="@+id/txt_disc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_toRightOf="@+id/price_txt"
                         android:fontFamily="@font/sans_regular"
                         android:text="₹42"
                         android:textColor="@color/colorText"
@@ -216,15 +218,77 @@
 
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_toRightOf="@+id/txt_disc"
+                        android:background="@drawable/round_add_new_address"
+                        android:backgroundTint="@color/purple_500"
                         android:fontFamily="@font/sans_regular"
-                        android:gravity="right"
+                        android:padding="@dimen/_4sdp"
                         android:text="5% Off"
-                        android:textColor="@color/colorRed"
-                        android:textSize="@dimen/_15ssp" />
-                </LinearLayout>
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12ssp" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/addBtn"
+                        android:layout_width="@dimen/_60sdp"
+                        android:layout_height="@dimen/_25sdp"
+                        android:layout_alignParentRight="true"
+                        android:layout_gravity="right"
+                        android:background="@drawable/btn_add_bg"
+                        android:fontFamily="@font/sans_regular"
+                        android:text="Add"
+                        android:textColor="@color/purple_500" />
+
+                    <LinearLayout
+                        android:id="@+id/IncDec"
+                        android:layout_width="@dimen/_60sdp"
+                        android:layout_height="@dimen/_25sdp"
+                        android:layout_alignParentRight="true"
+                        android:layout_gravity="right"
+                        android:background="@drawable/round_add_new_address"
+                        android:backgroundTint="@color/purple_500"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/decreaseButton"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:backgroundTint="@color/purple_500"
+                            android:gravity="center"
+                            android:text="-"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_14ssp" />
+
+
+                        <TextView
+                            android:id="@+id/IncDecText"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="0"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_10ssp" />
+
+
+                        <TextView
+                            android:id="@+id/increaseButton"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="right"
+                            android:layout_weight="1"
+                            android:backgroundTint="@color/purple_500"
+                            android:gravity="center"
+                            android:text="+"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_14ssp" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
 
 
                 <TextView
@@ -281,22 +345,12 @@
         android:id="@+id/bottom_lin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_5sdp"
         android:layout_alignParentBottom="true"
+        android:layout_marginHorizontal="@dimen/_5sdp"
         android:layout_marginBottom="@dimen/_12sdp"
         android:orientation="horizontal"
 
         >
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_35sdp"
-            android:layout_marginHorizontal="@dimen/_5ssp"
-            android:layout_weight="1"
-            android:background="@drawable/round_add_to_cart"
-            android:fontFamily="@font/sans_regular"
-            android:text="add to cart"
-            android:textColor="@color/colorWhite" />
 
         <Button
             android:layout_width="wrap_content"

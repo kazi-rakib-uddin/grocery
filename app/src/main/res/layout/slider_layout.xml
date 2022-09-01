@@ -1,89 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/img_rel"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/img_screen_1">
+    xmlns:custom="http://schemas.android.com/tools">
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:gravity="center"
-        android:layout_marginTop="@dimen/_150sdp"
-        >
+        android:orientation="vertical">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_20sdp"
-        android:layout_marginVertical="@dimen/_10sdp"
-        app:cardUseCompatPadding="true"
-        app:cardCornerRadius="@dimen/_5sdp"
-        >
 
-        <LinearLayout
+        <com.cunoraz.gifview.library.GifView
+            android:id="@+id/img_rel"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_450sdp"
+            android:layout_marginTop="@dimen/_50sdp"
+            custom:gif="@mipmap/store" />
+
+
+        <!--        <com.airbnb.lottie.LottieAnimationView-->
+        <!--            android:id="@+id/img_rel"-->
+        <!--            android:layout_width="@dimen/_250sdp"-->
+        <!--            android:layout_height="@dimen/_250sdp"-->
+        <!--            android:layout_marginTop="@dimen/_50sdp"-->
+        <!--            app:lottie_rawRes="@raw/checkout"-->
+        <!--            app:lottie_autoPlay="true"-->
+        <!--            app:lottie_loop="true"/>-->
+
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginHorizontal="@dimen/_20sdp"
             android:layout_marginVertical="@dimen/_10sdp"
-            >
+            app:cardCornerRadius="@dimen/_5sdp"
+            app:cardUseCompatPadding="true">
 
-        <TextView
-            android:id="@+id/txt_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Best Quality Goods"
-            android:textSize="20sp"
-            android:textColor="@color/black"
-            android:fontFamily="@font/sans_medium"
-            android:gravity="center"
-            android:layout_marginTop="@dimen/_10sdp"/>
-
-        <TextView
-            android:id="@+id/txt_desc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has"
-            android:textSize="13sp"
-            android:textColor="@color/black"
-            android:fontFamily="@font/sans_medium"
-            android:gravity="center"
-            android:layout_marginTop="@dimen/_10sdp"/>
-
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/btn_next"
-                android:layout_width="@dimen/_80sdp"
-                android:layout_height="@dimen/_50sdp"
-                app:cardCornerRadius="@dimen/_8sdp"
-                app:cardUseCompatPadding="true"
-                app:cardBackgroundColor="@color/purple_500"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/_10sdp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_marginVertical="@dimen/_10sdp"
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/txt_next"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/txt_title"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Next"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:fontFamily="@font/sans_medium"
+                    android:gravity="center"
+                    android:text="Best Quality Goods"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/txt_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:fontFamily="@font/sans_medium"
+                    android:gravity="center"
+                    android:text="It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has"
+                    android:textColor="@color/black"
+                    android:textSize="13sp" />
+
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btn_next"
+                    android:layout_width="@dimen/_80sdp"
+                    android:layout_height="@dimen/_50sdp"
                     android:layout_gravity="center"
-                    android:textColor="@color/white"
-                    android:fontFamily="@font/sans_regular"
-                    android:textSize="18sp"
-                    />
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:cardBackgroundColor="@color/purple_500"
+                    app:cardCornerRadius="@dimen/_8sdp"
+                    app:cardUseCompatPadding="true">
+
+                    <TextView
+                        android:id="@+id/txt_next"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/sans_regular"
+                        android:text="Next"
+                        android:textColor="@color/white"
+                        android:textSize="18sp" />
 
 
-            </androidx.cardview.widget.CardView>
+                </androidx.cardview.widget.CardView>
 
 
+            </LinearLayout>
 
-        </LinearLayout>
 
-
-    </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
     </LinearLayout>
 

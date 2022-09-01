@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.erashop.Activity.SingleProduct;
 import com.example.erashop.Model.SearchModel;
 import com.example.erashop.R;
+import com.example.erashop.databinding.CustomSearchResultBinding;
+import com.example.erashop.databinding.SinglePopulerItemBinding;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> {
     SearchModel[] searchModels;
@@ -27,16 +29,30 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.custom_search_result,parent,false);
-        return new ViewHolder(view);
+        LayoutInflater inflater =LayoutInflater.from(parent.getContext());
+        CustomSearchResultBinding binding = CustomSearchResultBinding.inflate(inflater,parent,false);
+        return new SearchAdapter.ViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.search_item_name.setText(searchModels[position].getName());
-        holder.search_item_OG_price.setText("₹"+searchModels[position].getOG_price());
-        holder.search_item_price.setText("₹"+searchModels[position].getPrice());
-        holder.search_image.setImageResource(searchModels[position].getImage());
+        holder.binding.searchItemName.setText(searchModels[position].getName());
+        holder.binding.searchItemOGPrice.setText("₹"+searchModels[position].getOG_price());
+        holder.binding.searchItemPrice.setText("₹"+searchModels[position].getPrice());
+        holder.binding.searchImage.setImageResource(searchModels[position].getImage());
+
+        holder.binding.IncDec.setVisibility(View.GONE);
+
+        holder.binding.addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.binding.IncDecText.setText("1");
+                holder.binding.addBtn.setVisibility(View.GONE);
+                holder.binding.IncDec.setVisibility(View.VISIBLE);
+                IncreaseDecrease(holder);
+            }
+        });
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,17 +69,44 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView search_image;
-        TextView search_item_name,search_item_price,search_item_OG_price;
+        CustomSearchResultBinding binding;
 
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            search_image = itemView.findViewById(R.id.search_image);
-            search_item_name = itemView.findViewById(R.id.search_item_name);
-            search_item_price = itemView.findViewById(R.id.search_item_price);
-            search_item_OG_price = itemView.findViewById(R.id.search_item_OG_price);
+
+        public ViewHolder(@NonNull CustomSearchResultBinding binding) {
+            super(binding.getRoot());
+            this.binding=binding;
+//            search_image = itemView.findViewById(R.id.search_image);
+//            search_item_name = itemView.findViewById(R.id.search_item_name);
+//            search_item_price = itemView.findViewById(R.id.search_item_price);
+//            search_item_OG_price = itemView.findViewById(R.id.search_item_OG_price);
 
 
         }
+    }
+
+    private void IncreaseDecrease(ViewHolder holder) {
+        final int[] count = {1};
+
+        holder.binding.increaseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                count[0] += 1;
+                holder.binding.IncDecText.setText(""+ count[0]);
+            }
+        });
+
+        holder.binding.decreaseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (count[0] == 1){
+                    holder.binding.addBtn.setVisibility(View.VISIBLE);
+                    holder.binding.IncDec.setVisibility(View.GONE);
+                }else{
+                    count[0] -= 1;
+                    holder.binding.IncDecText.setText(""+ count[0]);
+                }
+            }
+        });
+
     }
 }

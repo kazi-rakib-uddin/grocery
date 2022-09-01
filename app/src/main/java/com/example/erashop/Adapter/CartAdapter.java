@@ -39,11 +39,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
 
-        Glide
-                .with(holder.itemView)
-                .load(arrayList_catagory.get(position).getImage())
-                .centerCrop()
-                .into(holder.binding.image);
+//        Glide
+//                .with(holder.itemView)
+//                .load(arrayList_catagory.get(position).getImage())
+//                .centerCrop()
+//                .into(holder.binding.image);
 
 
 
@@ -51,8 +51,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
 
     @Override
     public int getItemCount() {
-        return arrayList_catagory.size();
+//        return arrayList_catagory.size();
+
+        return 1;
     }
+
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 

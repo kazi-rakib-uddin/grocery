@@ -5,22 +5,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activity.SplashActivity"
-    android:background="@color/purple_500">
+    android:background="@color/white">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
+
+
+        <ImageView
+            android:id="@+id/splashImg1"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="@dimen/_200sdp"
+            android:layout_height="@dimen/_200sdp"
+            android:src="@drawable/dukanwala_logo"/>
+
+
+        <ImageView
+            android:id="@+id/splashImg2"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Era Shop"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_30sdp"
-            android:fontFamily="@font/sans_bold"
-            android:gravity="center"/>
+            android:layout_marginHorizontal="@dimen/_40sdp"
+            android:src="@drawable/dukanwala_logo_text"/>
 
 
 

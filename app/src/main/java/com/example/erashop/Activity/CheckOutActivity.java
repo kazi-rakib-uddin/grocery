@@ -38,7 +38,7 @@ public class CheckOutActivity extends AppCompatActivity {
         binding.checkOutBtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(CheckOutActivity.this,CartActivity.class));
+                onBackPressed();
             }
         });
 
@@ -54,7 +54,7 @@ public class CheckOutActivity extends AppCompatActivity {
 
     }
     private void address() {
-        arrayList_top_brand.add(new CategoryModel("Kazi Sani","https://m.media-amazon.com/images/I/71hEzQGO5qL._SL1500_.jpg"));
+        arrayList_top_brand.add(new CategoryModel("Kazi Sani","https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"));
 
         binding.rvCheckoutAddress.setAdapter(new AddressAdapter(this,arrayList_top_brand));
 
@@ -62,7 +62,7 @@ public class CheckOutActivity extends AppCompatActivity {
 
     private void TopBrand()
     {
-        arrayList_top_cart.add(new CategoryModel("Banana","https://m.media-amazon.com/images/I/71hEzQGO5qL._SL1500_.jpg"));
+        arrayList_top_cart.add(new CategoryModel("Banana","https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"));
 
         binding.rvCheckoutItem.setAdapter(new CheckOutCartAdapter(this,arrayList_top_cart));
 

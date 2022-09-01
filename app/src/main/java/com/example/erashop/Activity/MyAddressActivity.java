@@ -38,8 +38,7 @@ public class MyAddressActivity extends AppCompatActivity {
         binding.addressBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MyAddressActivity.this,MainActivity.class);
-                startActivity(intent);
+                onBackPressed();
             }
         });
 

@@ -6,20 +6,28 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 
 import com.example.erashop.R;
+import com.example.erashop.databinding.ActivitySplashBinding;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class SplashActivity extends AppCompatActivity {
+    ActivitySplashBinding binding;
+    Animation topAnimation,bottomAnimation;
+
+    ImageView img1,img2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        binding = ActivitySplashBinding.inflate(getLayoutInflater());
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
         getSupportActionBar().hide();
 
@@ -30,5 +38,18 @@ public class SplashActivity extends AppCompatActivity {
                 finish();
             }
         }, 3000);
+
+        topAnimation = AnimationUtils.loadAnimation(SplashActivity.this,R.anim.top_animation);
+        bottomAnimation = AnimationUtils.loadAnimation(SplashActivity.this,R.anim.bottom_animation);
+
+        img1 = findViewById(R.id.splashImg1);
+        img2 = findViewById(R.id.splashImg2);
+
+//        binding.splashImg1.setAnimation(topAnimation);
+//        binding.splashImg2.setAnimation(bottomAnimation);
+
+        img1.setAnimation(topAnimation);
+        img2.setAnimation(bottomAnimation);
+
     }
 }

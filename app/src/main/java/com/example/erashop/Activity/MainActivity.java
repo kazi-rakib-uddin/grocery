@@ -26,7 +26,7 @@ import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static ActivityMainBinding binding;
+    public ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
         //binding.bottomNav.setSelectedItemId(R.id.nav_home);
 
 
+//        binding.viewCart.setVisibility(View.GONE);
 
         binding.viewCart.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -47,7 +47,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Redmi 9A 32 GB"
+                android:text="1kg"
                 android:textSize="@dimen/_10ssp"
                 android:textColor="@color/colorBlack"
                 android:gravity="center"

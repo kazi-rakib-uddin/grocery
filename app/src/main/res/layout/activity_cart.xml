@@ -6,22 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".Activity.CartActivity">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cart_btn_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:elevation="@dimen/_5sdp"
-        app:cardCornerRadius="@dimen/_12sdp"
-        app:cardUseCompatPadding="true">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/_1sdp"
-            android:src="@drawable/img_back" />
-
-
-    </androidx.cardview.widget.CardView>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -40,8 +25,26 @@
             android:layout_marginHorizontal="@dimen/_5sdp"
             >
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cart_btn_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="@dimen/_5sdp"
+                app:cardCornerRadius="@dimen/_12sdp"
+                app:cardUseCompatPadding="true">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_1sdp"
+                    android:src="@drawable/img_back" />
+
+
+            </androidx.cardview.widget.CardView>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_cart"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -160,7 +163,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="₹1500"
+                        android:text="₹60"
                         android:textSize="@dimen/_12ssp"
                         android:textColor="@color/colorBlack"
                         android:layout_gravity="right"
@@ -196,7 +199,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="₹80"
+                        android:text="₹0"
                         android:textSize="@dimen/_12ssp"
                         android:textColor="@color/colorGreen"
                         android:gravity="right"
@@ -231,7 +234,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="₹50"
+                        android:text="₹15"
                         android:textSize="@dimen/_12ssp"
                         android:textColor="@color/colorRed"
                         android:gravity="right"
@@ -268,7 +271,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="₹1580"
+                        android:text="₹45"
                         android:textSize="@dimen/_12ssp"
                         android:textColor="@color/colorBlack"
                         android:gravity="right"
@@ -325,7 +328,8 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:background="@drawable/background_white"
-                android:layout_marginTop="@dimen/_10sdp">
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp">
 
 
 
@@ -432,7 +436,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="₹2400"
+                android:text="₹45"
                 android:textSize="@dimen/_15ssp"
                 android:textColor="@color/colorBlack"
                 android:layout_marginTop="@dimen/_5sdp"

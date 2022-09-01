@@ -16,6 +16,7 @@ import com.example.erashop.Model.HomeCatagoryModel;
 import com.example.erashop.Model.HomeItemModel;
 import com.example.erashop.databinding.SingleHomeCatagoryBinding;
 import com.example.erashop.databinding.SinglePopulerItemBinding;
+import com.huynn109.IncreaseDecreaseButton;
 
 import java.util.List;
 
@@ -42,7 +43,19 @@ public class HomePopulerAdapter extends RecyclerView.Adapter<HomePopulerAdapter.
 
         holder.binding.name.setText(homeCatagoryModels.get(position).getName());
         holder.binding.image.setImageResource(homeCatagoryModels.get(position).getImage());
+        holder.binding.IncDec.setVisibility(View.GONE);
         //Glide.with(context).load(homeCatagoryModels.get(position).getImage()).into(holder.binding.image);
+
+        holder.binding.addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.binding.IncDecText.setText("1");
+                holder.binding.addBtn.setVisibility(View.GONE);
+                holder.binding.IncDec.setVisibility(View.VISIBLE);
+                IncreaseDecrease(holder);
+            }
+        });
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -51,6 +64,8 @@ public class HomePopulerAdapter extends RecyclerView.Adapter<HomePopulerAdapter.
             }
         });
     }
+
+
 
     @Override
     public int getItemCount() {
@@ -65,4 +80,31 @@ public class HomePopulerAdapter extends RecyclerView.Adapter<HomePopulerAdapter.
             this.binding=binding;
         }
     }
+
+    private void IncreaseDecrease(MyViewHolder holder) {
+        final int[] count = {1};
+
+        holder.binding.increaseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                count[0] += 1;
+                holder.binding.IncDecText.setText(""+ count[0]);
+            }
+        });
+
+        holder.binding.decreaseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (count[0] == 1){
+                    holder.binding.addBtn.setVisibility(View.VISIBLE);
+                    holder.binding.IncDec.setVisibility(View.GONE);
+                }else{
+                    count[0] -= 1;
+                    holder.binding.IncDecText.setText(""+ count[0]);
+                }
+            }
+        });
+
+    }
+
 }

@@ -201,7 +201,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="₹24"
+                    android:text="₹60"
                     android:textSize="@dimen/_12ssp"
                     android:textColor="@color/colorBlack"
                     android:layout_gravity="right"
@@ -237,7 +237,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="₹6"
+                    android:text="₹0"
                     android:textSize="@dimen/_12ssp"
                     android:textColor="@color/colorGreen"
                     android:gravity="right"
@@ -272,7 +272,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="₹6"
+                    android:text="₹15"
                     android:textSize="@dimen/_12ssp"
                     android:textColor="@color/colorRed"
                     android:gravity="right"
@@ -309,7 +309,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="₹24"
+                    android:text="₹45"
                     android:textSize="@dimen/_12ssp"
                     android:textColor="@color/colorBlack"
                     android:gravity="right"

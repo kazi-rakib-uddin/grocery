@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#B93160</color>
-    <color name="purple_700">#930838</color>
+    <color name="purple_500">#EB423F</color>
+    <color name="purple_700">#D61410</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
@@ -21,4 +21,5 @@
     <color name="colorGray">#969797</color>
     <color name="colorBG">#F2F4FA</color>
     <color name="actionbar">#FFFFFF</color>
+    <color name="yellow">#FFA800</color>
 </resources>

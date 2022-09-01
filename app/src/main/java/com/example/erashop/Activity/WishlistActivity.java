@@ -30,8 +30,7 @@ public class WishlistActivity extends AppCompatActivity {
         binding.btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(WishlistActivity.this,MainActivity.class);
-                startActivity(intent);
+                onBackPressed();
             }
         });
 

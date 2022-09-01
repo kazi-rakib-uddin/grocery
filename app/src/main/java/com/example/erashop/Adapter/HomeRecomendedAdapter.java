@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.erashop.Activity.SingleProduct;
 import com.example.erashop.Model.HomeCatagoryModel;
+import com.example.erashop.databinding.ActivityMainBinding;
 import com.example.erashop.databinding.SinglePopulerItemBinding;
 import com.example.erashop.databinding.SingleRecomendedItemBinding;
 
@@ -40,6 +41,17 @@ public class HomeRecomendedAdapter extends RecyclerView.Adapter<HomeRecomendedAd
 
         holder.binding.name.setText(homeCatagoryModels.get(position).getName());
         holder.binding.image.setImageResource(homeCatagoryModels.get(position).getImage());
+        holder.binding.IncDec.setVisibility(View.GONE);
+
+        holder.binding.addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.binding.IncDecText.setText("1");
+                holder.binding.addBtn.setVisibility(View.GONE);
+                holder.binding.IncDec.setVisibility(View.VISIBLE);
+                IncreaseDecrease(holder);
+            }
+        });
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,4 +75,31 @@ public class HomeRecomendedAdapter extends RecyclerView.Adapter<HomeRecomendedAd
             this.binding=binding;
         }
     }
+
+    private void IncreaseDecrease(MyViewHolder holder) {
+        final int[] count = {1};
+
+        holder.binding.increaseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                count[0] += 1;
+                holder.binding.IncDecText.setText(""+ count[0]);
+            }
+        });
+
+        holder.binding.decreaseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (count[0] == 1){
+                    holder.binding.addBtn.setVisibility(View.VISIBLE);
+                    holder.binding.IncDec.setVisibility(View.GONE);
+                }else{
+                    count[0] -= 1;
+                    holder.binding.IncDecText.setText(""+ count[0]);
+                }
+            }
+        });
+
+    }
+
 }

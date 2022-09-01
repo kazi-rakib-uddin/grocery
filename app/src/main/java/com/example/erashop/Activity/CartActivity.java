@@ -32,7 +32,7 @@ public class CartActivity extends AppCompatActivity {
         binding.cartBtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(CartActivity.this,MainActivity.class));
+                onBackPressed();
             }
         });
 
@@ -49,7 +49,7 @@ public class CartActivity extends AppCompatActivity {
 
     private void TopBrand()
     {
-        arrayList_top_brand.add(new CategoryModel("Redmi 9A 32 GB","https://m.media-amazon.com/images/I/71hEzQGO5qL._SL1500_.jpg"));
+        arrayList_top_brand.add(new CategoryModel("Banana","https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"));
         binding.rvCart.setAdapter(new CartAdapter(this,arrayList_top_brand));
     }
 

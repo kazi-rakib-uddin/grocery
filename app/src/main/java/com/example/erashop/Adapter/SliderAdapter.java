@@ -14,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.viewpager.widget.PagerAdapter;
 
+import com.airbnb.lottie.LottieAnimationView;
+import com.cunoraz.gifview.library.GifView;
 import com.example.erashop.Activity.LoginActivity;
 import com.example.erashop.Activity.OnBoardingActivity;
 import com.example.erashop.R;
@@ -30,9 +32,9 @@ public class SliderAdapter extends PagerAdapter {
     }
 
     public int[] slider_images = {
-            R.drawable.img_screen_1,
-            R.drawable.img_screen_2,
-            R.drawable.img_screen_3
+            R.mipmap.groceries,
+            R.mipmap.groceriesbag,
+            R.mipmap.deliverytruck
     };
 
     public String[] slider_header = {
@@ -58,12 +60,12 @@ public class SliderAdapter extends PagerAdapter {
         layoutInflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(R.layout.slider_layout,container,false);
 
-        RelativeLayout img_rel = view.findViewById(R.id.img_rel);
+        GifView img_rel = view.findViewById(R.id.img_rel);
         TextView txt_title = view.findViewById(R.id.txt_title);
         txt_next = view.findViewById(R.id.txt_next);
         btn_next = view.findViewById(R.id.btn_next);
 
-        img_rel.setBackgroundResource(slider_images[position]);
+        img_rel.setGifResource(slider_images[position]);
         txt_title.setText(slider_header[position]);
 
         btn_next.setOnClickListener(new View.OnClickListener() {

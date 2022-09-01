@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.example.erashop.Adapter.HomePopulerAdapter;
 import com.example.erashop.Adapter.SinglePageImageAdapter;
 import com.example.erashop.Adapter.TopBrandAdapter;
 import com.example.erashop.Adapter.ViewSlmilarAdapter;
@@ -43,16 +44,18 @@ public class SingleProduct extends AppCompatActivity {
 
         binding.txtDisc.setPaintFlags(binding.txtDisc.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
+
+
         newMobile();
         TopBrand();
 
         binding.singleBtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(SingleProduct.this,MainActivity.class);
-                startActivity(intent);
+                onBackPressed();
             }
         });
+
 
         binding.rvImageSlide.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -103,6 +106,43 @@ public class SingleProduct extends AppCompatActivity {
             }
         });
 
+        binding.IncDec.setVisibility(View.GONE);
+        binding.addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                binding.IncDecText.setText("1");
+                binding.addBtn.setVisibility(View.GONE);
+                binding.IncDec.setVisibility(View.VISIBLE);
+                IncreaseDecrease();
+            }
+        });
+
+
+    }
+
+    private void IncreaseDecrease() {
+        final int[] count = {1};
+
+        binding.increaseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                count[0] += 1;
+                binding.IncDecText.setText(""+ count[0]);
+            }
+        });
+
+        binding.decreaseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (count[0] == 1){
+                    binding.addBtn.setVisibility(View.VISIBLE);
+                    binding.IncDec.setVisibility(View.GONE);
+                }else{
+                    count[0] -= 1;
+                    binding.IncDecText.setText(""+ count[0]);
+                }
+            }
+        });
 
     }
 
@@ -119,7 +159,6 @@ public class SingleProduct extends AppCompatActivity {
         binding.rvTopBrand.setAdapter(new TopBrandAdapter(this, arrayList_top_brand));
 
     }
-
 
     private void TopBrand2() {
         arrayList_top_brand.add(new CategoryModel("Banana", "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"));

@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".Activity.OnBoardingActivity">
 
+
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
@@ -14,10 +15,12 @@
 
     <LinearLayout
         android:id="@+id/lin_dots"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:gravity="center"
+        android:padding="@dimen/_1sdp"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/_30sdp"
         android:orientation="horizontal" />
 

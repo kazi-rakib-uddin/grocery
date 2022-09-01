@@ -33,8 +33,7 @@ public class AddAddessActivity extends AppCompatActivity {
         binding.addAddressBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AddAddessActivity.this,MyAddressActivity.class);
-                startActivity(intent);
+                onBackPressed();
             }
         });
 

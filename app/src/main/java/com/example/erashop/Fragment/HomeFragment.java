@@ -42,8 +42,8 @@ public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
     private static String[] array_imgs = new String[] {
-            "https://img.freepik.com/free-psd/horizontal-banner-online-fashion-sale_23-2148585404.jpg?w=900&t=st=1660296962~exp=1660297562~hmac=29e6c339f81ad2bddc2925c01e71608a9253dc5f61799bc59fb8e7ea80504b90",
-            "https://img.freepik.com/free-psd/sale-banner-template_24972-824.jpg?w=996&t=st=1660296243~exp=1660296843~hmac=43bd834c304f476d23274de08e42de1b8856da1e24659d0ef2885945f4f5bd85",
+            "https://img.freepik.com/premium-vector/grocery-vegetable-food-facebook-instagram-cover-photo-design-banner-2022_556601-94.jpg",
+            "https://media.istockphoto.com/vectors/grocery-shopping-promotional-sale-banner-vector-id1198467447",
             "https://img.freepik.com/free-vector/online-shopping-isometric-concept-shopping-cart_107791-317.jpg?w=826&t=st=1660297153~exp=1660297753~hmac=507d520dfbdaf1ff666b8c461de5ac28f0c0a871c91639b9babe50fa45e1f049"
     };
 
@@ -150,8 +150,10 @@ public class HomeFragment extends Fragment {
         homeRecomendedAdapter_oil = new HomeRecomendedAdapter(getContext(),homeOilModel);
 
         binding.rvRecomended.setAdapter(homeRecomendedAdapter);
+
         binding.rvPopular.setAdapter(homePopulerAdapter);
         binding.rvBanner.setAdapter(homeBannerAdapter);
+
         binding.rvOil.setAdapter(homeRecomendedAdapter_oil);
 
         homeTrendingOfferAdapter = new HomeTrendingOfferAdapter(getContext());
