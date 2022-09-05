@@ -190,7 +190,6 @@ public class EditProfile extends AppCompatActivity {
     private void massage(String msg) {
         Snackbar snackbar = Snackbar.make(binding.rel, msg, Snackbar.LENGTH_LONG);
         snackbar.show();
-
     }
 
     private void update() {
