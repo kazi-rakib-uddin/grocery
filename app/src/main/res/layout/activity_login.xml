@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
     <RelativeLayout
+    android:id="@+id/rel"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -91,13 +92,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_20sdp"
-                android:hint="Email ID">
+                android:hint="Phone">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/email"
+                    android:id="@+id/phone"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="textEmailAddress" />
+                    android:inputType="number" />
 
             </com.google.android.material.textfield.TextInputLayout>
 

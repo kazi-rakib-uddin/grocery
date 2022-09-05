@@ -11,6 +11,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.example.erashop.R;
+import com.example.erashop.Session.OBSession;
 import com.example.erashop.databinding.ActivitySplashBinding;
 
 import java.util.Timer;
@@ -19,6 +20,8 @@ import java.util.TimerTask;
 public class SplashActivity extends AppCompatActivity {
     ActivitySplashBinding binding;
     Animation topAnimation,bottomAnimation;
+
+    private OBSession obSession;
 
     ImageView img1,img2;
 
@@ -31,10 +34,18 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         getSupportActionBar().hide();
 
+        obSession = new OBSession(this);
+
+
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                startActivity(new Intent(SplashActivity.this, OnBoardingActivity.class));
+                if(!obSession.getInstall().equals("")){
+                    startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                }
+                else {
+                    startActivity(new Intent(SplashActivity.this, OnBoardingActivity.class));
+                }
                 finish();
             }
         }, 3000);

@@ -93,6 +93,7 @@
                     android:layout_gravity="center"
                     android:background="@drawable/btn_add_bg"
                     android:fontFamily="@font/sans_regular"
+                    android:gravity="center"
                     android:text="Add"
                     android:elevation="@dimen/_10sdp"
                     android:textColor="@color/purple_500" />

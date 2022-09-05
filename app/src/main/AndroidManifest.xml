@@ -4,6 +4,10 @@
     package="com.example.erashop">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application xmlns:tools="http://schemas.android.com/tools"
         android:allowBackup="true"
@@ -12,7 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.EraShop"
-        tools:replace="android:theme">
+        tools:replace="android:theme"
+        android:networkSecurityConfig="@xml/network_security_config">
         <activity
             android:name=".Activity.EnterOTPActivity"
             android:exported="false" />

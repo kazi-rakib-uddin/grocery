@@ -19,11 +19,13 @@ import com.cunoraz.gifview.library.GifView;
 import com.example.erashop.Activity.LoginActivity;
 import com.example.erashop.Activity.OnBoardingActivity;
 import com.example.erashop.R;
+import com.example.erashop.Session.OBSession;
 
 public class SliderAdapter extends PagerAdapter {
 
     Context context;
     LayoutInflater layoutInflater;
+    OBSession obSession;
     public static TextView txt_next;
     public static CardView btn_next;
 
@@ -78,6 +80,9 @@ public class SliderAdapter extends PagerAdapter {
                 }
                 else
                 {
+                    obSession = new OBSession(context);
+                    obSession.setInstall("1");
+
                     context.startActivity(new Intent(context, LoginActivity.class));
                 }
 

@@ -51,6 +51,7 @@
         <entry key="..\:/GOURAB/Design/grocery/app/src/main/res/layout/activity_my_address.xml" value="0.25" />
         <entry key="..\:/GOURAB/Design/grocery/app/src/main/res/layout/activity_my_orders.xml" value="0.16" />
         <entry key="..\:/GOURAB/Design/grocery/app/src/main/res/layout/activity_on_boarding.xml" value="0.20416666666666666" />
+        <entry key="..\:/GOURAB/Design/grocery/app/src/main/res/layout/activity_register.xml" value="0.20416666666666666" />
         <entry key="..\:/GOURAB/Design/grocery/app/src/main/res/layout/activity_search.xml" value="0.22" />
         <entry key="..\:/GOURAB/Design/grocery/app/src/main/res/layout/activity_single_product.xml" value="0.2" />
         <entry key="..\:/GOURAB/Design/grocery/app/src/main/res/layout/activity_splash.xml" value="0.20416666666666666" />
@@ -58,6 +59,7 @@
         <entry key="..\:/GOURAB/Design/grocery/app/src/main/res/layout/activity_track_order.xml" value="0.22" />
         <entry key="..\:/GOURAB/Design/grocery/app/src/main/res/layout/activity_wishlist.xml" value="0.22" />
         <entry key="..\:/GOURAB/Design/grocery/app/src/main/res/layout/banner_auto_slider_layout.xml" value="0.20416666666666666" />
+        <entry key="..\:/GOURAB/Design/grocery/app/src/main/res/layout/bottom_dialog.xml" value="0.22" />
         <entry key="..\:/GOURAB/Design/grocery/app/src/main/res/layout/bottom_sheet_view_similar.xml" value="0.16" />
         <entry key="..\:/GOURAB/Design/grocery/app/src/main/res/layout/custom_address_item.xml" value="0.22" />
         <entry key="..\:/GOURAB/Design/grocery/app/src/main/res/layout/custom_cart_item.xml" value="0.25" />
@@ -75,6 +77,7 @@
         <entry key="..\:/GOURAB/Design/grocery/app/src/main/res/layout/fragment_wishlist.xml" value="0.22" />
         <entry key="..\:/GOURAB/Design/grocery/app/src/main/res/layout/item_timeline.xml" value="0.22" />
         <entry key="..\:/GOURAB/Design/grocery/app/src/main/res/layout/number_picker_custom_layout.xml" value="0.22" />
+        <entry key="..\:/GOURAB/Design/grocery/app/src/main/res/layout/progress_dialog.xml" value="0.20416666666666666" />
         <entry key="..\:/GOURAB/Design/grocery/app/src/main/res/layout/round_add_new_address.xml" value="0.20416666666666666" />
         <entry key="..\:/GOURAB/Design/grocery/app/src/main/res/layout/round_office.xml" value="0.20416666666666666" />
         <entry key="..\:/GOURAB/Design/grocery/app/src/main/res/layout/single_all_catagory.xml" value="0.25" />

@@ -3,6 +3,12 @@
 
     <style name="BottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@android:color/transparent</item>
+
     </style>
+
+    <style name="ProgressAccent" parent="ThemeOverlay.AppCompat.Light">
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
 
 </resources>
