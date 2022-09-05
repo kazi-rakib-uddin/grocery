@@ -28,6 +28,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Objects;
 
 import retrofit2.Call;
@@ -39,7 +40,7 @@ public class EditProfile extends AppCompatActivity {
     private ActivityEditProfileBinding binding;
     BottomSheetDialog bottomSheetDialog;
     BottomDialogBinding binding2;
-    private String name, email, phone, id, img;
+    private String name, email, phone, id, profile_picture;
     ApiInterface apiInterface;
     Session session;
 
@@ -136,15 +137,22 @@ public class EditProfile extends AppCompatActivity {
                 if(resultCode == RESULT_OK){
                     Bitmap photo = (Bitmap) data.getExtras().get("data");
                     binding.circularImg.setImageBitmap(photo);
-                    img = BitMapToString(photo);
+                    profile_picture = BitMapToString(photo);
                     bottomSheetDialog.dismiss();
+                    upload_profile_image(profile_picture);
                 }
                 break;
             case 2:
                 if(resultCode == RESULT_OK){
                     Uri selectedImage = data.getData();
-                    binding.circularImg.setImageURI(selectedImage);
-                    img = selectedImage.toString();
+                    try {
+                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+                        binding.circularImg.setImageBitmap(bitmap);
+                        profile_picture = BitMapToString(bitmap);
+                        upload_profile_image(profile_picture);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     bottomSheetDialog.dismiss();
                 }
                 break;
@@ -152,9 +160,35 @@ public class EditProfile extends AppCompatActivity {
 
     }
 
+    private void upload_profile_image(String profile_picture) {
+        Call<String> call = apiInterface.upload_profile_image(profile_picture);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                String resp = response.body();
+                try {
+                    JSONObject jsonObject = new JSONObject(resp);
+                    if (jsonObject.getString("rec").equals("0")) {
+                        massage("Can't update profile picture now");
+                    } else {
+                        massage("profile picture updated");
+                    }
+
+                } catch (JSONException e) {
+                    massage("" + e.getLocalizedMessage());
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
+    }
+
     private void massage(String msg) {
-        Snackbar snackbar = Snackbar
-                .make(binding.rel, msg, Snackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(binding.rel, msg, Snackbar.LENGTH_LONG);
         snackbar.show();
 
     }
@@ -164,7 +198,7 @@ public class EditProfile extends AppCompatActivity {
         phone = binding.phone.getText().toString();
         email = binding.email.getText().toString();
 
-        Call<String> call = apiInterface.update(id, name, phone, email, img);
+        Call<String> call = apiInterface.update(id, name, phone, email);
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {

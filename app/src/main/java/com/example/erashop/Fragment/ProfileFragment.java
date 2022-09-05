@@ -19,6 +19,7 @@ import com.example.erashop.R;
 import com.example.erashop.Session.Session;
 import com.example.erashop.databinding.FragmentProfileBinding;
 import com.example.erashop.databinding.FragmentWishlistBinding;
+import com.google.android.material.snackbar.Snackbar;
 
 public class ProfileFragment extends Fragment {
     FragmentProfileBinding binding;
@@ -69,7 +70,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 session.remove();
-                Toast.makeText(getActivity(), "Logout", Toast.LENGTH_SHORT).show();
+                massage("Logout");
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
                 getActivity().finish();
@@ -78,4 +79,11 @@ public class ProfileFragment extends Fragment {
 
         return binding.getRoot();
     }
+
+    private void massage(String msg) {
+        Snackbar snackbar = Snackbar.make(binding.rel, msg, Snackbar.LENGTH_LONG);
+        snackbar.show();
+
+    }
+
 }
