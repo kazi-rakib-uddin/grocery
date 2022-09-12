@@ -143,6 +143,7 @@ public class EditProfile extends AppCompatActivity {
                 }
                 break;
             case 2:
+//              gallery
                 if(resultCode == RESULT_OK){
                     Uri selectedImage = data.getData();
                     try {
