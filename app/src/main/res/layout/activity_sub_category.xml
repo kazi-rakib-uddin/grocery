@@ -1,12 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Fragment.CategoryFragment">
+    tools:context=".Activity.SubCategoryActivity">
+
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/BtnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="@dimen/_5sdp"
+            app:cardCornerRadius="@dimen/_12sdp"
+            app:cardUseCompatPadding="true">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_1sdp"
+                android:src="@drawable/img_back" />
+
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/head_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/sans_bold"
+            android:lineSpacingExtra="5sp"
+            android:text=""
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textColor="@color/purple_500"
+            android:textSize="18sp" />
+
+    </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
+        android:layout_below="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -20,28 +59,18 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/sans_bold"
-                android:gravity="center_vertical"
-                android:text="All Category"
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/sans_regular"
                 android:gravity="center_vertical"
                 android:lineSpacingExtra="0sp"
-                android:text="Choose from a variety of products "
+                android:text="Best range of products"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:textColor="@color/black"
                 android:textSize="12sp" />
 
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_catagory"
+                android:id="@+id/rv_sub_catagory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
@@ -54,4 +83,5 @@
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
+
 </RelativeLayout>

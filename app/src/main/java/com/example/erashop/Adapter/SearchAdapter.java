@@ -17,11 +17,13 @@ import com.example.erashop.R;
 import com.example.erashop.databinding.CustomSearchResultBinding;
 import com.example.erashop.databinding.SinglePopulerItemBinding;
 
+import java.util.ArrayList;
+
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> {
-    SearchModel[] searchModels;
+    ArrayList<SearchModel> searchModels = new ArrayList<>();
     Context context;
 
-    public SearchAdapter(SearchModel[] searchModels, Context context) {
+    public SearchAdapter(ArrayList<SearchModel> searchModels, Context context) {
         this.context = context;
         this.searchModels = searchModels;
     }
@@ -36,10 +38,10 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.binding.searchItemName.setText(searchModels[position].getName());
-        holder.binding.searchItemOGPrice.setText("₹"+searchModels[position].getOG_price());
-        holder.binding.searchItemPrice.setText("₹"+searchModels[position].getPrice());
-        holder.binding.searchImage.setImageResource(searchModels[position].getImage());
+        holder.binding.searchItemName.setText(searchModels.get(position).getName());
+        holder.binding.searchItemOGPrice.setText("₹"+searchModels.get(position).getOG_price());
+        holder.binding.searchItemPrice.setText("₹"+searchModels.get(position).getPrice());
+        holder.binding.searchImage.setImageResource(Integer.parseInt(searchModels.get(position).getImage()));
 
         holder.binding.IncDec.setVisibility(View.GONE);
 
@@ -65,7 +67,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
-        return searchModels.length;
+        return searchModels.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

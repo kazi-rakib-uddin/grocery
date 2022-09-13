@@ -14,10 +14,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.erashop.ApiInterface.ApiInterface;
 import com.example.erashop.R;
 import com.example.erashop.Session.Session;
+import com.example.erashop.Utils.ProgressUtils;
+import com.example.erashop.Utils.Utils;
 import com.example.erashop.databinding.ActivityEditProfileBinding;
 import com.example.erashop.databinding.BottomDialogBinding;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -58,6 +62,8 @@ public class EditProfile extends AppCompatActivity {
 
         binding2 = BottomDialogBinding.inflate(getLayoutInflater());
 
+        setImage();
+
         binding.CameraBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,6 +93,49 @@ public class EditProfile extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void setImage() {
+        ProgressUtils.showLoadingDialog(this);
+        Call<String> call = apiInterface.fetch_profile(session.getUser_id());
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                String res = response.body();
+                if(!res.equals("")){
+                    try {
+                        JSONObject jsonObject = new JSONObject(res);
+                        if (jsonObject.getString("rec").equals("1")){
+
+                            Glide.with(EditProfile.this)
+                                    .load(Utils.DocUrl+jsonObject.getString("image"))
+                                    .centerCrop()
+                                    .placeholder(R.drawable.not_found)
+                                    .into(binding.circularImg);
+
+                            binding.name.setText(jsonObject.getString("name"));
+                            binding.email.setText(jsonObject.getString("email"));
+                            binding.phone.setText(jsonObject.getString("phone"));
+
+                        }else{
+
+                        }
+                        ProgressUtils.cancelLoading();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(EditProfile.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                        ProgressUtils.cancelLoading();
+                    }
+                }else{
+                    ProgressUtils.cancelLoading();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
     }
 
     private void show(View view) {
@@ -162,7 +211,7 @@ public class EditProfile extends AppCompatActivity {
     }
 
     private void upload_profile_image(String profile_picture) {
-        Call<String> call = apiInterface.upload_profile_image(profile_picture);
+        Call<String> call = apiInterface.upload_profile_image(session.getUser_id(),profile_picture);
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {

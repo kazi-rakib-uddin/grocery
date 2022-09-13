@@ -20,7 +20,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.example.erashop.Activity.EditProfile;
 import com.example.erashop.Activity.OnBoardingActivity;
 import com.example.erashop.Activity.SearchActivity;
 import com.example.erashop.Adapter.AutoImageSliderAdapter;
@@ -30,13 +33,25 @@ import com.example.erashop.Adapter.HomePopulerAdapter;
 import com.example.erashop.Adapter.HomeRecomendedAdapter;
 import com.example.erashop.Adapter.HomeTrendingOfferAdapter;
 import com.example.erashop.Adapter.SliderAdapter;
+import com.example.erashop.ApiClient.APIClient;
+import com.example.erashop.ApiInterface.ApiInterface;
 import com.example.erashop.Model.HomeCatagoryModel;
 import com.example.erashop.Model.HomeItemModel;
 import com.example.erashop.R;
+import com.example.erashop.Session.Session;
+import com.example.erashop.Utils.ProgressUtils;
+import com.example.erashop.Utils.Utils;
 import com.example.erashop.databinding.FragmentHomeBinding;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
 
@@ -68,9 +83,17 @@ public class HomeFragment extends Fragment {
     private List<HomeCatagoryModel> homeFreshFoodModel;
     private List<HomeCatagoryModel> homeOilModel;
 
+    ApiInterface apiInterface;
+    Session session;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        apiInterface = APIClient.getApiClient().create(ApiInterface.class);
+        session = new Session(getContext());
+
+        setImage();
 
         binding = FragmentHomeBinding.inflate(inflater,container,false);
 
@@ -108,7 +131,6 @@ public class HomeFragment extends Fragment {
                 startActivity(new Intent(getActivity(),SearchActivity.class));
             }
         });
-
 
 //        binding.nestedScroll.setZ(-30);
         binding.searchCard.setOnClickListener(new View.OnClickListener() {
@@ -193,6 +215,49 @@ public class HomeFragment extends Fragment {
             }
         });*/
 
+    }
+
+
+
+    private void setImage() {
+        ProgressUtils.showLoadingDialog(getContext());
+        Call<String> call = apiInterface.fetch_profile(session.getUser_id());
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                String res = response.body();
+                if(!res.equals("")){
+                    try {
+                        JSONObject jsonObject = new JSONObject(res);
+                        if (jsonObject.getString("rec").equals("1")){
+
+                            Glide.with(getActivity())
+                                    .load(Utils.DocUrl+jsonObject.getString("image"))
+                                    .centerCrop()
+                                    .placeholder(R.drawable.not_found)
+                                    .into(binding.ProfileImg);
+
+                            binding.name.setText(String.format("Hi,%s", jsonObject.getString("name")));
+
+                        }else{
+
+                        }
+                        ProgressUtils.cancelLoading();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(getActivity(), e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                        ProgressUtils.cancelLoading();
+                    }
+                }else{
+                    ProgressUtils.cancelLoading();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
     }
 
 

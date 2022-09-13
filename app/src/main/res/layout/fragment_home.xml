@@ -130,7 +130,7 @@
                 android:layout_marginTop="@dimen/_10sdp">
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/img"
+                    android:id="@+id/Profile_img"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_10sdp"
@@ -139,19 +139,20 @@
                 <LinearLayout
                     android:id="@+id/name_line"
                     android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_toRightOf="@+id/img"
+                    android:layout_toRightOf="@+id/Profile_img"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Hi Andy!"
+                        android:text=""
                         android:layout_marginTop="@dimen/_5sdp"
                         android:fontFamily="@font/sans_bold"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/_14ssp"/>
+                        android:textSize="@dimen/_12ssp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -175,7 +176,7 @@
                     android:id="@+id/search_card"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/img">
+                    android:layout_below="@+id/Profile_img">
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"

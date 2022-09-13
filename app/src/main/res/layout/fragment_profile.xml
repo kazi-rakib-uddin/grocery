@@ -29,6 +29,7 @@
                 android:layout_marginTop="@dimen/_20sdp">
 
                 <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/ProfileImg"
                     android:layout_width="@dimen/_70sdp"
                     android:layout_height="@dimen/_70sdp"
                     android:src="@drawable/img_man"
@@ -45,9 +46,9 @@
 
 
                     <TextView
+                        android:id="@+id/name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Kazi Sani"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:textSize="@dimen/_15ssp"
                         android:textColor="@color/colorBlack"
@@ -57,9 +58,9 @@
 
 
                     <TextView
+                        android:id="@+id/mail_id"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="support@gmail.com"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:textSize="@dimen/_12ssp"
                         android:textColor="@color/colorBlack"

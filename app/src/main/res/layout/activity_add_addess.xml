@@ -43,7 +43,7 @@
     </LinearLayout>
 
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/bottom_lin"
@@ -74,6 +74,7 @@
                     app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/full_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Full Name" />
@@ -88,6 +89,7 @@
                     app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/phone_number"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Mobile Number"
@@ -103,6 +105,7 @@
                     app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/mail_id"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Email ID"
@@ -118,6 +121,7 @@
                     app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/pin_code"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Pin Code"
@@ -133,6 +137,7 @@
                     app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/house_no"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Flat, House No., Buildng.." />
@@ -147,6 +152,7 @@
                     app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/area"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Area, Colony, Street" />
@@ -161,6 +167,7 @@
                     app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/landmark"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Landmark"
@@ -192,12 +199,14 @@
 
 
                 <RadioGroup
+                    android:id="@+id/radioGroup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:orientation="horizontal">
 
                     <RadioButton
+                        android:id="@+id/radioHomeBTN"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:buttonTint="@color/colorPrimary"
@@ -206,6 +215,7 @@
 
 
                     <RadioButton
+                        android:id="@+id/radioOfficeBTN"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/_8sdp"
@@ -214,6 +224,7 @@
                         android:text="Office" />
 
                     <RadioButton
+                        android:id="@+id/radioOthersBTN"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/_8sdp"
@@ -226,6 +237,7 @@
 
 
                 <CheckBox
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/colorPrimary"
@@ -239,7 +251,7 @@
         </LinearLayout>
 
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 
     <LinearLayout
@@ -252,6 +264,7 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/reset"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -262,7 +275,7 @@
 
 
         <Button
-            android:id="@+id/btn_place_order"
+            android:id="@+id/edit_address"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -270,7 +283,7 @@
             android:layout_weight="1"
             android:background="@drawable/check_out_bg"
             android:fontFamily="@font/sans_medium"
-            android:text="Edit Address" />
+            android:text="Add Address"/>
 
 
     </LinearLayout>
