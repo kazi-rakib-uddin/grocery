@@ -21,15 +21,18 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.erashop.Activity.LoginActivity;
 import com.example.erashop.Activity.OnBoardingActivity;
+import com.example.erashop.Model.TopBannerModel;
 import com.example.erashop.R;
+
+import java.util.ArrayList;
 
 public class AutoImageSliderAdapter extends PagerAdapter {
 
     Context context;
     LayoutInflater layoutInflater;
-    private String[] items;
+    ArrayList<TopBannerModel> items;
 
-    public AutoImageSliderAdapter(Context context, String[] items) {
+    public AutoImageSliderAdapter(Context context, ArrayList<TopBannerModel> items) {
         this.context = context;
         this.items = items;
     }
@@ -38,7 +41,7 @@ public class AutoImageSliderAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return items.length;
+        return items.size();
     }
 
     @Override
@@ -46,7 +49,7 @@ public class AutoImageSliderAdapter extends PagerAdapter {
         return view == (RelativeLayout)object;
     }
 
-    public void setItems(String[] items) {
+    public void setItems(ArrayList<TopBannerModel> items) {
         this.items = items;
         notifyDataSetChanged();
     }
@@ -60,7 +63,7 @@ public class AutoImageSliderAdapter extends PagerAdapter {
 
         ImageView image = view.findViewById(R.id.image);
 
-        displayImageOriginal(context, image, items, position);
+        displayImageOriginal(context, image, items.get(position).getImage() , position);
 
         container.addView(view);
 
@@ -74,9 +77,9 @@ public class AutoImageSliderAdapter extends PagerAdapter {
     }
 
 
-    private static void displayImageOriginal(Context context, ImageView img, String[] url, int position) {
+    private static void displayImageOriginal(Context context, ImageView img, String url, int position) {
         try {
-            Glide.with(context).load(url[position])
+            Glide.with(context).load(url)
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .into(img);
         } catch (Exception e) {

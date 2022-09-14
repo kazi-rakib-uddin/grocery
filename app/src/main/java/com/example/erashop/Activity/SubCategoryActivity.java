@@ -83,7 +83,8 @@ public class SubCategoryActivity extends AppCompatActivity {
                                 subCategoryModels.add(new SubCategoryModel(
                                         jsonObject.getString("sub_category_name"),
                                         Utils.sub_category_images + jsonObject.getString("image"),
-                                        jsonObject.getString("id"),Category_id
+                                        jsonObject.getString("id"),
+                                        Category_id
                                 ));
                             }
                             subCategoryAdapter = new SubCategoryAdapter(subCategoryModels,SubCategoryActivity.this);

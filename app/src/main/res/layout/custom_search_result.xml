@@ -15,6 +15,7 @@
         >
 
         <TextView
+            android:id="@id/discount_percentage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/sans_regular"

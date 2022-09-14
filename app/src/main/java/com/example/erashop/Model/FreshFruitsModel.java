@@ -1,9 +1,9 @@
 package com.example.erashop.Model;
 
-public class SearchModel {
+public class FreshFruitsModel {
     String cat_id,sub_cat_id,product_id,name,price,OG_price,image,discount;
 
-    public SearchModel(String cat_id,String sub_cat_id,String product_id,String name, String price, String OG_price, String image,String discount) {
+    public FreshFruitsModel(String cat_id, String sub_cat_id, String product_id, String name, String price, String OG_price, String image, String discount) {
         this.cat_id = cat_id;
         this.sub_cat_id = sub_cat_id;
         this.product_id = product_id;
@@ -38,14 +38,6 @@ public class SearchModel {
         this.product_id = product_id;
     }
 
-    public String getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(String discount) {
-        this.discount = discount;
-    }
-
     public String getName() {
         return name;
     }
@@ -76,5 +68,13 @@ public class SearchModel {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(String discount) {
+        this.discount = discount;
     }
 }

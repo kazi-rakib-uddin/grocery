@@ -295,6 +295,7 @@
 
 
                 <TextView
+                    android:id="@+id/cat1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
@@ -339,6 +340,7 @@
 
 
                 <TextView
+                    android:id="@+id/cat2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
@@ -366,7 +368,7 @@
 
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_recomended"
+                android:id="@+id/rv_freshfruits"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
@@ -403,6 +405,7 @@
 
 
                 <TextView
+                    android:id="@+id/cat3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"

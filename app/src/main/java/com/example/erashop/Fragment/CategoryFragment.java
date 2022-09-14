@@ -54,7 +54,7 @@ public class CategoryFragment extends Fragment {
         return binding.getRoot();
     }
 
-    private void fetch_categories() {
+    public void fetch_categories() {
         ProgressUtils.showLoadingDialog(getContext());
         Call<String> call = apiInterface.fetch_categories();
         call.enqueue(new Callback<String>() {

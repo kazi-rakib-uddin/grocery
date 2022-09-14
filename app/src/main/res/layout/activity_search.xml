@@ -6,6 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".Activity.SearchActivity">
 
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -13,10 +17,10 @@
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/search_bar"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_marginLeft="@dimen/_12sdp"
-            android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginRight="@dimen/_12sdp">
 
             <EditText
@@ -35,10 +39,32 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/search_edittext"
             android:layout_margin="@dimen/_5sdp"
-            tools:itemCount="2"
+            tools:itemCount="1"
             tools:listitem="@layout/custom_search_result"/>
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie"
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="@dimen/_150sdp"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_150sdp"
+            app:lottie_rawRes="@raw/not_found"
+            app:lottie_url="REPLACE_JSON_URL"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"/>
+
+        <TextView
+            android:id="@+id/lottieTXT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="No products found on this category"
+            android:fontFamily="@font/sans_regular"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp"/>
 
     </LinearLayout>
 
+    </androidx.core.widget.NestedScrollView>
 
 </RelativeLayout>

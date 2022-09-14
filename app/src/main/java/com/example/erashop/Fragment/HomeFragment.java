@@ -1,15 +1,10 @@
 package com.example.erashop.Fragment;
 
 import android.content.Intent;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Handler;
@@ -17,34 +12,35 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.erashop.Activity.EditProfile;
-import com.example.erashop.Activity.OnBoardingActivity;
 import com.example.erashop.Activity.SearchActivity;
+import com.example.erashop.Adapter.AllCatagoryAdapter;
 import com.example.erashop.Adapter.AutoImageSliderAdapter;
 import com.example.erashop.Adapter.HomeBannerAdapter;
 import com.example.erashop.Adapter.HomeCatagoryAdapter;
 import com.example.erashop.Adapter.HomePopulerAdapter;
 import com.example.erashop.Adapter.HomeRecomendedAdapter;
 import com.example.erashop.Adapter.HomeTrendingOfferAdapter;
-import com.example.erashop.Adapter.SliderAdapter;
+import com.example.erashop.Adapter.SearchAdapter;
 import com.example.erashop.ApiClient.APIClient;
 import com.example.erashop.ApiInterface.ApiInterface;
+import com.example.erashop.Model.FreshFruitsModel;
 import com.example.erashop.Model.HomeCatagoryModel;
-import com.example.erashop.Model.HomeItemModel;
+import com.example.erashop.Model.SearchModel;
+import com.example.erashop.Model.TopBannerModel;
 import com.example.erashop.R;
 import com.example.erashop.Session.Session;
 import com.example.erashop.Utils.ProgressUtils;
 import com.example.erashop.Utils.Utils;
 import com.example.erashop.databinding.FragmentHomeBinding;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,11 +52,12 @@ import retrofit2.Response;
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
-    private static String[] array_imgs = new String[] {
-            "https://img.freepik.com/premium-vector/grocery-vegetable-food-facebook-instagram-cover-photo-design-banner-2022_556601-94.jpg",
-            "https://media.istockphoto.com/vectors/grocery-shopping-promotional-sale-banner-vector-id1198467447",
-            "https://img.freepik.com/free-vector/online-shopping-isometric-concept-shopping-cart_107791-317.jpg?w=826&t=st=1660297153~exp=1660297753~hmac=507d520dfbdaf1ff666b8c461de5ac28f0c0a871c91639b9babe50fa45e1f049"
-    };
+//    private static String[] top_banner_images = new String[] {};
+//    String[] banimage = new String[]{};
+
+    ArrayList<TopBannerModel> topBannerModels = new ArrayList<>();
+    ArrayList<FreshFruitsModel> freshFruitsModels = new ArrayList<>();
+    ArrayList<FreshFruitsModel> freshFruitsModels2 = new ArrayList<>();
 
     private static String[] array_banner = new String[] {
             "https://trivenisupermarket.com/img/triveni-indian-supermarket-coming-soon.jpg",
@@ -70,18 +67,30 @@ public class HomeFragment extends Fragment {
 
     private AutoImageSliderAdapter adapter;
     private TextView[] mDots;
-    private Runnable runnable = null;
-    private Handler handler = new Handler();
-    private HomeCatagoryAdapter homeCatagoryAdapter;
+//    private Runnable runnable = null;
+//    private Handler handler = new Handler();
+//    private HomeCatagoryAdapter homeCatagoryAdapter;
     private HomePopulerAdapter homePopulerAdapter;
     private HomeBannerAdapter homeBannerAdapter;
     private HomeRecomendedAdapter homeRecomendedAdapter;
-    private HomeRecomendedAdapter homeRecomendedAdapter_oil;
+    private HomeRecomendedAdapter homeRecomendedAdapter2;
+//    private HomeRecomendedAdapter homeRecomendedAdapter_oil;
     private HomeTrendingOfferAdapter homeTrendingOfferAdapter;
-    private List<HomeCatagoryModel> homeCatagoryModels;
-    private List<HomeCatagoryModel> homeItemModels;
-    private List<HomeCatagoryModel> homeFreshFoodModel;
-    private List<HomeCatagoryModel> homeOilModel;
+
+
+//    SearchAdapter searchAdapter;
+    ArrayList<SearchModel> searchModels=new ArrayList<>();
+    ArrayList<HomeCatagoryModel> TopCategory=new ArrayList<>();
+
+
+    AllCatagoryAdapter allCatagoryAdapter;
+
+    String cat_id, sub_cat_id;
+
+//    private List<HomeCatagoryModel> homeCatagoryModels;
+//    private ArrayList<HomeCatagoryModel> homeItemModels=new ArrayList<>();
+//    private ArrayList<HomeCatagoryModel> homeFreshFoodModel=new ArrayList<>();
+//    private ArrayList<HomeCatagoryModel> homeOilModel=new ArrayList<>();
 
     ApiInterface apiInterface;
     Session session;
@@ -94,6 +103,9 @@ public class HomeFragment extends Fragment {
         session = new Session(getContext());
 
         setImage();
+
+        cat_id = getActivity().getIntent().getStringExtra("cat_id");
+        sub_cat_id = getActivity().getIntent().getStringExtra("sub_cat_id");
 
         binding = FragmentHomeBinding.inflate(inflater,container,false);
 
@@ -147,77 +159,74 @@ public class HomeFragment extends Fragment {
 
     private void initView() {
 
-        adapter = new AutoImageSliderAdapter(getActivity(),array_imgs);
-        binding.pagerSlider.setAdapter(adapter);
-        binding.pagerSlider.setCurrentItem(0);
-
-        addDotsIndicator(array_imgs.length, 0);
+        BannerSet();//banner
 
         binding.pagerSlider.addOnPageChangeListener(listener);
-//        startAutoSlider(array_imgs.length);
 
-        catagoryList();
-        homeCatagoryAdapter = new HomeCatagoryAdapter(getActivity(),homeCatagoryModels);
-        binding.rvCatagory.setAdapter(homeCatagoryAdapter);
-
+        fetch_categories();//cat
 
         homeBannerAdapter = new HomeBannerAdapter(getContext(),array_banner);
         binding.rvPopular.setAdapter(homePopulerAdapter);
 
-        itemList();
-        freshFoodList();
-        oilList();
-        homePopulerAdapter = new HomePopulerAdapter(getContext(),homeItemModels);
-        homeRecomendedAdapter = new HomeRecomendedAdapter(getContext(),homeFreshFoodModel);
-        homeRecomendedAdapter_oil = new HomeRecomendedAdapter(getContext(),homeOilModel);
+        ShowProductList();//tata tea
 
-        binding.rvRecomended.setAdapter(homeRecomendedAdapter);
+        fetch_product_by_category();//fruits
+
+        fetch_product_by_category2();//oil
 
         binding.rvPopular.setAdapter(homePopulerAdapter);
         binding.rvBanner.setAdapter(homeBannerAdapter);
-
-        binding.rvOil.setAdapter(homeRecomendedAdapter_oil);
 
         homeTrendingOfferAdapter = new HomeTrendingOfferAdapter(getContext());
         binding.rvTrendingOffer.setAdapter(homeTrendingOfferAdapter);
 
         final int[] state = new int[1];
-        /*binding.nestedScroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
 
-
-            }
-
-
-        });*/
-
-        /*binding.rvPopular.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                state[0] = newState;
-
-            }
-
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                if (dy>0 && (state[0] == 0 || state[0] == 2))
-                {
-                    binding.cardSearch.setVisibility(View.GONE);
-                }
-                else if (dy <-10)
-                {
-                    binding.cardSearch.setVisibility(View.VISIBLE);
-                }
-            }
-        });*/
+        fetch_category_name(binding.cat1, "1");
+        fetch_category_name(binding.cat2, "3");
+        fetch_category_name(binding.cat3, "1");
 
     }
 
+    private void BannerSet() {
+        Call<String> call = apiInterface.fetch_multiple_banner();
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                String res = response.body();
+                if (!res.equals("")){
+                    try {
+                        JSONArray jsonArray = new JSONArray(res);
+                        if (jsonArray.length()!=0){
+                            for (int i=0;i<jsonArray.length();i++){
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                topBannerModels.add(new TopBannerModel(
+                                        Utils.banner_images+jsonObject.getString("image_name")
+                                ));
+                            }
+                            adapter = new AutoImageSliderAdapter(getActivity(), topBannerModels);
+                            binding.pagerSlider.setAdapter(adapter);
+                            binding.pagerSlider.setCurrentItem(0);
+                            addDotsIndicator(topBannerModels.size(), 0);
 
+                        }else{
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(getContext(), e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
+    }
 
     private void setImage() {
         ProgressUtils.showLoadingDialog(getContext());
@@ -260,10 +269,7 @@ public class HomeFragment extends Fragment {
         });
     }
 
-
-
-    public void addDotsIndicator(int size, int position)
-    {
+    public void addDotsIndicator(int size, int position) {
         mDots = new TextView[size];
         binding.linDots.removeAllViews();
 
@@ -303,49 +309,239 @@ public class HomeFragment extends Fragment {
         }
     };
 
-    private List<HomeCatagoryModel> catagoryList()
-    {
-        homeCatagoryModels = new ArrayList<>();
-        homeCatagoryModels.add(new HomeCatagoryModel("Grocery & Staple",R.drawable.image));
-        homeCatagoryModels.add(new HomeCatagoryModel("Oil",R.drawable.oil));
-        homeCatagoryModels.add(new HomeCatagoryModel("Tea & Coffee",R.drawable.tea_coffee));
-        homeCatagoryModels.add(new HomeCatagoryModel("Dairy Milk",R.drawable.dairy_milk));
 
-        return homeCatagoryModels;
+
+
+    public void fetch_categories() {
+        ProgressUtils.showLoadingDialog(getContext());
+        Call<String> call = apiInterface.fetch_categories();
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                String res = response.body();
+                if (!res.equals("")){
+                    try {
+                        JSONArray jsonArray = new JSONArray(res);
+                        if (jsonArray.length()!=0){
+                            TopCategory.clear();
+                            for (int i=0;i< jsonArray.length();i++){
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                TopCategory.add(new HomeCatagoryModel(jsonObject.getString("name"),
+                                        Utils.Category_images+jsonObject.getString("image"),
+                                        jsonObject.getString("id")));
+                            }
+                            allCatagoryAdapter = new AllCatagoryAdapter(getActivity(),TopCategory);
+                            binding.rvCatagory.setAdapter(allCatagoryAdapter);
+                        }else {
+
+                        }
+                        ProgressUtils.cancelLoading();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(getActivity(), e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                        ProgressUtils.cancelLoading();
+                    }
+                }else{
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                ProgressUtils.cancelLoading();
+            }
+        });
+
     }
 
 
-    private List<HomeCatagoryModel> itemList()
-    {
-        homeItemModels = new ArrayList<>();
-        homeItemModels.add(new HomeCatagoryModel("Tata Premium Tea",R.drawable.tata_tea));
-        homeItemModels.add(new HomeCatagoryModel("Tata Premium Tea",R.drawable.tata_tea));
-        homeItemModels.add(new HomeCatagoryModel("Tata Premium Tea",R.drawable.tata_tea));
 
-        return homeItemModels;
+
+    private void ShowProductList() {
+        ProgressUtils.showLoadingDialog(getContext());
+        Call<String> call = apiInterface.fetch_product_by_category("1");
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                String res = response.body();
+                if (!res.equals("")) {
+                    try {
+                        JSONArray jsonArray = new JSONArray(res);
+                        if (jsonArray.length() != 0) {
+                            searchModels.clear();
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                searchModels.add(new SearchModel(
+                                        jsonObject.getString("category_id"),
+                                        jsonObject.getString("sub_category_id"),
+                                        jsonObject.getString("id"),
+                                        jsonObject.getString("product_name"),
+                                        jsonObject.getString("discounted_price"),
+                                        jsonObject.getString("original_price"),
+                                        Utils.product_images+jsonObject.getString("image1"),
+                                        jsonObject.getString("discount_percentage")
+                                ));
+                            }
+                            homePopulerAdapter = new HomePopulerAdapter(getContext(),searchModels);
+                            binding.rvPopular.setAdapter(homePopulerAdapter);
+                            ProgressUtils.cancelLoading();
+                        } else {
+                            ProgressUtils.cancelLoading();
+                            Toast.makeText(getActivity(), "not found", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(getActivity(), e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                        ProgressUtils.cancelLoading();
+                    }
+                } else {
+                    ProgressUtils.cancelLoading();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                ProgressUtils.cancelLoading();
+            }
+        });
+
     }
 
 
-    private List<HomeCatagoryModel> freshFoodList()
-    {
-        homeFreshFoodModel = new ArrayList<>();
-        homeFreshFoodModel.add(new HomeCatagoryModel("Banana",R.drawable.banana));
-        homeFreshFoodModel.add(new HomeCatagoryModel("Apple",R.drawable.apple));
-        homeFreshFoodModel.add(new HomeCatagoryModel("Graps",R.drawable.graps));
-        homeFreshFoodModel.add(new HomeCatagoryModel("Avocado",R.drawable.avocado));
 
-        return homeFreshFoodModel;
+
+    private void fetch_product_by_category() {
+        Call<String> call = apiInterface.fetch_product_by_category("3");
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                String res = response.body();
+                if (!res.equals("")){
+                    try {
+                        JSONArray jsonArray = new JSONArray(res);
+                        if (jsonArray.length()!=0){
+                            freshFruitsModels.clear();
+                            for (int i=0;i<jsonArray.length();i++){
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                freshFruitsModels.add(new FreshFruitsModel(
+                                        jsonObject.getString("category_id"),
+                                        jsonObject.getString("sub_category_id"),
+                                        jsonObject.getString("id"),
+                                        jsonObject.getString("product_name"),
+                                        jsonObject.getString("discounted_price"),
+                                        jsonObject.getString("original_price"),
+                                        Utils.product_images+jsonObject.getString("image1"),
+                                        jsonObject.getString("discount_percentage")
+                                ));
+                            }
+                            homeRecomendedAdapter = new HomeRecomendedAdapter(getContext(),freshFruitsModels);
+                            binding.rvFreshfruits.setAdapter(homeRecomendedAdapter);
+
+                        }else{
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }else{
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
+
+
     }
 
-    private List<HomeCatagoryModel> oilList()
-    {
-        homeOilModel = new ArrayList<>();
-        homeOilModel.add(new HomeCatagoryModel("Fortune Oil",R.drawable.fortune_oil));
-        homeOilModel.add(new HomeCatagoryModel("Dalda Kachi Ghani",R.drawable.dalda));
-        homeOilModel.add(new HomeCatagoryModel("Mahakosh Oil",R.drawable.mahakosh));
-        homeOilModel.add(new HomeCatagoryModel("Fortune Pure Oil",R.drawable.fortune_oil));
 
-        return homeOilModel;
+
+
+    private void fetch_product_by_category2() {
+        Call<String> call = apiInterface.fetch_product_by_category("1");
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                String res = response.body();
+                if (!res.equals("")){
+                    try {
+                        JSONArray jsonArray = new JSONArray(res);
+                        if (jsonArray.length()!=0){
+                            freshFruitsModels2.clear();
+                            for (int i=0;i<jsonArray.length();i++){
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                freshFruitsModels2.add(new FreshFruitsModel(
+                                        jsonObject.getString("category_id"),
+                                        jsonObject.getString("sub_category_id"),
+                                        jsonObject.getString("id"),
+                                        jsonObject.getString("product_name"),
+                                        jsonObject.getString("discounted_price"),
+                                        jsonObject.getString("original_price"),
+                                        Utils.product_images+jsonObject.getString("image1"),
+                                        jsonObject.getString("discount_percentage")
+                                ));
+                            }
+                            homeRecomendedAdapter2 = new HomeRecomendedAdapter(getContext(),freshFruitsModels2);
+                            binding.rvOil.setAdapter(homeRecomendedAdapter2);
+
+                        }else{
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }else{
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
+
+
     }
+
+
+
+
+
+    private void fetch_category_name(TextView text,String id){
+        Call<String> call = apiInterface.fetch_category_name(id);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                String res = response.body();
+                if (!res.equals("")){
+                    try {
+                        JSONObject jsonObject = new JSONObject(res);
+                        if (jsonObject.getString("rec").equals("1")){
+                            text.setText(jsonObject.getString("name"));
+                        }else{
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(getContext(), e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    }
+
+                }else{
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Toast.makeText(getContext(), t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
 
 }

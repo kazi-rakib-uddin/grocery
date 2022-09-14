@@ -1,21 +1,20 @@
 package com.example.erashop.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.erashop.Activity.SingleProduct;
 import com.example.erashop.Model.SearchModel;
 import com.example.erashop.R;
 import com.example.erashop.databinding.CustomSearchResultBinding;
-import com.example.erashop.databinding.SinglePopulerItemBinding;
 
 import java.util.ArrayList;
 
@@ -37,11 +36,17 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.binding.searchItemName.setText(searchModels.get(position).getName());
-        holder.binding.searchItemOGPrice.setText("₹"+searchModels.get(position).getOG_price());
-        holder.binding.searchItemPrice.setText("₹"+searchModels.get(position).getPrice());
-        holder.binding.searchImage.setImageResource(Integer.parseInt(searchModels.get(position).getImage()));
+        holder.binding.searchItemOGPrice.setText(String.format("₹%s", searchModels.get(position).getOG_price()));
+        holder.binding.searchItemPrice.setText(String.format("₹%s", searchModels.get(position).getPrice()));
+//        holder.binding.searchImage.setImageResource(Integer.parseInt(searchModels.get(position).getImage()));
+        Glide.with(context)
+                .load(searchModels.get(position).getImage())
+                .centerCrop()
+                .placeholder(R.drawable.not_found)
+                .into(holder.binding.searchImage);
+        holder.binding.discountPercentage.setText(String.format("%s%% Off", searchModels.get(position).getDiscount()));
 
         holder.binding.IncDec.setVisibility(View.GONE);
 
@@ -60,6 +65,9 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, SingleProduct.class);
+                intent.putExtra("product_id",searchModels.get(position).getProduct_id());
+                intent.putExtra("cat_id",searchModels.get(position).getCat_id());
+                intent.putExtra("sub_cat_id",searchModels.get(position).getSub_cat_id());
                 context.startActivity(intent);
             }
         });
@@ -67,7 +75,13 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
-        return searchModels.size();
+        int size =0;
+        if (searchModels.size()<4){
+            size = searchModels.size();
+        }else{
+            size = 4;
+        }
+        return size;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

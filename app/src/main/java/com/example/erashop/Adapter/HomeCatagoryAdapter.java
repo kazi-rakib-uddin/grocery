@@ -11,17 +11,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.erashop.Activity.SearchActivity;
+import com.example.erashop.Activity.SubCategoryActivity;
 import com.example.erashop.Model.HomeCatagoryModel;
 import com.example.erashop.databinding.SingleHomeCatagoryBinding;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HomeCatagoryAdapter extends RecyclerView.Adapter<HomeCatagoryAdapter.MyViewHolder> {
 
     private Context context;
-    private List<HomeCatagoryModel> homeCatagoryModels;
+    private ArrayList<HomeCatagoryModel> homeCatagoryModels=new ArrayList<>();
 
-    public HomeCatagoryAdapter(Context context, List<HomeCatagoryModel> homeCatagoryModels) {
+    public HomeCatagoryAdapter(Context context, ArrayList<HomeCatagoryModel> homeCatagoryModels) {
         this.context = context;
         this.homeCatagoryModels = homeCatagoryModels;
     }
@@ -42,7 +44,7 @@ public class HomeCatagoryAdapter extends RecyclerView.Adapter<HomeCatagoryAdapte
         holder.binding.HomeTopCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                context.startActivity(new Intent(context, SearchActivity.class));
+                context.startActivity(new Intent(context, SubCategoryActivity.class));
             }
         });
 

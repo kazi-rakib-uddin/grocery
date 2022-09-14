@@ -1,7 +1,9 @@
 package com.example.erashop.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,22 +12,26 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.erashop.Activity.SingleProduct;
+import com.example.erashop.Model.FreshFruitsModel;
 import com.example.erashop.Model.HomeCatagoryModel;
+import com.example.erashop.R;
 import com.example.erashop.databinding.ActivityMainBinding;
 import com.example.erashop.databinding.SinglePopulerItemBinding;
 import com.example.erashop.databinding.SingleRecomendedItemBinding;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HomeRecomendedAdapter extends RecyclerView.Adapter<HomeRecomendedAdapter.MyViewHolder> {
 
     private Context context;
-    private List<HomeCatagoryModel> homeCatagoryModels;
+    private ArrayList<FreshFruitsModel> freshFruitsModels;
 
-    public HomeRecomendedAdapter(Context context, List<HomeCatagoryModel> homeCatagoryModels) {
+    public HomeRecomendedAdapter(Context context, ArrayList<FreshFruitsModel> freshFruitsModels) {
         this.context = context;
-        this.homeCatagoryModels = homeCatagoryModels;
+        this.freshFruitsModels = freshFruitsModels;
     }
 
     @NonNull
@@ -37,10 +43,19 @@ public class HomeRecomendedAdapter extends RecyclerView.Adapter<HomeRecomendedAd
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
-        holder.binding.name.setText(homeCatagoryModels.get(position).getName());
-        holder.binding.image.setImageResource(homeCatagoryModels.get(position).getImage());
+        holder.binding.name.setText(freshFruitsModels.get(position).getName());
+        holder.binding.discountPercentage.setText(freshFruitsModels.get(position).getDiscount()+"% OFF");
+        holder.binding.originalPrice.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+        holder.binding.originalPrice.setText("₹"+freshFruitsModels.get(position).getOG_price());
+        holder.binding.discountedPrice.setText("₹"+freshFruitsModels.get(position).getPrice());
+
+        Glide.with(context)
+                .load(freshFruitsModels.get(position).getImage())
+                .centerCrop()
+                .placeholder(R.drawable.not_found)
+                .into(holder.binding.image);
         holder.binding.IncDec.setVisibility(View.GONE);
 
         holder.binding.addBtn.setOnClickListener(new View.OnClickListener() {
@@ -57,6 +72,9 @@ public class HomeRecomendedAdapter extends RecyclerView.Adapter<HomeRecomendedAd
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, SingleProduct.class);
+                intent.putExtra("product_id",freshFruitsModels.get(position).getProduct_id());
+                intent.putExtra("cat_id",freshFruitsModels.get(position).getCat_id());
+                intent.putExtra("sub_cat_id",freshFruitsModels.get(position).getSub_cat_id());
                 context.startActivity(intent);
             }
         });
@@ -64,7 +82,7 @@ public class HomeRecomendedAdapter extends RecyclerView.Adapter<HomeRecomendedAd
 
     @Override
     public int getItemCount() {
-        return homeCatagoryModels.size();
+        return freshFruitsModels.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

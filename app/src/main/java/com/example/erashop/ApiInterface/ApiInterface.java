@@ -96,4 +96,38 @@ public interface ApiInterface {
             @Field("sub_category_id") String sub_category_id
     );
 
+    @FormUrlEncoded
+    @POST("fetch_single_product_details.php")
+    Call<String> fetch_single_product_details(
+            @Field("product_id") String product_id,
+            @Field("sub_category_id") String sub_category_id,
+            @Field("category_id") String category_id
+    );
+
+    @FormUrlEncoded
+    @POST("fetch_product_images.php")
+    Call<String> fetch_product_images(
+            @Field("product_id") String product_id,
+            @Field("sub_category_id") String sub_category_id,
+            @Field("category_id") String category_id
+    );
+
+    @FormUrlEncoded
+    @POST("fetch_product_by_category.php")
+    Call<String> fetch_product_by_category(
+            @Field("category_id") String category_id
+    );
+
+    @FormUrlEncoded
+    @POST("fetch_category_name.php")
+    Call<String> fetch_category_name(
+            @Field("category_id") String category_id
+    );
+
+    @GET("fetch_multiple_banner.php")
+    Call<String> fetch_multiple_banner();
+
+    @GET("fetch_product.php")
+    Call<String> fetch_product();
+
 }

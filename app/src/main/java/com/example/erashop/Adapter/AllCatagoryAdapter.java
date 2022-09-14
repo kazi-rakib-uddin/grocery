@@ -69,7 +69,13 @@ public class AllCatagoryAdapter extends RecyclerView.Adapter<AllCatagoryAdapter.
 
     @Override
     public int getItemCount() {
-        return homeCatagoryModels.size();
+        int size =0;
+        if (homeCatagoryModels.size()<10){
+            size = homeCatagoryModels.size();
+        }else{
+            size = 10;
+        }
+        return size;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

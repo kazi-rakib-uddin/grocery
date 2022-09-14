@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.erashop.Adapter.SearchAdapter;
@@ -51,7 +52,8 @@ public class SearchActivity extends AppCompatActivity {
         apiInterface = APIClient.getApiClient().create(ApiInterface.class);
 
         cat_id = getIntent().getStringExtra("cat_id");
-        sub_cat_id = getIntent().getStringExtra("cat_id");
+        sub_cat_id = getIntent().getStringExtra("sub_cat_id");
+
 
         GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
         binding.rvSearch.setLayoutManager(layoutManager);
@@ -71,9 +73,12 @@ public class SearchActivity extends AppCompatActivity {
                     try {
                         JSONArray jsonArray = new JSONArray(res);
                         if (jsonArray.length() != 0) {
+                            binding.lottie.setVisibility(View.GONE);
+                            binding.lottieTXT.setVisibility(View.GONE);
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                                 searchModels.add(new SearchModel(
+                                        cat_id,sub_cat_id,
                                         jsonObject.getString("id"),
                                         jsonObject.getString("product_name"),
                                         jsonObject.getString("discounted_price"),
@@ -88,6 +93,9 @@ public class SearchActivity extends AppCompatActivity {
                             ProgressUtils.cancelLoading();
                         } else {
                             ProgressUtils.cancelLoading();
+                            binding.rvSearch.setVisibility(View.GONE);
+                            binding.searchBar.setVisibility(View.GONE);
+                            binding.searchEdittext.setVisibility(View.GONE);
                             Toast.makeText(SearchActivity.this, "not found", Toast.LENGTH_SHORT).show();
                         }
                     } catch (JSONException e) {
