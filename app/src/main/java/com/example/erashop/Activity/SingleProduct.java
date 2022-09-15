@@ -45,12 +45,14 @@ public class SingleProduct extends AppCompatActivity {
     RecyclerView rv_view_similar;
     ImageView img_cancel;
 
-    String[] product_images=new String[]{};
+    String isWishlisted = "";
+
+    String[] product_images = new String[]{};
 
     ApiInterface apiInterface;
     Session session;
 
-    String cat_id="", sub_cat_id="",product_id="";
+    String cat_id = "", sub_cat_id = "", product_id = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +71,8 @@ public class SingleProduct extends AppCompatActivity {
         cat_id = getIntent().getStringExtra("cat_id");
         sub_cat_id = getIntent().getStringExtra("sub_cat_id");
 
-            fetchProductDetails();
-            fetchProductImages();
+        fetchProductDetails();
+        fetchProductImages();
 
         binding.txtDisc.setPaintFlags(binding.txtDisc.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
@@ -150,27 +152,26 @@ public class SingleProduct extends AppCompatActivity {
         });
 
 
-
     }
 
     private void fetchProductDetails() {
         ProgressUtils.showLoadingDialog(this);
-        Call<String> call = apiInterface.fetch_single_product_details(product_id,sub_cat_id,cat_id);
+        Call<String> call = apiInterface.fetch_single_product_details(product_id, sub_cat_id, cat_id);
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 String res = response.body();
-                if (!res.equals("")){
+                if (!res.equals("")) {
                     try {
                         JSONObject jsonObject = new JSONObject(res);
-                        if (jsonObject.getString("rec").equals("1")){
+                        if (jsonObject.getString("rec").equals("1")) {
                             binding.productName.setText(jsonObject.getString("product_name"));
                             binding.quantity.setText(jsonObject.getString("quantity"));
                             binding.txtDisc.setText(String.format("₹%s", jsonObject.getString("original_price")));
                             binding.priceTxt.setText(String.format("₹%s", jsonObject.getString("discounted_price")));
                             binding.discountPercentage.setText(String.format("%s%% Off", jsonObject.getString("discount_percentage")));
                             binding.description.setText(jsonObject.getString("description"));
-                        }else{
+                        } else {
 
                         }
                         ProgressUtils.cancelLoading();
@@ -179,7 +180,7 @@ public class SingleProduct extends AppCompatActivity {
                         Toast.makeText(SingleProduct.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                         ProgressUtils.cancelLoading();
                     }
-                }else {
+                } else {
 
                 }
                 ProgressUtils.cancelLoading();
@@ -193,32 +194,32 @@ public class SingleProduct extends AppCompatActivity {
 
     }
 
-    private void fetchProductImages(){
-        Call<String> call = apiInterface.fetch_product_images(product_id,sub_cat_id,cat_id);
+    private void fetchProductImages() {
+        Call<String> call = apiInterface.fetch_product_images(product_id, sub_cat_id, cat_id);
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 String res = response.body();
-                if (!res.equals("")){
+                if (!res.equals("")) {
                     try {
                         JSONArray jsonArray = new JSONArray(res);
-                        if (jsonArray.length()!=0){
-                            for (int i=0;i<jsonArray.length();i++){
+                        if (jsonArray.length() != 0) {
+                            for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                images.add(new CategoryModel("", Utils.product_images+jsonObject.getString("image1")));
-                                images.add(new CategoryModel("", Utils.product_images+jsonObject.getString("image2")));
-                                images.add(new CategoryModel("", Utils.product_images+jsonObject.getString("image3")));
-                                images.add(new CategoryModel("", Utils.product_images+jsonObject.getString("image4")));
+                                images.add(new CategoryModel("", Utils.product_images + jsonObject.getString("image1")));
+                                images.add(new CategoryModel("", Utils.product_images + jsonObject.getString("image2")));
+                                images.add(new CategoryModel("", Utils.product_images + jsonObject.getString("image3")));
+                                images.add(new CategoryModel("", Utils.product_images + jsonObject.getString("image4")));
                             }
-                            binding.rvImageSlide.setAdapter(new SinglePageImageAdapter(SingleProduct.this,images));
-                        }else{
+                            binding.rvImageSlide.setAdapter(new SinglePageImageAdapter(SingleProduct.this, images));
+                        } else {
 
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
                         Toast.makeText(SingleProduct.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                     }
-                }else{
+                } else {
 
                 }
             }
@@ -237,19 +238,19 @@ public class SingleProduct extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 count[0] += 1;
-                binding.IncDecText.setText(""+ count[0]);
+                binding.IncDecText.setText("" + count[0]);
             }
         });
 
         binding.decreaseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (count[0] == 1){
+                if (count[0] == 1) {
                     binding.addBtn.setVisibility(View.VISIBLE);
                     binding.IncDec.setVisibility(View.GONE);
-                }else{
+                } else {
                     count[0] -= 1;
-                    binding.IncDecText.setText(""+ count[0]);
+                    binding.IncDecText.setText("" + count[0]);
                 }
             }
         });
@@ -257,7 +258,7 @@ public class SingleProduct extends AppCompatActivity {
     }
 
     private void TopBrand() {
-        arrayList_top_brand.add(new CategoryModel("Banana","https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"));
+        arrayList_top_brand.add(new CategoryModel("Banana", "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"));
         arrayList_top_brand.add(new CategoryModel("Apple", "https://images.unsplash.com/photo-1569870499705-504209102861?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=415&q=80"));
         arrayList_top_brand.add(new CategoryModel("Grape", "https://2rdnmg1qbg403gumla1v9i2h-wpengine.netdna-ssl.com/wp-content/uploads/sites/3/2021/11/Benefitsof-Grapes-1305284794-770x533-1-650x428.jpg"));
         arrayList_top_brand.add(new CategoryModel("Avocado", "https://m.media-amazon.com/images/I/71LUriXVE2L._SL1500_.jpg"));
@@ -294,8 +295,11 @@ public class SingleProduct extends AppCompatActivity {
     }
 
     private void Wishlist() {
-        Toast.makeText(this, "Wishlist", Toast.LENGTH_SHORT).show();
-        if (binding.wishList.getDrawable().isVisible()){
+        binding.wishList.setImageResource(R.drawable.img_red_wishlist);
+    }
+
+    private void checkWishListed(String res){
+        if (res.equals("Y")){
             binding.wishList.setImageResource(R.drawable.img_red_wishlist);
         }else{
             binding.wishList.setImageResource(R.drawable.img_wishlist);
