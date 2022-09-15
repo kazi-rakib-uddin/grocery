@@ -37,7 +37,8 @@ public class SearchActivity extends AppCompatActivity {
     ApiInterface apiInterface;
     Session session;
 
-    String cat_id, sub_cat_id;
+    String cat_id, sub_cat_id,source="";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +59,18 @@ public class SearchActivity extends AppCompatActivity {
         GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
         binding.rvSearch.setLayoutManager(layoutManager);
 
-        ShowProductList();
+        source = getIntent().getStringExtra("source");
+
+
+
+        if (source.equals("from_sub_Cat")){
+            ShowProductList();
+        }else if(source.equals("from_home_fragment")){
+            binding.lottie.setVisibility(View.GONE);
+            binding.lottieTXT.setVisibility(View.GONE);
+        }else{
+            Toast.makeText(this, "Something went wrong!", Toast.LENGTH_SHORT).show();
+        }
 
     }
 
@@ -94,7 +106,7 @@ public class SearchActivity extends AppCompatActivity {
                         } else {
                             ProgressUtils.cancelLoading();
                             binding.rvSearch.setVisibility(View.GONE);
-                            binding.searchBar.setVisibility(View.GONE);
+//                            binding.searchBar.setVisibility(View.GONE);
                             binding.searchEdittext.setVisibility(View.GONE);
                             Toast.makeText(SearchActivity.this, "not found", Toast.LENGTH_SHORT).show();
                         }

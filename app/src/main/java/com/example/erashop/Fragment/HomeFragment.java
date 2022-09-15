@@ -154,7 +154,9 @@ public class HomeFragment extends Fragment {
         binding.searchCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), SearchActivity.class));
+                Intent intent = new Intent(getActivity(), SearchActivity.class);
+                intent.putExtra("source","from_home_fragment");
+                startActivity(intent);
             }
         });
 

@@ -53,6 +53,7 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
                 Intent intent= new Intent(context,SearchActivity.class);
                 intent.putExtra("sub_cat_id",subCategoryModels.get(position).getSub_Category_id());
                 intent.putExtra("cat_id",subCategoryModels.get(position).getCategory_id());
+                intent.putExtra("source","from_sub_Cat");
                 context.startActivity(intent);
             }
         });
