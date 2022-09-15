@@ -147,7 +147,7 @@ public class SingleProduct extends AppCompatActivity {
         binding.wishList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Wishlist();
+                AddToWishlist();
             }
         });
 
@@ -294,16 +294,42 @@ public class SingleProduct extends AppCompatActivity {
 
     }
 
-    private void Wishlist() {
-        binding.wishList.setImageResource(R.drawable.img_red_wishlist);
-    }
+    private void AddToWishlist() {
+        ProgressUtils.showLoadingDialog(this);
+        Call<String> call = apiInterface.add_wishlist(session.getUser_id(),product_id);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                String res = response.body();
+                if (!res.equals("")){
+                    try {
+                        JSONObject jsonObject = new JSONObject(res);
+                        if (jsonObject.getString("rec").equals("1")){
+                            Toast.makeText(SingleProduct.this, "Product added to wishlist", Toast.LENGTH_SHORT).show();
+                            binding.wishList.setImageResource(R.drawable.img_red_wishlist);
+                            ProgressUtils.cancelLoading();
+                        }else if(jsonObject.getString("rec").equals("3")){
+                            Toast.makeText(SingleProduct.this, "Product already added to wishlist", Toast.LENGTH_SHORT).show();
+                            binding.wishList.setImageResource(R.drawable.img_red_wishlist);
+                            ProgressUtils.cancelLoading();
+                        }else{
+                            Toast.makeText(SingleProduct.this, "Can't add this product to wishlist", Toast.LENGTH_SHORT).show();
+                            ProgressUtils.cancelLoading();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(SingleProduct.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                        ProgressUtils.cancelLoading();
+                    }
+                }else{
 
-    private void checkWishListed(String res){
-        if (res.equals("Y")){
-            binding.wishList.setImageResource(R.drawable.img_red_wishlist);
-        }else{
-            binding.wishList.setImageResource(R.drawable.img_wishlist);
-        }
-    }
+                }
+            }
 
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Toast.makeText(SingleProduct.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 }

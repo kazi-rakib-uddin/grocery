@@ -132,8 +132,28 @@ public interface ApiInterface {
     Call<String> fetch_bottom_multiple_banner();
 
     @FormUrlEncoded
-    @POST("fetch_product.php")
-    Call<String> fetch_product(
+    @POST("fetch_product_by_product_id.php")
+    Call<String> fetch_product_by_product_id(
+            @Field("product_id") String product_id
+    );
+
+    @FormUrlEncoded
+    @POST("fetch_wishlist_by_user_id.php")
+    Call<String> fetch_wishlist_by_user_id(
+            @Field("user_id") String user_id
+    );
+
+    @FormUrlEncoded
+    @POST("add_wishlist.php")
+    Call<String> add_wishlist(
+            @Field("user_id") String user_id,
+            @Field("product_id") String product_id
+    );
+
+    @FormUrlEncoded
+    @POST("delete_from_wishlist.php")
+    Call<String> delete_from_wishlist(
+            @Field("user_id") String user_id,
             @Field("product_id") String product_id
     );
 
