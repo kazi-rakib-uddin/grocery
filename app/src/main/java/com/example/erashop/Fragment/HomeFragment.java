@@ -5,9 +5,9 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.viewpager.widget.ViewPager;
 
-import android.os.Handler;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,18 +19,20 @@ import com.bumptech.glide.Glide;
 import com.example.erashop.Activity.SearchActivity;
 import com.example.erashop.Adapter.AllCatagoryAdapter;
 import com.example.erashop.Adapter.AutoImageSliderAdapter;
+import com.example.erashop.Adapter.BottomBannerAdapter;
+import com.example.erashop.Adapter.TrendingOfferAdapter;
+import com.example.erashop.Model.BottomBannerModel;
 import com.example.erashop.Adapter.HomeBannerAdapter;
-import com.example.erashop.Adapter.HomeCatagoryAdapter;
 import com.example.erashop.Adapter.HomePopulerAdapter;
 import com.example.erashop.Adapter.HomeRecomendedAdapter;
 import com.example.erashop.Adapter.HomeTrendingOfferAdapter;
-import com.example.erashop.Adapter.SearchAdapter;
 import com.example.erashop.ApiClient.APIClient;
 import com.example.erashop.ApiInterface.ApiInterface;
 import com.example.erashop.Model.FreshFruitsModel;
 import com.example.erashop.Model.HomeCatagoryModel;
 import com.example.erashop.Model.SearchModel;
 import com.example.erashop.Model.TopBannerModel;
+import com.example.erashop.Model.TrendingOfferModel;
 import com.example.erashop.R;
 import com.example.erashop.Session.Session;
 import com.example.erashop.Utils.ProgressUtils;
@@ -40,10 +42,8 @@ import com.example.erashop.databinding.FragmentHomeBinding;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -75,7 +75,13 @@ public class HomeFragment extends Fragment {
     private HomeRecomendedAdapter homeRecomendedAdapter;
     private HomeRecomendedAdapter homeRecomendedAdapter2;
 //    private HomeRecomendedAdapter homeRecomendedAdapter_oil;
-    private HomeTrendingOfferAdapter homeTrendingOfferAdapter;
+    private ArrayList<HomeTrendingOfferAdapter> homeTrendingOfferAdapter=new ArrayList<>();
+
+    ArrayList<BottomBannerModel> bottomBannerModels = new ArrayList<>();
+    BottomBannerAdapter bottomBannerAdapter;
+
+    ArrayList<TrendingOfferModel> trendingOfferModels = new ArrayList<>();
+    TrendingOfferAdapter trendingOfferAdapter;
 
 
 //    SearchAdapter searchAdapter;
@@ -152,6 +158,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
+
         initView();
 
         return binding.getRoot();
@@ -160,6 +167,8 @@ public class HomeFragment extends Fragment {
     private void initView() {
 
         BannerSet();//banner
+
+        Bottom_BannerSet();
 
         binding.pagerSlider.addOnPageChangeListener(listener);
 
@@ -174,11 +183,13 @@ public class HomeFragment extends Fragment {
 
         fetch_product_by_category2();//oil
 
-        binding.rvPopular.setAdapter(homePopulerAdapter);
-        binding.rvBanner.setAdapter(homeBannerAdapter);
+        trending_offers();
 
-        homeTrendingOfferAdapter = new HomeTrendingOfferAdapter(getContext());
-        binding.rvTrendingOffer.setAdapter(homeTrendingOfferAdapter);
+//        binding.rvTrendingOffer.setLayoutManager(new LinearLayoutManager(getContext()));
+
+
+//        homeTrendingOfferAdapter = new HomeTrendingOfferAdapter(getContext());
+//        binding.rvTrendingOffer.setAdapter(homeTrendingOfferAdapter);
 
         final int[] state = new int[1];
 
@@ -215,6 +226,43 @@ public class HomeFragment extends Fragment {
                     } catch (JSONException e) {
                         e.printStackTrace();
                         Toast.makeText(getContext(), e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void Bottom_BannerSet() {
+        Call<String> call = apiInterface.fetch_bottom_multiple_banner();
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                String res = response.body();
+                if (!res.equals("")){
+                    try {
+                        JSONArray jsonArray = new JSONArray(res);
+                        if (jsonArray.length()!=0){
+                            for (int i=0;i< jsonArray.length();i++){
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                bottomBannerModels.add(new BottomBannerModel(
+                                        Utils.bottom_banner_images+jsonObject.getString("image_name")
+                                ));
+                            }
+                            bottomBannerAdapter = new BottomBannerAdapter(bottomBannerModels,getContext());
+                            binding.rvBanner.setAdapter(bottomBannerAdapter);
+
+                        }else{
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
                 }else{
 
@@ -510,7 +558,6 @@ public class HomeFragment extends Fragment {
 
 
 
-
     private void fetch_category_name(TextView text,String id){
         Call<String> call = apiInterface.fetch_category_name(id);
         call.enqueue(new Callback<String>() {
@@ -541,6 +588,51 @@ public class HomeFragment extends Fragment {
             }
         });
 
+    }
+
+
+    private void trending_offers(){
+        Call<String> call = apiInterface.fetch_trending_offers();
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                String res = response.body();
+                if (!res.equals("")){
+                    try {
+                        JSONArray jsonArray = new JSONArray(res);
+                        if (jsonArray.length()!=0){
+                            for (int i =0;i< jsonArray.length();i++){
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                trendingOfferModels.add(new TrendingOfferModel(
+                                        jsonObject.getString("product_id"),
+                                        jsonObject.getString("product_name"),
+                                        Utils.trending_offers_images+jsonObject.getString("product_image"),
+                                        Utils.trending_product_title_image+jsonObject.getString("product_title_image"),
+                                        jsonObject.getString("trending_status"),
+                                        jsonObject.getString("discount_percentage"),
+                                        jsonObject.getString("category_id"),
+                                        jsonObject.getString("sub_category_id")
+
+                                ));
+                            }
+
+                            trendingOfferAdapter = new TrendingOfferAdapter(trendingOfferModels,getContext());
+                            binding.rvTrendingOffer.setAdapter(trendingOfferAdapter);
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }else{
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
     }
 
 

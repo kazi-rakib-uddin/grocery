@@ -127,7 +127,17 @@ public interface ApiInterface {
     @GET("fetch_multiple_banner.php")
     Call<String> fetch_multiple_banner();
 
-    @GET("fetch_product.php")
-    Call<String> fetch_product();
+
+    @GET("fetch_bottom_multiple_banner.php")
+    Call<String> fetch_bottom_multiple_banner();
+
+    @FormUrlEncoded
+    @POST("fetch_product.php")
+    Call<String> fetch_product(
+            @Field("product_id") String product_id
+    );
+
+    @GET("fetch_trending_offers.php")
+    Call<String> fetch_trending_offers();
 
 }

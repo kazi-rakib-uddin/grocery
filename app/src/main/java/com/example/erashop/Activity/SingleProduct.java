@@ -69,12 +69,13 @@ public class SingleProduct extends AppCompatActivity {
         cat_id = getIntent().getStringExtra("cat_id");
         sub_cat_id = getIntent().getStringExtra("sub_cat_id");
 
+            fetchProductDetails();
+            fetchProductImages();
+
         binding.txtDisc.setPaintFlags(binding.txtDisc.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
 //        newMobile();
         TopBrand();
-        fetchProductDetails();
-        fetchProductImages();
 
         binding.singleBtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,6 +142,12 @@ public class SingleProduct extends AppCompatActivity {
             }
         });
 
+        binding.wishList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Wishlist();
+            }
+        });
 
 
 
@@ -285,4 +292,14 @@ public class SingleProduct extends AppCompatActivity {
         binding.rvImageSlide.setAdapter(new SinglePageImageAdapter(this, arrayList_banner_faction));
 
     }
+
+    private void Wishlist() {
+        Toast.makeText(this, "Wishlist", Toast.LENGTH_SHORT).show();
+        if (binding.wishList.getDrawable().isVisible()){
+            binding.wishList.setImageResource(R.drawable.img_red_wishlist);
+        }else{
+            binding.wishList.setImageResource(R.drawable.img_wishlist);
+        }
+    }
+
 }
