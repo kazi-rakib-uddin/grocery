@@ -14,24 +14,38 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.erashop.Activity.SingleProduct;
+import com.example.erashop.ApiClient.APIClient;
+import com.example.erashop.ApiInterface.ApiInterface;
 import com.example.erashop.Model.FreshFruitsModel;
 import com.example.erashop.Model.HomeCatagoryModel;
 import com.example.erashop.R;
+import com.example.erashop.Session.Session;
 import com.example.erashop.databinding.ActivityMainBinding;
 import com.example.erashop.databinding.SinglePopulerItemBinding;
 import com.example.erashop.databinding.SingleRecomendedItemBinding;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeRecomendedAdapter extends RecyclerView.Adapter<HomeRecomendedAdapter.MyViewHolder> {
 
     private Context context;
     private ArrayList<FreshFruitsModel> freshFruitsModels;
+    ApiInterface apiInterface;
+    Session session;
 
     public HomeRecomendedAdapter(Context context, ArrayList<FreshFruitsModel> freshFruitsModels) {
         this.context = context;
         this.freshFruitsModels = freshFruitsModels;
+        session = new Session(context);
+        apiInterface = APIClient.getApiClient().create(ApiInterface.class);
     }
 
     @NonNull
@@ -64,7 +78,7 @@ public class HomeRecomendedAdapter extends RecyclerView.Adapter<HomeRecomendedAd
                 holder.binding.IncDecText.setText("1");
                 holder.binding.addBtn.setVisibility(View.GONE);
                 holder.binding.IncDec.setVisibility(View.VISIBLE);
-                IncreaseDecrease(holder);
+                IncreaseDecrease(holder,position);
             }
         });
 
@@ -94,7 +108,7 @@ public class HomeRecomendedAdapter extends RecyclerView.Adapter<HomeRecomendedAd
         }
     }
 
-    private void IncreaseDecrease(MyViewHolder holder) {
+    private void IncreaseDecrease(MyViewHolder holder, int position) {
         final int[] count = {1};
 
         holder.binding.increaseButton.setOnClickListener(new View.OnClickListener() {
@@ -102,6 +116,7 @@ public class HomeRecomendedAdapter extends RecyclerView.Adapter<HomeRecomendedAd
             public void onClick(View view) {
                 count[0] += 1;
                 holder.binding.IncDecText.setText(""+ count[0]);
+                Increase(position);
             }
         });
 
@@ -115,6 +130,87 @@ public class HomeRecomendedAdapter extends RecyclerView.Adapter<HomeRecomendedAd
                     count[0] -= 1;
                     holder.binding.IncDecText.setText(""+ count[0]);
                 }
+                Decrease(position);
+            }
+        });
+
+    }
+
+    private void Increase(int position){
+        Call<String> call = apiInterface.cart_quantity_increase(
+                freshFruitsModels.get(position).getProduct_id(),
+                session.getUser_id(),
+                freshFruitsModels.get(position).getPrice(),
+                freshFruitsModels.get(position).getQuantity()
+        );
+
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                String res = response.body();
+                if (!res.equals(null)){
+                    try {
+                        JSONObject jsonObject = new JSONObject(res);
+                        if (jsonObject.getString("rec").equals("1")){
+                            Toast.makeText(context, "Increase", Toast.LENGTH_SHORT).show();
+                        }else if (jsonObject.getString("rec").equals("2")){
+                            Toast.makeText(context, "Not increased", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(context, "Can't increase", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(context, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    private void Decrease(int position){
+        Call<String> call = apiInterface.cart_quantity_decrease(
+                freshFruitsModels.get(position).getProduct_id(),
+                session.getUser_id(),
+                freshFruitsModels.get(position).getPrice(),
+                freshFruitsModels.get(position).getQuantity()
+        );
+
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                String res = response.body();
+                if (!res.equals(null)){
+                    try {
+                        JSONObject jsonObject = new JSONObject(res);
+                        if (jsonObject.getString("rec").equals("1")){
+                            Toast.makeText(context, "Increase", Toast.LENGTH_SHORT).show();
+                        }else if (jsonObject.getString("rec").equals("2")){
+                            Toast.makeText(context, "Not increased", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(context, "Can't increase", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(context, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
             }
         });
 

@@ -1,13 +1,10 @@
 package com.example.erashop.ApiInterface;
 
-import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.Part;
 
 public interface ApiInterface {
     @FormUrlEncoded
@@ -155,6 +152,38 @@ public interface ApiInterface {
     Call<String> delete_from_wishlist(
             @Field("user_id") String user_id,
             @Field("product_id") String product_id
+    );
+
+    @FormUrlEncoded
+    @POST("search_products.php")
+    Call<String> search_products(
+            @Field("searched") String searched
+    );
+    @FormUrlEncoded
+    @POST("add_to_cart.php")
+    Call<String> add_to_cart(
+            @Field("product_id") String product_id,
+            @Field("user_id") String user_id,
+            @Field("price") String price,
+            @Field("quantity") String quantity
+    );
+
+    @FormUrlEncoded
+    @POST("cart_quantity_increase.php")
+    Call<String> cart_quantity_increase(
+            @Field("product_id") String product_id,
+            @Field("user_id") String user_id,
+            @Field("price") String price,
+            @Field("quantity") String quantity
+    );
+
+    @FormUrlEncoded
+    @POST("cart_quantity_decrease.php")
+    Call<String> cart_quantity_decrease(
+            @Field("product_id") String product_id,
+            @Field("user_id") String user_id,
+            @Field("price") String price,
+            @Field("quantity") String quantity
     );
 
     @GET("fetch_trending_offers.php")

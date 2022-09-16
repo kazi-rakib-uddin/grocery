@@ -118,6 +118,47 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
             }
         });
 
+        holder.add_to_cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Call<String> call = apiInterface.add_to_cart(
+                        wishlistModel.get(position).getId(),
+                        session.getUser_id(),
+                        wishlistModel.get(position).getItem_price(),
+                        wishlistModel.get(position).getQuantity()
+                );
+                call.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        String res = response.body();
+                        if (!res.equals(null)){
+                            try {
+                                JSONObject jsonObject = new JSONObject(res);
+                                if (jsonObject.getString("rec").equals("1")){
+                                    Toast.makeText(context, "Added to cart", Toast.LENGTH_SHORT).show();
+                                }else if (jsonObject.getString("rec").equals("2")){
+                                    Toast.makeText(context, "Can't add to cart", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(context, "Already exists", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Toast.makeText(context, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }else{
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+
+                    }
+                });
+
+            }
+        });
+
     }
 
     @Override
@@ -128,7 +169,7 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView item_name,item_size,item_price,item_OG_price,item_discount;
         ImageView wishlist_image;
-        LinearLayout removeWishlist;
+        LinearLayout removeWishlist,add_to_cart;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -140,6 +181,7 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
             item_OG_price.setPaintFlags(item_OG_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             item_discount = itemView.findViewById(R.id.item_discount);
             removeWishlist = itemView.findViewById(R.id.removeWishlist);
+            add_to_cart = itemView.findViewById(R.id.add_to_cart);
 
         }
     }

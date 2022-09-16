@@ -119,7 +119,8 @@ public class WishlistFragment extends Fragment {
                                     jsonObject.getString("discounted_price"),
                                     jsonObject.getString("original_price"),
                                     jsonObject.getString("discount_percentage"),
-                                    Utils.product_images+jsonObject.getString("image1")
+                                    Utils.product_images+jsonObject.getString("image1"),
+                                    jsonObject.getString("quantity")
                                     ));
 
                             wishlistAdapter = new WishlistAdapter(getContext(),wishlistModel);

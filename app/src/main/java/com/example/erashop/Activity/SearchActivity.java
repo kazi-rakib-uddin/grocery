@@ -1,7 +1,9 @@
 package com.example.erashop.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,7 +34,11 @@ public class SearchActivity extends AppCompatActivity {
 
     ActivitySearchBinding binding;
     SearchAdapter searchAdapter;
+    SearchAdapter searchAdapter2;
+    SearchAdapter searchAdapter3;
     ArrayList<SearchModel> searchModels = new ArrayList<>();
+    ArrayList<SearchModel> searchModels2 = new ArrayList<>();
+    ArrayList<SearchModel> searchModels3 = new ArrayList<>();
 
     ApiInterface apiInterface;
     Session session;
@@ -65,10 +71,33 @@ public class SearchActivity extends AppCompatActivity {
 
         if (source.equals("from_sub_Cat")){
             ShowProductList();
-        }else if(source.equals("from_home_fragment")){
+        }
+        else if(source.equals("from_home_fragment")){
+
             binding.lottie.setVisibility(View.GONE);
             binding.lottieTXT.setVisibility(View.GONE);
-        }else{
+            binding.searchEdittext.clearFocus();
+
+            binding.searchEdittext.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    SearchProducts(query);
+                    return true;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    if(!newText.equals("")) {
+                        SearchProducts2(newText);
+                    }else{
+                        binding.rvSearch.setVisibility(View.GONE);
+                    }
+                    return true;
+                }
+            });
+
+        }
+        else{
             Toast.makeText(this, "Something went wrong!", Toast.LENGTH_SHORT).show();
         }
 
@@ -96,7 +125,8 @@ public class SearchActivity extends AppCompatActivity {
                                         jsonObject.getString("discounted_price"),
                                         jsonObject.getString("original_price"),
                                         Utils.product_images+jsonObject.getString("image1"),
-                                        jsonObject.getString("discount_percentage")
+                                        jsonObject.getString("discount_percentage"),
+                                        jsonObject.getString("quantity")
 
                                 ));
                             }
@@ -129,5 +159,120 @@ public class SearchActivity extends AppCompatActivity {
 
     }
 
+    private void SearchProducts(String query) {
+        ProgressUtils.showLoadingDialog(this);
+        Call<String> call = apiInterface.search_products(query);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                String res = response.body();
+                if (res != null){
+                    try {
+                        JSONArray jsonArray = new JSONArray(res);
+                        if (jsonArray.length()!=0){
+                            searchModels2.clear();
+                            for (int i=0;i<jsonArray.length();i++){
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                searchModels2.add(new SearchModel(
+                                        jsonObject.getString("category_id"),
+                                        jsonObject.getString("sub_category_id"),
+                                        jsonObject.getString("id"),
+                                        jsonObject.getString("product_name"),
+                                        jsonObject.getString("discounted_price"),
+                                        jsonObject.getString("original_price"),
+                                        Utils.product_images+jsonObject.getString("image1"),
+                                        jsonObject.getString("discount_percentage"),
+                                        jsonObject.getString("quantity")
+
+                                ));
+                            }
+
+                            searchAdapter2 = new SearchAdapter(searchModels2,SearchActivity.this);
+                            binding.rvSearch.setAdapter(searchAdapter2);
+                            binding.rvSearch.setVisibility(View.VISIBLE);
+                            ProgressUtils.cancelLoading();
+                        }else{
+                            binding.lottie.setVisibility(View.VISIBLE);
+                            binding.lottieTXT.setVisibility(View.VISIBLE);
+                            Toast.makeText(SearchActivity.this, "No products found", Toast.LENGTH_SHORT).show();
+                        }
+                        ProgressUtils.cancelLoading();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        ProgressUtils.cancelLoading();
+                        Toast.makeText(SearchActivity.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+
+                }
+                ProgressUtils.cancelLoading();
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Toast.makeText(SearchActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                ProgressUtils.cancelLoading();
+
+            }
+        });
+    }
+
+    private void SearchProducts2(String query) {
+//        ProgressUtils.showLoadingDialog(this);
+        Call<String> call = apiInterface.search_products(query);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                String res = response.body();
+                if (res != null){
+                    try {
+                        JSONArray jsonArray = new JSONArray(res);
+                        if (jsonArray.length()!=0){
+                            searchModels3.clear();
+                            for (int i=0;i<jsonArray.length();i++){
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                searchModels3.add(new SearchModel(
+                                        jsonObject.getString("category_id"),
+                                        jsonObject.getString("sub_category_id"),
+                                        jsonObject.getString("id"),
+                                        jsonObject.getString("product_name"),
+                                        jsonObject.getString("discounted_price"),
+                                        jsonObject.getString("original_price"),
+                                        Utils.product_images+jsonObject.getString("image1"),
+                                        jsonObject.getString("discount_percentage"),
+                                        jsonObject.getString("quantity")
+
+                                ));
+                            }
+                            searchAdapter3 = new SearchAdapter(searchModels3,SearchActivity.this);
+                            binding.rvSearch.setAdapter(searchAdapter3);
+                            binding.rvSearch.setVisibility(View.VISIBLE);
+                            binding.lottie.setVisibility(View.GONE);
+//                            ProgressUtils.cancelLoading();
+                        }else{
+                            binding.rvSearch.setVisibility(View.GONE);
+                            binding.lottie.setVisibility(View.VISIBLE);
+//                            Toast.makeText(SearchActivity.this, "No products found", Toast.LENGTH_SHORT).show();
+                        }
+//                        ProgressUtils.cancelLoading();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+//                        ProgressUtils.cancelLoading();
+                        Toast.makeText(SearchActivity.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+
+                }
+//                ProgressUtils.cancelLoading();
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Toast.makeText(SearchActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+//                ProgressUtils.cancelLoading();
+
+            }
+        });
+    }
 
 }

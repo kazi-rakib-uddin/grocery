@@ -15,23 +15,33 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:id="@+id/search_bar"
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--            android:id="@+id/search_bar"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="55dp"-->
+<!--            android:layout_marginLeft="@dimen/_12sdp"-->
+<!--            android:layout_marginRight="@dimen/_12sdp">-->
+
+<!--            <EditText-->
+<!--                android:id="@+id/search_edittext"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:drawableStart="@drawable/img_search"-->
+<!--                android:drawablePadding="10dp"-->
+<!--                android:hint="Search" />-->
+
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search_edittext"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_marginLeft="@dimen/_12sdp"
-            android:layout_marginRight="@dimen/_12sdp">
-
-            <EditText
-                android:id="@+id/search_edittext"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:drawableStart="@drawable/img_search"
-                android:drawablePadding="10dp"
-                android:hint="Search" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="@dimen/_45sdp"
+            android:layout_marginHorizontal="@dimen/_5sdp"
+            android:layout_marginVertical="@dimen/_5sdp"
+            android:background="@drawable/search_bg"
+            app:iconifiedByDefault="false"
+            app:queryHint="Search..."/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_search"

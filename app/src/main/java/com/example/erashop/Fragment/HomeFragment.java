@@ -429,7 +429,8 @@ public class HomeFragment extends Fragment {
                                         jsonObject.getString("discounted_price"),
                                         jsonObject.getString("original_price"),
                                         Utils.product_images+jsonObject.getString("image1"),
-                                        jsonObject.getString("discount_percentage")
+                                        jsonObject.getString("discount_percentage"),
+                                        jsonObject.getString("quantity")
                                 ));
                             }
                             homePopulerAdapter = new HomePopulerAdapter(getContext(),searchModels);
@@ -481,7 +482,8 @@ public class HomeFragment extends Fragment {
                                         jsonObject.getString("discounted_price"),
                                         jsonObject.getString("original_price"),
                                         Utils.product_images+jsonObject.getString("image1"),
-                                        jsonObject.getString("discount_percentage")
+                                        jsonObject.getString("discount_percentage"),
+                                        jsonObject.getString("quantity")
                                 ));
                             }
                             homeRecomendedAdapter = new HomeRecomendedAdapter(getContext(),freshFruitsModels);
@@ -531,7 +533,8 @@ public class HomeFragment extends Fragment {
                                         jsonObject.getString("discounted_price"),
                                         jsonObject.getString("original_price"),
                                         Utils.product_images+jsonObject.getString("image1"),
-                                        jsonObject.getString("discount_percentage")
+                                        jsonObject.getString("discount_percentage"),
+                                        jsonObject.getString("quantity")
                                 ));
                             }
                             homeRecomendedAdapter2 = new HomeRecomendedAdapter(getContext(),freshFruitsModels2);

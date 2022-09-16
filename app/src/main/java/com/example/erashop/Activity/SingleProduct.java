@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -52,7 +53,7 @@ public class SingleProduct extends AppCompatActivity {
     ApiInterface apiInterface;
     Session session;
 
-    String cat_id = "", sub_cat_id = "", product_id = "";
+    String cat_id = "", sub_cat_id = "", product_id = "",price="",quantity="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +106,7 @@ public class SingleProduct extends AppCompatActivity {
             }
         });
 
-        binding.viewSimiliar.setOnClickListener(new View.OnClickListener() {
+        binding.viewSimiliar.setOnClickListener(new View.OnClickListener()    {
             @Override
             public void onClick(View view) {
 
@@ -141,6 +142,39 @@ public class SingleProduct extends AppCompatActivity {
                 binding.addBtn.setVisibility(View.GONE);
                 binding.IncDec.setVisibility(View.VISIBLE);
                 IncreaseDecrease();
+
+                Call<String> call = apiInterface.add_to_cart(
+                        product_id, session.getUser_id(),price,quantity
+                );
+                call.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        String res = response.body();
+                        if (!res.equals(null)){
+                            try {
+                                JSONObject jsonObject = new JSONObject(res);
+                                if (jsonObject.getString("rec").equals("1")){
+                                    Toast.makeText(SingleProduct.this, "Added to cart", Toast.LENGTH_SHORT).show();
+                                }else if (jsonObject.getString("rec").equals("2")){
+                                    Toast.makeText(SingleProduct.this, "Can't add to cart", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(SingleProduct.this, "Already exists", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Toast.makeText(SingleProduct.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }else{
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+
+                    }
+                });
+
             }
         });
 
@@ -148,6 +182,15 @@ public class SingleProduct extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 AddToWishlist();
+            }
+        });
+
+
+        binding.buyNow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SingleProduct.this,CartActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -165,10 +208,12 @@ public class SingleProduct extends AppCompatActivity {
                     try {
                         JSONObject jsonObject = new JSONObject(res);
                         if (jsonObject.getString("rec").equals("1")) {
+                            price = jsonObject.getString("discounted_price");
+                            quantity = jsonObject.getString("quantity");
                             binding.productName.setText(jsonObject.getString("product_name"));
-                            binding.quantity.setText(jsonObject.getString("quantity"));
+                            binding.quantity.setText(quantity);
                             binding.txtDisc.setText(String.format("₹%s", jsonObject.getString("original_price")));
-                            binding.priceTxt.setText(String.format("₹%s", jsonObject.getString("discounted_price")));
+                            binding.priceTxt.setText(String.format("₹%s", price));
                             binding.discountPercentage.setText(String.format("%s%% Off", jsonObject.getString("discount_percentage")));
                             binding.description.setText(jsonObject.getString("description"));
                         } else {
@@ -239,6 +284,7 @@ public class SingleProduct extends AppCompatActivity {
             public void onClick(View view) {
                 count[0] += 1;
                 binding.IncDecText.setText("" + count[0]);
+                Increase();
             }
         });
 
@@ -252,6 +298,77 @@ public class SingleProduct extends AppCompatActivity {
                     count[0] -= 1;
                     binding.IncDecText.setText("" + count[0]);
                 }
+                Decrease();
+            }
+        });
+
+    }
+
+    private void Increase() {
+        Call<String> call = apiInterface.cart_quantity_increase(product_id, session.getUser_id(),price,quantity);
+
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                String res = response.body();
+                if (!res.equals(null)){
+                    try {
+                        JSONObject jsonObject = new JSONObject(res);
+                        if (jsonObject.getString("rec").equals("1")){
+                            Toast.makeText(SingleProduct.this, "Increase", Toast.LENGTH_SHORT).show();
+                        }else if (jsonObject.getString("rec").equals("2")){
+                            Toast.makeText(SingleProduct.this, "Not increased", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(SingleProduct.this, "Can't increase", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(SingleProduct.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    private void Decrease() {
+        Call<String> call = apiInterface.cart_quantity_decrease(product_id, session.getUser_id(),price,quantity);
+
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                String res = response.body();
+                if (!res.equals(null)){
+                    try {
+                        JSONObject jsonObject = new JSONObject(res);
+                        if (jsonObject.getString("rec").equals("1")){
+                            Toast.makeText(SingleProduct.this, "Decrease", Toast.LENGTH_SHORT).show();
+                        }else if (jsonObject.getString("rec").equals("2")){
+                            Toast.makeText(SingleProduct.this, "Not decreased", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(SingleProduct.this, "Can't decrease", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(SingleProduct.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
             }
         });
 
@@ -332,4 +449,6 @@ public class SingleProduct extends AppCompatActivity {
             }
         });
     }
+
+
 }

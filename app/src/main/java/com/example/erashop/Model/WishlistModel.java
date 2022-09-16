@@ -1,9 +1,9 @@
 package com.example.erashop.Model;
 
 public class WishlistModel {
-    private String id,category_id,sub_category_id,item_name,item_size,item_price,item_OG_price,item_discount, image;
+    private String id,category_id,sub_category_id,item_name,item_size,item_price,item_OG_price,item_discount, image,quantity;
 
-    public WishlistModel(String id, String category_id, String sub_category_id, String item_name, String item_size, String item_price, String item_OG_price, String item_discount, String image) {
+    public WishlistModel(String id, String category_id, String sub_category_id, String item_name, String item_size, String item_price, String item_OG_price, String item_discount, String image,String quantity) {
         this.id = id;
         this.category_id = category_id;
         this.sub_category_id = sub_category_id;
@@ -13,6 +13,16 @@ public class WishlistModel {
         this.item_OG_price = item_OG_price;
         this.item_discount = item_discount;
         this.image = image;
+        this.quantity = quantity;
+    }
+
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
     }
 
     public String getId() {

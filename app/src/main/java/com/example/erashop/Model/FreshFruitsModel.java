@@ -1,9 +1,10 @@
 package com.example.erashop.Model;
 
 public class FreshFruitsModel {
-    String cat_id,sub_cat_id,product_id,name,price,OG_price,image,discount;
+    String cat_id,sub_cat_id,product_id,name,price,OG_price,image,discount,quantity;
 
-    public FreshFruitsModel(String cat_id, String sub_cat_id, String product_id, String name, String price, String OG_price, String image, String discount) {
+
+    public FreshFruitsModel(String cat_id, String sub_cat_id, String product_id, String name, String price, String OG_price, String image, String discount, String quantity) {
         this.cat_id = cat_id;
         this.sub_cat_id = sub_cat_id;
         this.product_id = product_id;
@@ -12,6 +13,15 @@ public class FreshFruitsModel {
         this.OG_price = OG_price;
         this.image = image;
         this.discount = discount;
+        this.quantity = quantity;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
     }
 
     public String getCat_id() {

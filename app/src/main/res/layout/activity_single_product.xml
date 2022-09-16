@@ -114,7 +114,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/sans_medium"
-                        android:text="Banana"
+                        android:text=""
                         android:textColor="@color/colorBlack"
                         android:textSize="@dimen/_18ssp" />
 
@@ -202,7 +202,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sans_regular"
-                        android:text="₹39"
+                        android:text=""
                         android:textColor="@color/colorBlack"
                         android:textSize="@dimen/_18ssp" />
 
@@ -215,7 +215,7 @@
                         android:layout_marginLeft="@dimen/_10sdp"
                         android:layout_toRightOf="@+id/price_txt"
                         android:fontFamily="@font/sans_regular"
-                        android:text="₹42"
+                        android:text=""
                         android:textColor="@color/colorText"
                         android:textSize="@dimen/_11ssp" />
 
@@ -230,7 +230,7 @@
                         android:backgroundTint="@color/purple_500"
                         android:fontFamily="@font/sans_regular"
                         android:padding="@dimen/_4sdp"
-                        android:text="5% Off"
+                        android:text=""
                         android:textColor="@color/white"
                         android:textSize="@dimen/_12ssp" />
 
@@ -311,8 +311,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:fontFamily="@font/sans_regular"
-                    android:text="A mobile phone, cellular phone, cell phone, cellphone, handphone, or hand phone, sometimes shortened to simply mobile, cell or just phone, is a portable telephone that can make and receive calls over a radio frequency link while the user is moving within a telephone service area
-            hand phone, sometimes shortened to simply mobile, cell or just phone, is a portable telephone that can make and receive calls over a radio."
+                    android:text=""
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/_10ssp" />
 
@@ -358,6 +357,7 @@
         >
 
         <Button
+            android:id="@+id/buy_now"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_35sdp"
             android:layout_marginHorizontal="@dimen/_5sdp"
