@@ -243,9 +243,9 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                         if (jsonObject.getString("rec").equals("1")){
                             Toast.makeText(context, "Increase", Toast.LENGTH_SHORT).show();
                         }else if (jsonObject.getString("rec").equals("2")){
-                            Toast.makeText(context, "Not increased", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Not decreased", Toast.LENGTH_SHORT).show();
                         }else{
-                            Toast.makeText(context, "Can't increase", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Can't decrease", Toast.LENGTH_SHORT).show();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

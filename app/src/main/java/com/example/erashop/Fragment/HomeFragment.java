@@ -44,6 +44,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -101,6 +102,9 @@ public class HomeFragment extends Fragment {
     ApiInterface apiInterface;
     Session session;
 
+    ArrayList<TextView> textViews = new ArrayList<>();
+//    String[] IDs = new String[]{};
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -131,26 +135,32 @@ public class HomeFragment extends Fragment {
                 transaction.commit();
             }
         });
+
         binding.HomeFruitViewAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(),SearchActivity.class));
+//                Intent intent = new Intent(getActivity(),SearchActivity.class);
+////                intent.putExtra("from_home_fragment","from_home_fragment");
+////                intent.putExtra("cat_id",cat_id);
+////                intent.putExtra("sub_cat_id",sub_cat_id);
+//                startActivity(intent);
             }
         });
         binding.HomeTeaViewAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(),SearchActivity.class));
+//                startActivity(new Intent(getActivity(),SearchActivity.class));
             }
         });
         binding.HomeOilViewAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(),SearchActivity.class));
+//                startActivity(new Intent(getActivity(),SearchActivity.class));
             }
         });
 
 //        binding.nestedScroll.setZ(-30);
+
         binding.searchCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -166,6 +176,8 @@ public class HomeFragment extends Fragment {
         return binding.getRoot();
     }
 
+
+
     private void initView() {
 
         BannerSet();//banner
@@ -179,11 +191,11 @@ public class HomeFragment extends Fragment {
         homeBannerAdapter = new HomeBannerAdapter(getContext(),array_banner);
         binding.rvPopular.setAdapter(homePopulerAdapter);
 
-        ShowProductList();//tata tea
+        ShowProductList("1");//tata tea
 
-        fetch_product_by_category();//fruits
+        fetch_product_by_category("3");//fruits
 
-        fetch_product_by_category2();//oil
+        fetch_product_by_category2("5");//oil
 
         trending_offers();
 
@@ -195,11 +207,52 @@ public class HomeFragment extends Fragment {
 
         final int[] state = new int[1];
 
-        fetch_category_name(binding.cat1, "1");
-        fetch_category_name(binding.cat2, "3");
-        fetch_category_name(binding.cat3, "1");
+
+
+        textViews.add(binding.cat1);
+        textViews.add(binding.cat2);
+        textViews.add(binding.cat3);
+
+
+        GetID();
 
     }
+
+
+    private void GetID(){
+        Call<String> call = apiInterface.fetch_category_id();
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                String res = response.body();
+                if (!res.equals(null)){
+                    try {
+                        JSONArray jsonArray = new JSONArray(res);
+                        if (jsonArray.length()>0){
+                            for(int i=0;i<3;i++){
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+//                                ShowProductList(jsonObject.getString("id"));
+                                fetch_category_name(textViews.get(i),jsonObject.getString("id"));
+                            }
+                        }else{
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }else{
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
+
+    }
+
 
     private void BannerSet() {
         Call<String> call = apiInterface.fetch_multiple_banner();
@@ -241,6 +294,7 @@ public class HomeFragment extends Fragment {
         });
     }
 
+
     private void Bottom_BannerSet() {
         Call<String> call = apiInterface.fetch_bottom_multiple_banner();
         call.enqueue(new Callback<String>() {
@@ -277,6 +331,7 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
 
     private void setImage() {
         ProgressUtils.showLoadingDialog(getContext());
@@ -319,6 +374,7 @@ public class HomeFragment extends Fragment {
         });
     }
 
+
     public void addDotsIndicator(int size, int position) {
         mDots = new TextView[size];
         binding.linDots.removeAllViews();
@@ -340,6 +396,7 @@ public class HomeFragment extends Fragment {
         }
     }
 
+
     ViewPager.OnPageChangeListener listener = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -358,8 +415,6 @@ public class HomeFragment extends Fragment {
 
         }
     };
-
-
 
 
     public void fetch_categories() {
@@ -405,11 +460,9 @@ public class HomeFragment extends Fragment {
     }
 
 
-
-
-    private void ShowProductList() {
+    private void ShowProductList(String id) {
         ProgressUtils.showLoadingDialog(getContext());
-        Call<String> call = apiInterface.fetch_product_by_category("1");
+        Call<String> call = apiInterface.fetch_product_by_category(id);
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
@@ -459,10 +512,8 @@ public class HomeFragment extends Fragment {
     }
 
 
-
-
-    private void fetch_product_by_category() {
-        Call<String> call = apiInterface.fetch_product_by_category("3");
+    private void fetch_product_by_category(String id) {
+        Call<String> call = apiInterface.fetch_product_by_category(id);
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
@@ -510,10 +561,8 @@ public class HomeFragment extends Fragment {
     }
 
 
-
-
-    private void fetch_product_by_category2() {
-        Call<String> call = apiInterface.fetch_product_by_category("1");
+    private void fetch_product_by_category2(String id) {
+        Call<String> call = apiInterface.fetch_product_by_category(id);
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
@@ -559,8 +608,6 @@ public class HomeFragment extends Fragment {
 
 
     }
-
-
 
 
     private void fetch_category_name(TextView text,String id){

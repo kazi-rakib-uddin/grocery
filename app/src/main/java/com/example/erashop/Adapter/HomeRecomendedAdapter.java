@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.erashop.Activity.MainActivity;
 import com.example.erashop.Activity.SingleProduct;
 import com.example.erashop.ApiClient.APIClient;
 import com.example.erashop.ApiInterface.ApiInterface;
@@ -24,6 +25,7 @@ import com.example.erashop.databinding.ActivityMainBinding;
 import com.example.erashop.databinding.SinglePopulerItemBinding;
 import com.example.erashop.databinding.SingleRecomendedItemBinding;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -78,7 +80,44 @@ public class HomeRecomendedAdapter extends RecyclerView.Adapter<HomeRecomendedAd
                 holder.binding.IncDecText.setText("1");
                 holder.binding.addBtn.setVisibility(View.GONE);
                 holder.binding.IncDec.setVisibility(View.VISIBLE);
+
+                Call<String> call = apiInterface.add_to_cart(
+                        freshFruitsModels.get(position).getProduct_id(),
+                        session.getUser_id(),
+                        freshFruitsModels.get(position).getPrice(),
+                        freshFruitsModels.get(position).getQuantity()
+                );
+                call.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        String res = response.body();
+                        if (!res.equals(null)){
+                            try {
+                                JSONObject jsonObject = new JSONObject(res);
+                                if (jsonObject.getString("rec").equals("1")){
+                                    Toast.makeText(context, "Added to cart", Toast.LENGTH_SHORT).show();
+                                    fetch_cart();
+                                }else if (jsonObject.getString("rec").equals("2")){
+                                    Toast.makeText(context, "Can't add to cart", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(context, "Already exists", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Toast.makeText(context, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }else{
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+
+                    }
+                });
                 IncreaseDecrease(holder,position);
+
             }
         });
 
@@ -116,7 +155,44 @@ public class HomeRecomendedAdapter extends RecyclerView.Adapter<HomeRecomendedAd
             public void onClick(View view) {
                 count[0] += 1;
                 holder.binding.IncDecText.setText(""+ count[0]);
-                Increase(position);
+                Call<String> call = apiInterface.cart_quantity_increase(
+                        freshFruitsModels.get(position).getProduct_id(),
+                        session.getUser_id(),
+                        freshFruitsModels.get(position).getPrice(),
+                        freshFruitsModels.get(position).getQuantity()
+                );
+
+                call.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        String res = response.body();
+                        if (!res.equals(null)){
+                            try {
+                                JSONObject jsonObject = new JSONObject(res);
+                                if (jsonObject.getString("rec").equals("1")){
+                                    Toast.makeText(context, "Increase", Toast.LENGTH_SHORT).show();
+                                    fetch_cart();
+                                }else if (jsonObject.getString("rec").equals("2")){
+                                    Toast.makeText(context, "Not increased", Toast.LENGTH_SHORT).show();
+                                    fetch_cart();
+                                }else{
+                                    Toast.makeText(context, "Can't increase", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Toast.makeText(context, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }else{
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+
+                    }
+                });
             }
         });
 
@@ -130,42 +206,81 @@ public class HomeRecomendedAdapter extends RecyclerView.Adapter<HomeRecomendedAd
                     count[0] -= 1;
                     holder.binding.IncDecText.setText(""+ count[0]);
                 }
-                Decrease(position);
+                Call<String> call = apiInterface.cart_quantity_decrease(
+                        freshFruitsModels.get(position).getProduct_id(),
+                        session.getUser_id(),
+                        freshFruitsModels.get(position).getPrice(),
+                        freshFruitsModels.get(position).getQuantity()
+                );
+
+                call.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        String res = response.body();
+                        if (!res.equals(null)){
+                            try {
+                                JSONObject jsonObject = new JSONObject(res);
+                                if (jsonObject.getString("rec").equals("1")){
+                                    Toast.makeText(context, "Removed", Toast.LENGTH_SHORT).show();
+                                    fetch_cart();
+                                }else if (jsonObject.getString("rec").equals("2")){
+                                    Toast.makeText(context, "Decreased", Toast.LENGTH_SHORT).show();
+                                    fetch_cart();
+                                }else if (jsonObject.getString("rec").equals("3")){
+                                    Toast.makeText(context, "Can't decrease", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(context, "Not found", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Toast.makeText(context, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }else{
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+
+                    }
+                });
             }
+
         });
 
     }
 
-    private void Increase(int position){
-        Call<String> call = apiInterface.cart_quantity_increase(
-                freshFruitsModels.get(position).getProduct_id(),
-                session.getUser_id(),
-                freshFruitsModels.get(position).getPrice(),
-                freshFruitsModels.get(position).getQuantity()
-        );
-
+    private void fetch_cart(){
+        Call<String> call = apiInterface.fetch_cart(session.getUser_id());
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 String res = response.body();
                 if (!res.equals(null)){
                     try {
-                        JSONObject jsonObject = new JSONObject(res);
-                        if (jsonObject.getString("rec").equals("1")){
-                            Toast.makeText(context, "Increase", Toast.LENGTH_SHORT).show();
-                        }else if (jsonObject.getString("rec").equals("2")){
-                            Toast.makeText(context, "Not increased", Toast.LENGTH_SHORT).show();
+                        JSONArray jsonArray = new JSONArray(res);
+                        int size = jsonArray.length();
+                        if (size > 0){
+                            MainActivity.binding.viewCart.setVisibility(View.VISIBLE);
+                            MainActivity.binding.itemNo.setText(String.format("%s items", String.valueOf(size)));
+                            int price=0;
+                            for (int i=0;i< jsonArray.length();i++){
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                price = price+Integer.valueOf(jsonObject.getString("price"));
+                            }
+                            MainActivity.binding.price.setText("₹"+String.valueOf(price));
+                            MainActivity.binding.itemNo.setText(jsonArray.length()+" items");
                         }else{
-                            Toast.makeText(context, "Can't increase", Toast.LENGTH_SHORT).show();
+                            MainActivity.binding.viewCart.setVisibility(View.GONE);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
-                        Toast.makeText(context, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }else{
 
                 }
-
             }
 
             @Override
@@ -173,47 +288,6 @@ public class HomeRecomendedAdapter extends RecyclerView.Adapter<HomeRecomendedAd
 
             }
         });
-
-    }
-
-    private void Decrease(int position){
-        Call<String> call = apiInterface.cart_quantity_decrease(
-                freshFruitsModels.get(position).getProduct_id(),
-                session.getUser_id(),
-                freshFruitsModels.get(position).getPrice(),
-                freshFruitsModels.get(position).getQuantity()
-        );
-
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                String res = response.body();
-                if (!res.equals(null)){
-                    try {
-                        JSONObject jsonObject = new JSONObject(res);
-                        if (jsonObject.getString("rec").equals("1")){
-                            Toast.makeText(context, "Increase", Toast.LENGTH_SHORT).show();
-                        }else if (jsonObject.getString("rec").equals("2")){
-                            Toast.makeText(context, "Not increased", Toast.LENGTH_SHORT).show();
-                        }else{
-                            Toast.makeText(context, "Can't increase", Toast.LENGTH_SHORT).show();
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        Toast.makeText(context, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }else{
-
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-
-            }
-        });
-
     }
 
 }

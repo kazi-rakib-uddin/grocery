@@ -72,8 +72,8 @@ public class SearchActivity extends AppCompatActivity {
         if (source.equals("from_sub_Cat")){
             ShowProductList();
         }
-        else if(source.equals("from_home_fragment")){
 
+        else if(source.equals("from_home_fragment")){
             binding.lottie.setVisibility(View.GONE);
             binding.lottieTXT.setVisibility(View.GONE);
             binding.searchEdittext.clearFocus();
@@ -97,6 +97,7 @@ public class SearchActivity extends AppCompatActivity {
             });
 
         }
+
         else{
             Toast.makeText(this, "Something went wrong!", Toast.LENGTH_SHORT).show();
         }

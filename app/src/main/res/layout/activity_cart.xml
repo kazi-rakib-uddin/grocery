@@ -6,14 +6,56 @@
     android:layout_height="match_parent"
     tools:context=".Activity.CartActivity">
 
+    <androidx.cardview.widget.CardView
+        android:visibility="gone"
+        android:id="@+id/cart_btn_back2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/_5sdp"
+        app:cardCornerRadius="@dimen/_12sdp"
+        app:cardUseCompatPadding="true">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_1sdp"
+            android:src="@drawable/img_back" />
+
+    </androidx.cardview.widget.CardView>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottie"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="@dimen/_150sdp"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        app:lottie_rawRes="@raw/not_found"
+        app:lottie_url="REPLACE_JSON_URL"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"/>
+
+    <TextView
+        android:id="@+id/lottieTXT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Cart is empty"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/lottie"
+        android:visibility="gone"
+        android:fontFamily="@font/sans_regular"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_16ssp"/>
 
 
-    <ScrollView
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/bottom_lin"
         android:fillViewport="true"
         android:scrollbars="none"
+        android:id="@+id/nested_scroll"
         >
 
 
@@ -161,6 +203,7 @@
 
 
                     <TextView
+                        android:id="@+id/subTotal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="₹60"
@@ -232,9 +275,10 @@
 
 
                     <TextView
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="₹15"
+                        android:text="₹0"
                         android:textSize="@dimen/_12ssp"
                         android:textColor="@color/colorRed"
                         android:gravity="right"
@@ -269,6 +313,7 @@
 
 
                     <TextView
+                        android:id="@+id/total"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="₹45"
@@ -401,7 +446,7 @@
 
 
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <LinearLayout
         android:id="@+id/bottom_lin"
@@ -434,9 +479,10 @@
 
 
             <TextView
+                android:id="@+id/overAllTotal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="₹45"
+                android:text="₹0"
                 android:textSize="@dimen/_15ssp"
                 android:textColor="@color/colorBlack"
                 android:layout_marginTop="@dimen/_5sdp"

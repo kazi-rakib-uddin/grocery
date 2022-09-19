@@ -121,6 +121,9 @@ public interface ApiInterface {
             @Field("category_id") String category_id
     );
 
+    @GET("fetch_category_id.php")
+    Call<String> fetch_category_id();
+
     @GET("fetch_multiple_banner.php")
     Call<String> fetch_multiple_banner();
 
@@ -159,6 +162,7 @@ public interface ApiInterface {
     Call<String> search_products(
             @Field("searched") String searched
     );
+
     @FormUrlEncoded
     @POST("add_to_cart.php")
     Call<String> add_to_cart(
@@ -188,5 +192,13 @@ public interface ApiInterface {
 
     @GET("fetch_trending_offers.php")
     Call<String> fetch_trending_offers();
+
+    @FormUrlEncoded
+    @POST("fetch_cart.php")
+    Call<String> fetch_cart(
+            @Field("user_id") String user_id
+    );
+
+
 
 }
