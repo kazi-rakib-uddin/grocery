@@ -75,15 +75,12 @@ public class HomePopulerAdapter extends RecyclerView.Adapter<HomePopulerAdapter.
 
 
         holder.binding.IncDec.setVisibility(View.GONE);
-        //Glide.with(context).load(homeCatagoryModels.get(position).getImage()).into(holder.binding.image);
-
-//        int pos = position;
 
         holder.binding.addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ProgressUtils.showLoadingDialog(context);
-                holder.binding.IncDecText.setText("1");
+//                holder.binding.IncDecText.setText("1");
                 holder.binding.addBtn.setVisibility(View.GONE);
                 holder.binding.IncDec.setVisibility(View.VISIBLE);
                 Call<String> call = apiInterface.add_to_cart(
@@ -101,6 +98,7 @@ public class HomePopulerAdapter extends RecyclerView.Adapter<HomePopulerAdapter.
                                 JSONObject jsonObject = new JSONObject(res);
                                 if (jsonObject.getString("rec").equals("1")){
                                     Toast.makeText(context, "Added to cart", Toast.LENGTH_SHORT).show();
+                                    holder.binding.IncDecText.setText("1");
                                     fetch_cart(holder);
                                     ProgressUtils.cancelLoading();
                                 }else if (jsonObject.getString("rec").equals("2")){
@@ -108,6 +106,7 @@ public class HomePopulerAdapter extends RecyclerView.Adapter<HomePopulerAdapter.
                                     ProgressUtils.cancelLoading();
                                 }else{
                                     Toast.makeText(context, "Already exists", Toast.LENGTH_SHORT).show();
+                                    products_no_on_cart(holder,position);
                                     ProgressUtils.cancelLoading();
                                 }
                             } catch (JSONException e) {
@@ -132,7 +131,7 @@ public class HomePopulerAdapter extends RecyclerView.Adapter<HomePopulerAdapter.
             }
         });
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.binding.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, SingleProduct.class);
@@ -142,6 +141,9 @@ public class HomePopulerAdapter extends RecyclerView.Adapter<HomePopulerAdapter.
                 context.startActivity(intent);
             }
         });
+
+
+
     }
 
 
@@ -190,13 +192,13 @@ public class HomePopulerAdapter extends RecyclerView.Adapter<HomePopulerAdapter.
                             try {
                                 JSONObject jsonObject = new JSONObject(res);
                                 if (jsonObject.getString("rec").equals("1")){
-                                    Toast.makeText(context, "Increase", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(context, "Increase", Toast.LENGTH_SHORT).show();
                                     fetch_cart(holder);
                                 }else if (jsonObject.getString("rec").equals("2")){
-                                    Toast.makeText(context, "Not increased", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(context, "Not increased", Toast.LENGTH_SHORT).show();
                                     fetch_cart(holder);
                                 }else{
-                                    Toast.makeText(context, "Can't increase", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(context, "Can't increase", Toast.LENGTH_SHORT).show();
                                     fetch_cart(holder);
                                 }
                             } catch (JSONException e) {
@@ -243,16 +245,16 @@ public class HomePopulerAdapter extends RecyclerView.Adapter<HomePopulerAdapter.
                             try {
                                 JSONObject jsonObject = new JSONObject(res);
                                 if (jsonObject.getString("rec").equals("1")){
-                                    Toast.makeText(context, "Removed", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(context, "Removed", Toast.LENGTH_SHORT).show();
                                     fetch_cart(holder);
                                 }else if (jsonObject.getString("rec").equals("2")){
-                                    Toast.makeText(context, "Decreased", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(context, "Decreased", Toast.LENGTH_SHORT).show();
                                     fetch_cart(holder);
                                 }else if (jsonObject.getString("rec").equals("3")){
-                                    Toast.makeText(context, "Can't decrease", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(context, "Can't decrease", Toast.LENGTH_SHORT).show();
                                     fetch_cart(holder);
                                 }else{
-                                    Toast.makeText(context, "Not found", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(context, "Not found", Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -290,7 +292,7 @@ public class HomePopulerAdapter extends RecyclerView.Adapter<HomePopulerAdapter.
                             int price=0;
                             for (int i=0;i< jsonArray.length();i++){
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                holder.binding.IncDecText.setText(jsonObject.getString("quantity"));
+//                                holder.binding.IncDecText.setText(jsonObject.getString("quantity"));
                                 price = price+Integer.valueOf(jsonObject.getString("price"));
                             }
                             MainActivity.binding.price.setText("₹"+String.valueOf(price));
@@ -312,4 +314,42 @@ public class HomePopulerAdapter extends RecyclerView.Adapter<HomePopulerAdapter.
             }
         });
     }
+
+    private void products_no_on_cart(MyViewHolder holder, int position){
+        Call<String> call = apiInterface.fetch_cart(session.getUser_id());
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                String res = response.body();
+                if (!res.equals(null)){
+                    try {
+                        JSONArray jsonArray = new JSONArray(res);
+                        if (jsonArray.length() > 0){
+                            for (int i=0;i< jsonArray.length();i++){
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                if (searchModels.get(position).getProduct_id().equals(jsonObject.getString("product_id")) &&
+                                        session.getUser_id().equals(jsonObject.getString("user_id"))){
+                                    holder.binding.IncDecText.setText(jsonObject.getString("quantity"));
+                                }else{
+//                                    holder.binding.IncDecText.setText("1");
+                                }
+                            }
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }else{
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
+    }
+
 }

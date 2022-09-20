@@ -256,7 +256,7 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_weight="1"
                     android:fontFamily="@font/sans_bold"
-                    android:text="Categorys"
+                    android:text="Categories"
                     android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                     android:textColor="@color/black"
                     android:textSize="16sp" />

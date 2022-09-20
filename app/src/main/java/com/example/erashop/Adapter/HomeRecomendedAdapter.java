@@ -100,7 +100,7 @@ public class HomeRecomendedAdapter extends RecyclerView.Adapter<HomeRecomendedAd
                                 }else if (jsonObject.getString("rec").equals("2")){
                                     Toast.makeText(context, "Can't add to cart", Toast.LENGTH_SHORT).show();
                                 }else{
-                                    Toast.makeText(context, "Already exists", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(context, "Already exists", Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -121,7 +121,7 @@ public class HomeRecomendedAdapter extends RecyclerView.Adapter<HomeRecomendedAd
             }
         });
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.binding.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, SingleProduct.class);
@@ -170,13 +170,13 @@ public class HomeRecomendedAdapter extends RecyclerView.Adapter<HomeRecomendedAd
                             try {
                                 JSONObject jsonObject = new JSONObject(res);
                                 if (jsonObject.getString("rec").equals("1")){
-                                    Toast.makeText(context, "Increase", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(context, "Increase", Toast.LENGTH_SHORT).show();
                                     fetch_cart();
                                 }else if (jsonObject.getString("rec").equals("2")){
-                                    Toast.makeText(context, "Not increased", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(context, "Not increased", Toast.LENGTH_SHORT).show();
                                     fetch_cart();
                                 }else{
-                                    Toast.makeText(context, "Can't increase", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(context, "Can't increase", Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -221,15 +221,15 @@ public class HomeRecomendedAdapter extends RecyclerView.Adapter<HomeRecomendedAd
                             try {
                                 JSONObject jsonObject = new JSONObject(res);
                                 if (jsonObject.getString("rec").equals("1")){
-                                    Toast.makeText(context, "Removed", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(context, "Removed", Toast.LENGTH_SHORT).show();
                                     fetch_cart();
                                 }else if (jsonObject.getString("rec").equals("2")){
-                                    Toast.makeText(context, "Decreased", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(context, "Decreased", Toast.LENGTH_SHORT).show();
                                     fetch_cart();
                                 }else if (jsonObject.getString("rec").equals("3")){
-                                    Toast.makeText(context, "Can't decrease", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(context, "Can't decrease", Toast.LENGTH_SHORT).show();
                                 }else{
-                                    Toast.makeText(context, "Not found", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(context, "Not found", Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();

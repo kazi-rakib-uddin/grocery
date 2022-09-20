@@ -190,6 +190,8 @@ public interface ApiInterface {
             @Field("quantity") String quantity
     );
 
+
+
     @GET("fetch_trending_offers.php")
     Call<String> fetch_trending_offers();
 
@@ -199,6 +201,31 @@ public interface ApiInterface {
             @Field("user_id") String user_id
     );
 
+    @FormUrlEncoded
+    @POST("fetch_delivery_charge.php")
+    Call<String> fetch_delivery_charge(
+            @Field("bill_amount") String bill_amount
+    );
 
 
+    @FormUrlEncoded
+    @POST("remove_from_cart.php")
+    Call<String> remove_from_cart(
+            @Field("product_id") String product_id,
+            @Field("user_id") String user_id
+    );
+
+    @FormUrlEncoded
+    @POST("order_placed.php")
+    Call<String> order_placed(
+            @Field("user_id") String user_id,
+            @Field("total_amount") String total_amount,
+            @Field("full_address") String full_address,
+            @Field("pincode") String pincode,
+            @Field("phone_no") String phone_no,
+            @Field("payment_method") String payment_method,
+            @Field("product_id") String product_id,
+            @Field("quantity") String quantity,
+            @Field("amount") String amount
+    );
 }

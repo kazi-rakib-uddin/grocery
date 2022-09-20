@@ -75,6 +75,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
         fetch_cart_items(holder, position);
         IncreaseDecrease(holder,position);
 
+        holder.binding.removeCartBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                removeFromCart(holder,position);
+            }
+        });
         holder.binding.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -115,6 +121,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
         });
 
     }
+
+
 
 
     @Override
@@ -196,15 +204,15 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
                             try {
                                 JSONObject jsonObject = new JSONObject(res);
                                 if (jsonObject.getString("rec").equals("1")){
-                                    Toast.makeText(context, "Increase", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(context, "Increase", Toast.LENGTH_SHORT).show();
                                     ((Activity)context).finish();
                                     context.startActivity(new Intent(context, CartActivity.class));
                                     fetch_cart();
                                 }else if (jsonObject.getString("rec").equals("2")){
-                                    Toast.makeText(context, "Not increased", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(context, "Not increased", Toast.LENGTH_SHORT).show();
                                     fetch_cart();
                                 }else{
-                                    Toast.makeText(context, "Can't increase", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(context, "Can't increase", Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -241,18 +249,18 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
                             try {
                                 JSONObject jsonObject = new JSONObject(res);
                                 if (jsonObject.getString("rec").equals("1")){
-                                    Toast.makeText(context, "Decreased", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(context, "Decreased", Toast.LENGTH_SHORT).show();
                                     ((Activity)context).finish();
                                     fetch_cart();
                                     context.startActivity(new Intent(context, CartActivity.class));
                                 }else if (jsonObject.getString("rec").equals("2")){
-                                    Toast.makeText(context, "Removed", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(context, "Removed", Toast.LENGTH_SHORT).show();
                                     fetch_cart();
                                 }else if (jsonObject.getString("rec").equals("3")){
-                                    Toast.makeText(context, "Can't decrease", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(context, "Can't decrease", Toast.LENGTH_SHORT).show();
                                     fetch_cart();
                                 }else{
-                                    Toast.makeText(context, "Not found", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(context, "Not found", Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -306,6 +314,39 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
+    }
+
+
+    private void removeFromCart(MyViewHolder holder, int position) {
+        Call call = apiInterface.remove_from_cart(cartModels.get(position).getId(),session.getUser_id());
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                String res = (String) response.body();
+
+                if (!res.equals(null)){
+                    try {
+                        JSONObject jsonObject = new JSONObject(res);
+                        if (jsonObject.getString("rec").equals("1")){
+                            ((Activity)context).finish();
+                            context.startActivity(new Intent(context, CartActivity.class));
+                        }else{
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }else{
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
 
             }
         });

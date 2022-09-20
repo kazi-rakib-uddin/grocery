@@ -18,7 +18,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="@dimen/_5sdp"
-            android:layout_marginVertical="@dimen/_5sdp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -72,6 +71,7 @@
 
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:id="@+id/edit_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -84,7 +84,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sans_regular"
-                        android:text="Edit Address"
+                        android:text="Add Address"
                         android:textColor="#EFA230"
                         android:textSize="@dimen/_12ssp" />
 
@@ -202,137 +202,107 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_10sdp"
                         android:background="@drawable/background_white"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:padding="@dimen/_2sdp">
 
 
-                        <LinearLayout
+                        <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="@dimen/_10sdp"
-                            android:layout_marginVertical="@dimen/_10sdp"
-                            android:background="@drawable/round_home"
-                            android:orientation="horizontal"
-                            android:padding="@dimen/_10sdp">
-
-
-                            <ImageView
-                                android:layout_width="@dimen/_20sdp"
-                                android:layout_height="@dimen/_20sdp"
-                                android:layout_gravity="center"
-                                android:src="@drawable/img_case_on_delivery" />
-
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginLeft="@dimen/_10sdp"
-                                android:fontFamily="@font/sans_regular"
-                                android:text="Case On Delivery"
-                                android:textColor="@color/colorBlack"
-                                android:textSize="@dimen/_12ssp" />
+                            android:background="@drawable/round_home">
 
 
                             <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="right">
-
-                                <RadioButton
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:buttonTint="@color/colorPrimary" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="@dimen/_10sdp"
-                            android:layout_marginVertical="@dimen/_10sdp"
-                            android:background="@drawable/round_home"
-                            android:orientation="horizontal"
-                            android:padding="@dimen/_10sdp"
-                            android:visibility="gone">
-
-
-                            <ImageView
-                                android:layout_width="@dimen/_20sdp"
-                                android:layout_height="@dimen/_20sdp"
-                                android:layout_gravity="center"
-                                android:src="@drawable/img_debit_card" />
-
-
-                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginLeft="@dimen/_10sdp"
-                                android:fontFamily="@font/sans_regular"
-                                android:text="Debit/Credit Card"
-                                android:textColor="@color/colorBlack"
-                                android:textSize="@dimen/_12ssp" />
+                                android:orientation="vertical"
+                                android:id="@+id/typeLin">
 
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="right">
-
-                                <RadioButton
-                                    android:layout_width="wrap_content"
+                                <LinearLayout
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:buttonTint="@color/colorPrimary" />
+                                    android:background="@drawable/round_home"
+                                    android:orientation="horizontal"
+                                    android:layout_marginBottom="@dimen/_2sdp"
+                                    android:padding="@dimen/_10sdp">
+
+
+                                    <ImageView
+                                        android:layout_width="@dimen/_20sdp"
+                                        android:layout_height="@dimen/_20sdp"
+                                        android:layout_gravity="center"
+                                        android:src="@drawable/img_case_on_delivery" />
+
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginLeft="@dimen/_10sdp"
+                                        android:fontFamily="@font/sans_regular"
+                                        android:text="Case On Delivery"
+                                        android:textColor="@color/colorBlack"
+                                        android:textSize="@dimen/_12ssp" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/round_home"
+                                    android:orientation="horizontal"
+                                    android:padding="@dimen/_10sdp">
+
+
+                                    <ImageView
+                                        android:layout_width="@dimen/_20sdp"
+                                        android:layout_height="@dimen/_20sdp"
+                                        android:layout_gravity="center"
+                                        android:src="@drawable/img_pay_online" />
+
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginLeft="@dimen/_10sdp"
+                                        android:fontFamily="@font/sans_regular"
+                                        android:text="Online Pay"
+                                        android:textColor="@color/colorBlack"
+                                        android:textSize="@dimen/_12ssp" />
+
+
+                                </LinearLayout>
 
                             </LinearLayout>
 
-                        </LinearLayout>
 
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="@dimen/_10sdp"
-                            android:layout_marginVertical="@dimen/_10sdp"
-                            android:background="@drawable/round_home"
-                            android:orientation="horizontal"
-                            android:padding="@dimen/_10sdp">
-
-
-                            <ImageView
-                                android:layout_width="@dimen/_20sdp"
-                                android:layout_height="@dimen/_20sdp"
-                                android:layout_gravity="center"
-                                android:src="@drawable/img_pay_online" />
-
-
-                            <TextView
+                            <RadioGroup
+                                android:id="@+id/radioGroup"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginLeft="@dimen/_10sdp"
-                                android:fontFamily="@font/sans_regular"
-                                android:text="Online Pay"
-                                android:textColor="@color/colorBlack"
-                                android:textSize="@dimen/_12ssp" />
-
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="right">
+                                android:layout_alignParentRight="true"
+                                android:padding="@dimen/_5sdp">
 
                                 <RadioButton
+                                    android:id="@+id/radioCashBTN"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:textColor="#EDEFF4"
                                     android:buttonTint="@color/colorPrimary" />
 
-                            </LinearLayout>
+                                <RadioButton
+                                    android:id="@+id/radioOnlineBTN"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="#EDEFF4"
+                                    android:buttonTint="@color/colorPrimary" />
 
-                        </LinearLayout>
+
+                            </RadioGroup>
+
+                        </RelativeLayout>
+
 
 
                     </LinearLayout>
@@ -377,6 +347,7 @@
 
 
             <TextView
+                android:id="@+id/total"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_5sdp"
@@ -390,7 +361,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/btn_pay_now"
+            android:id="@+id/btn_continue"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

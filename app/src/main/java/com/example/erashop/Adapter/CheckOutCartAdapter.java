@@ -37,12 +37,14 @@ public class CheckOutCartAdapter extends RecyclerView.Adapter<CheckOutCartAdapte
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-//
-//        Glide
-//                .with(holder.itemView)
-//                .load(arrayList_catagory.get(position).getImage())
-//                .centerCrop()
-//                .into(holder.binding.image);
+        holder.binding.name.setText(arrayList_catagory.get(position).getName());
+
+
+        Glide
+                .with(holder.itemView)
+                .load(arrayList_catagory.get(position).getImage())
+                .centerCrop()
+                .into(holder.binding.image);
 
 
 
@@ -50,8 +52,7 @@ public class CheckOutCartAdapter extends RecyclerView.Adapter<CheckOutCartAdapte
 
     @Override
     public int getItemCount() {
-//        return arrayList_catagory.size();
-        return 1;
+        return arrayList_catagory.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

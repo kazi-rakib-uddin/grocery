@@ -101,6 +101,7 @@
 
 
             <TextView
+                android:id="@+id/remove_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="REMOVE"
@@ -115,6 +116,7 @@
 
 
             <TextView
+                android:id="@+id/edit_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="EDIT"

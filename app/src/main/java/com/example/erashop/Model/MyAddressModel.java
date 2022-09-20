@@ -2,9 +2,9 @@ package com.example.erashop.Model;
 
 public class MyAddressModel {
     String name,number,mailId,pin,flatNO,area,landmark,state,type;
-    Boolean def_add;
 
-    public MyAddressModel(String name, String number, String mailId, String pin, String flatNO, String area, String landmark, String state, String type, Boolean def_add) {
+
+    public MyAddressModel(String name, String number, String mailId, String pin, String flatNO, String area, String landmark, String state, String type) {
         this.name = name;
         this.number = number;
         this.mailId = mailId;
@@ -14,7 +14,6 @@ public class MyAddressModel {
         this.landmark = landmark;
         this.state = state;
         this.type = type;
-        this.def_add = def_add;
     }
 
     public String getName() {
@@ -87,13 +86,5 @@ public class MyAddressModel {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public Boolean getDef_add() {
-        return def_add;
-    }
-
-    public void setDef_add(Boolean def_add) {
-        this.def_add = def_add;
     }
 }
