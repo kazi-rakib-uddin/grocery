@@ -2,28 +2,43 @@ package com.example.erashop.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.erashop.Adapter.PastOrdersAdapter;
 import com.example.erashop.Adapter.RecentOrdedrsAdapter;
-import com.example.erashop.Fragment.ProfileFragment;
+import com.example.erashop.ApiClient.APIClient;
+import com.example.erashop.ApiInterface.ApiInterface;
 import com.example.erashop.Model.PastOrdersModel;
 import com.example.erashop.Model.RecentOrdersModel;
 import com.example.erashop.R;
-import com.example.erashop.databinding.ActivityMainBinding;
+import com.example.erashop.Session.Session;
+import com.example.erashop.Utils.ProgressUtils;
 import com.example.erashop.databinding.ActivityMyOrdersBinding;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MyOrdersActivity extends AppCompatActivity {
 
-    RecentOrdersModel[] recentOrdersModels;
+    ArrayList<RecentOrdersModel> recentOrdersModels = new ArrayList<>();
     RecentOrdedrsAdapter recentOrdedrsAdapter;
 
-    PastOrdersModel[] pastOrdersModels;
+    ArrayList<PastOrdersModel> pastOrdersModels = new ArrayList<>();
     PastOrdersAdapter pastOrdersAdapter;
 
     ActivityMyOrdersBinding binding;
+
+    ApiInterface apiInterface;
+    Session session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +46,10 @@ public class MyOrdersActivity extends AppCompatActivity {
         binding = ActivityMyOrdersBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setTitle("My Orders");
         getSupportActionBar().hide();
 
+        session = new Session(MyOrdersActivity.this);
+        apiInterface = APIClient.getApiClient().create(ApiInterface.class);
 
         back();
         recent();
@@ -45,7 +60,7 @@ public class MyOrdersActivity extends AppCompatActivity {
     private void back() {
         binding.myorderBtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)  {
                 onBackPressed();
             }
         });
@@ -53,27 +68,95 @@ public class MyOrdersActivity extends AppCompatActivity {
 
 
     private void past() {
-        pastOrdersModels = new PastOrdersModel[]{
-                new PastOrdersModel("Banana", "1kg", R.drawable.banana),
-                new PastOrdersModel("Banana", "1kg", R.drawable.banana),
-                new PastOrdersModel("Banana", "1kg", R.drawable.banana),
-                new PastOrdersModel("Banana", "1kg", R.drawable.banana),
-        };
+        ProgressUtils.showLoadingDialog(this);
+        Call<String> call = apiInterface.fetch_delivered_order(session.getUser_id());
 
-        pastOrdersAdapter = new PastOrdersAdapter(this, pastOrdersModels);
-        binding.rvDeliveredOrder.setHasFixedSize(true);
-        binding.rvDeliveredOrder.setAdapter(pastOrdersAdapter);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                String res = response.body();
+                try {
+                    JSONArray jsonArray = new JSONArray(res);
+
+                    if (jsonArray.length()>0){
+                        for (int i=0;i<jsonArray.length();i++){
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            pastOrdersModels.add(new PastOrdersModel(
+                                    jsonObject.getString("invoice_no"),
+                                    jsonObject.getString("total_amount"),
+                                    jsonObject.getString("date"),
+                                    jsonObject.getString("payment_method")
+                            ));
+                        }
+                        pastOrdersAdapter = new PastOrdersAdapter(MyOrdersActivity.this, pastOrdersModels);
+                        binding.rvDeliveredOrder.setHasFixedSize(true);
+                        binding.rvDeliveredOrder.setAdapter(pastOrdersAdapter);
+
+                    }else{
+                        binding.rvDeliveredOrder.setVisibility(View.GONE);
+                        binding.txt2.setVisibility(View.GONE);
+                    }
+                    ProgressUtils.cancelLoading();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(MyOrdersActivity.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    ProgressUtils.cancelLoading();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                ProgressUtils.cancelLoading();
+                Toast.makeText(MyOrdersActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+
     }
 
     private void recent() {
-        recentOrdersModels = new RecentOrdersModel[]{
-                new RecentOrdersModel("Banana", "1kg", R.drawable.banana),
-                new RecentOrdersModel("Apple", "1kg", R.drawable.apple),
-                new RecentOrdersModel("Grapes", "1kg", R.drawable.graps),
-        };
+        ProgressUtils.showLoadingDialog(this);
+        Call<String> call = apiInterface.fetch_pending_order(session.getUser_id());
 
-        recentOrdedrsAdapter = new RecentOrdedrsAdapter(this, recentOrdersModels);
-        binding.rvRecentOrder.setHasFixedSize(true);
-        binding.rvRecentOrder.setAdapter(recentOrdedrsAdapter);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                String res = response.body();
+                try {
+                    JSONArray jsonArray = new JSONArray(res);
+
+                    if (jsonArray.length()>0){
+                        for (int i=0;i<jsonArray.length();i++){
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            recentOrdersModels.add(new RecentOrdersModel(
+                                    jsonObject.getString("invoice_no"),
+                                    jsonObject.getString("total_amount"),
+                                    jsonObject.getString("date"),
+                                    jsonObject.getString("payment_method")
+                            ));
+                        }
+                        recentOrdedrsAdapter = new RecentOrdedrsAdapter(MyOrdersActivity.this, recentOrdersModels);
+                        binding.rvRecentOrder.setHasFixedSize(true);
+                        binding.rvRecentOrder.setAdapter(recentOrdedrsAdapter);
+                    }else{
+                        binding.rvRecentOrder.setVisibility(View.GONE);
+                        binding.txt1.setVisibility(View.GONE);
+                    }
+                    ProgressUtils.cancelLoading();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(MyOrdersActivity.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    ProgressUtils.cancelLoading();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                ProgressUtils.cancelLoading();
+                Toast.makeText(MyOrdersActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 }

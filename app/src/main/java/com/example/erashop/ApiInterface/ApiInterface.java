@@ -70,6 +70,8 @@ public interface ApiInterface {
             @Field("user_id") String user_id
     );
 
+
+
     @FormUrlEncoded
     @POST("fetch_profile.php")
     Call<String> fetch_profile(
@@ -225,4 +227,24 @@ public interface ApiInterface {
             @Field("phone_no") String phone_no,
             @Field("payment_method") String payment_method
     );
+
+    @FormUrlEncoded
+    @POST("fetch_pending_order.php")
+    Call<String> fetch_pending_order(
+            @Field("user_id") String user_id
+    );
+
+    @FormUrlEncoded
+    @POST("fetch_delivered_order.php")
+    Call<String> fetch_delivered_order(
+            @Field("user_id") String user_id
+    );
+
+    @FormUrlEncoded
+    @POST("fetch_order_details.php")
+    Call<String> fetch_order_details(
+            @Field("invoice_no") String invoice_no
+    );
+
+
 }

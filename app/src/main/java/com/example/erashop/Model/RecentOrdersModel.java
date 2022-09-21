@@ -1,36 +1,44 @@
 package com.example.erashop.Model;
 
 public class RecentOrdersModel {
-    String name,qty;
-    int image;
+    String invoice_no,total_amount,date,payment_type;
 
-    public RecentOrdersModel(String name, String qty, int image) {
-        this.name = name;
-        this.qty = qty;
-        this.image = image;
+    public RecentOrdersModel(String invoice_no, String total_amount, String date,String payment_type) {
+        this.invoice_no = invoice_no;
+        this.total_amount = total_amount;
+        this.date = date;
+        this.payment_type = payment_type;
     }
 
-    public int getImage() {
-        return image;
+    public String getPayment_type() {
+        return payment_type;
     }
 
-    public void setImage(int image) {
-        this.image = image;
+    public void setPayment_type(String payment_type) {
+        this.payment_type = payment_type;
     }
 
-    public String getName() {
-        return name;
+    public String getInvoice_no() {
+        return invoice_no;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setInvoice_no(String invoice_no) {
+        this.invoice_no = invoice_no;
     }
 
-    public String getQty() {
-        return qty;
+    public String getTotal_amount() {
+        return total_amount;
     }
 
-    public void setQty(String qty) {
-        this.qty = qty;
+    public void setTotal_amount(String total_amount) {
+        this.total_amount = total_amount;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

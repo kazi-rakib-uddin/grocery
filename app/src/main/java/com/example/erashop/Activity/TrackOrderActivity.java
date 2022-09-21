@@ -3,6 +3,7 @@ package com.example.erashop.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.erashop.Adapter.TrackingAdapter;
 import com.example.erashop.Model.CategoryModel;
@@ -23,6 +24,13 @@ public class TrackOrderActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         getSupportActionBar().hide();
+
+        binding.trackBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
         Track();
         

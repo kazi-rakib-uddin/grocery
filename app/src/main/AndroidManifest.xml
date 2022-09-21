@@ -19,6 +19,9 @@
         android:theme="@style/Theme.EraShop"
         tools:replace="android:theme">
         <activity
+            android:name=".Activity.OrderDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.SubCategoryActivity"
             android:exported="false" />
         <activity
