@@ -308,6 +308,7 @@
 
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/HomeTeaViewAll"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -353,6 +354,7 @@
 
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/HomeFruitViewAll"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -418,6 +420,7 @@
 
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/HomeOilViewAll"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
