@@ -95,10 +95,11 @@
         <entry key="..\:/GOURAB/Develop/grocery/app/src/main/res/drawable/search_bg.xml" value="0.166" />
         <entry key="..\:/GOURAB/Develop/grocery/app/src/main/res/drawable/trending_bg.xml" value="0.166" />
         <entry key="..\:/GOURAB/Develop/grocery/app/src/main/res/layout/activity_cart.xml" value="0.20416666666666666" />
-        <entry key="..\:/GOURAB/Develop/grocery/app/src/main/res/layout/activity_check_out.xml" value="0.33" />
+        <entry key="..\:/GOURAB/Develop/grocery/app/src/main/res/layout/activity_check_out.xml" value="0.20416666666666666" />
         <entry key="..\:/GOURAB/Develop/grocery/app/src/main/res/layout/activity_main.xml" value="0.5" />
         <entry key="..\:/GOURAB/Develop/grocery/app/src/main/res/layout/activity_search.xml" value="0.20416666666666666" />
         <entry key="..\:/GOURAB/Develop/grocery/app/src/main/res/layout/activity_single_product.xml" value="0.20416666666666666" />
+        <entry key="..\:/GOURAB/Develop/grocery/app/src/main/res/layout/activity_success.xml" value="0.25" />
         <entry key="..\:/GOURAB/Develop/grocery/app/src/main/res/layout/custom_address_item.xml" value="0.25" />
         <entry key="..\:/GOURAB/Develop/grocery/app/src/main/res/layout/custom_banner.xml" value="0.20416666666666666" />
         <entry key="..\:/GOURAB/Develop/grocery/app/src/main/res/layout/custom_cart_item.xml" value="0.20416666666666666" />

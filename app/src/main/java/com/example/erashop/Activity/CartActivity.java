@@ -6,12 +6,14 @@ import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.erashop.Adapter.CartAdapter;
 import com.example.erashop.ApiClient.APIClient;
 import com.example.erashop.ApiInterface.ApiInterface;
 import com.example.erashop.Model.CartModel;
 import com.example.erashop.Session.Session;
+import com.example.erashop.Utils.ProgressUtils;
 import com.example.erashop.databinding.ActivityCartBinding;
 
 import org.json.JSONArray;
@@ -81,6 +83,7 @@ public class CartActivity extends AppCompatActivity {
     }
 
     private void fetch_cart_id() {
+        ProgressUtils.showLoadingDialog(this);
         Call<String> call = apiInterface.fetch_cart(session.getUser_id());
         call.enqueue(new Callback<String>() {
             @Override
@@ -110,23 +113,28 @@ public class CartActivity extends AppCompatActivity {
                             binding.lottie.setVisibility(View.VISIBLE);
                             binding.lottieTXT.setVisibility(View.VISIBLE);
                         }
+                        ProgressUtils.cancelLoading();
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        ProgressUtils.cancelLoading();
                     }
                 } else {
 
                 }
+                ProgressUtils.cancelLoading();
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-
+                Toast.makeText(CartActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                ProgressUtils.cancelLoading();
             }
         });
     }
 
 
     private void fetch_delivery_charge(int total_price) {
+        ProgressUtils.showLoadingDialog(this);
         Call call = apiInterface.fetch_delivery_charge(String.valueOf(total_price));
         call.enqueue(new Callback() {
             @Override
@@ -143,8 +151,11 @@ public class CartActivity extends AppCompatActivity {
                         } else {
 
                         }
+                        ProgressUtils.cancelLoading();
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        Toast.makeText(CartActivity.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                        ProgressUtils.cancelLoading();
                     }
                 } else {
 
@@ -154,7 +165,8 @@ public class CartActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call call, Throwable t) {
-
+                Toast.makeText(CartActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                ProgressUtils.cancelLoading();
             }
         });
     }

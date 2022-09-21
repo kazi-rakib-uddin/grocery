@@ -223,9 +223,6 @@ public interface ApiInterface {
             @Field("full_address") String full_address,
             @Field("pincode") String pincode,
             @Field("phone_no") String phone_no,
-            @Field("payment_method") String payment_method,
-            @Field("product_id") String product_id,
-            @Field("quantity") String quantity,
-            @Field("amount") String amount
+            @Field("payment_method") String payment_method
     );
 }

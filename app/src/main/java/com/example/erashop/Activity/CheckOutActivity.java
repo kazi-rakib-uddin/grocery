@@ -16,6 +16,7 @@ import com.example.erashop.Model.CategoryModel;
 import com.example.erashop.Model.MyAddressModel;
 import com.example.erashop.R;
 import com.example.erashop.Session.Session;
+import com.example.erashop.Utils.ProgressUtils;
 import com.example.erashop.Utils.Utils;
 import com.example.erashop.databinding.ActivityCheckOutBinding;
 
@@ -43,7 +44,7 @@ public class CheckOutActivity extends AppCompatActivity {
 
     String total = "";
     String type = "";
-    String full_name="",phone_number="",mail_id="",pin_code ="",house_no="",area="",landmark="",state="",address_type="";
+    String full_name = "", phone_number = "", mail_id = "", pin_code = "", house_no = "", area = "", landmark = "", state = "", address_type = "";
 
 
     @Override
@@ -76,7 +77,11 @@ public class CheckOutActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 //                startActivity(new Intent(CheckOutActivity.this, ActivitySuccess.class));
-                orderPlaced();
+                if (type.equals("")){
+                    Toast.makeText(CheckOutActivity.this, "Select payment mode", Toast.LENGTH_SHORT).show();
+                }else{
+                    orderPlaced();
+                }
             }
         });
 //        Intent intent = new Intent();
@@ -137,7 +142,6 @@ public class CheckOutActivity extends AppCompatActivity {
                             address_type = jsonObject.getString("address_type");
 
                             addressAdapter = new AddressAdapter(CheckOutActivity.this, address);
-
 
 
                             binding.rvCheckoutAddress.setAdapter(addressAdapter);
@@ -229,8 +233,41 @@ public class CheckOutActivity extends AppCompatActivity {
     }
 
     private void orderPlaced() {
-        String address = full_name+", "+house_no+", "+area+", "+landmark+", "+state+", "+address_type;
-//        Call<String> call = apiInterface.order_placed(session.getUser_id(),total,address,pin_code,phone_number,type,)
+        ProgressUtils.showLoadingDialog(CheckOutActivity.this);
+        String address = full_name + ", " + house_no + ", " + area + ", " + landmark + ", " + state + ", " + address_type;
+        Call<String> call = apiInterface.order_placed(session.getUser_id(), total, address, pin_code, phone_number, type);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                String res = response.body();
+                if (!res.equals(null)) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(res);
+                        if (jsonObject.getString("rec").equals("2")) {
+                            Intent intent = new Intent(CheckOutActivity.this, ActivitySuccess.class);
+                            intent.putExtra("address",address);
+                            intent.putExtra("payment_type",type);
+                            startActivity(intent);
+                            Toast.makeText(CheckOutActivity.this, "Order placed", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(CheckOutActivity.this, "Order not placed", Toast.LENGTH_SHORT).show();
+                        }
+                        ProgressUtils.cancelLoading();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(CheckOutActivity.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Toast.makeText(CheckOutActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 }

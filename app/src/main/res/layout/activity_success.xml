@@ -69,6 +69,7 @@
                     android:textSize="@dimen/_15ssp" />
 
                 <TextView
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/animation_view"
@@ -102,13 +103,14 @@
                     android:textSize="@dimen/_13ssp" />
 
                 <TextView
+                    android:id="@+id/address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/animation_view"
                     android:layout_marginHorizontal="@dimen/_5sdp"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:fontFamily="@font/sans_regular"
-                    android:text="3501 Delhi, \nEast Elmhurst Delhi, \nDelhi 71452"
+                    android:text=""
                     android:textColor="@color/colorText"
                     android:textSize="@dimen/_12ssp" />
 
@@ -124,13 +126,14 @@
                     android:textSize="@dimen/_14ssp" />
 
                 <TextView
+                    android:id="@+id/payment_type"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/animation_view"
                     android:layout_marginHorizontal="@dimen/_5sdp"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:fontFamily="@font/sans_regular"
-                    android:text="Cash On Delivery"
+                    android:text=""
                     android:textColor="@color/colorText"
                     android:textSize="@dimen/_10ssp" />
 
