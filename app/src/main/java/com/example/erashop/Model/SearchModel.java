@@ -1,16 +1,16 @@
 package com.example.erashop.Model;
 
 public class SearchModel {
-    String cat_id,sub_cat_id,product_id,name,price,OG_price,image,discount,quantity;
+    String cat_id,sub_cat_id,product_id,name,image,price,OG_price,discount,quantity;
 
-    public SearchModel(String cat_id,String sub_cat_id,String product_id,String name, String price, String OG_price, String image,String discount,String quantity) {
+    public SearchModel(String cat_id,String sub_cat_id,String product_id,String name, String price, String image, String OG_price,String discount,String quantity) {
         this.cat_id = cat_id;
         this.sub_cat_id = sub_cat_id;
         this.product_id = product_id;
         this.name = name;
         this.price = price;
-        this.OG_price = OG_price;
         this.image = image;
+        this.OG_price = OG_price;
         this.discount = discount;
         this.quantity = quantity;
     }

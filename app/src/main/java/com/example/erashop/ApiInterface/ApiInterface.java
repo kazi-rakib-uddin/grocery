@@ -225,7 +225,8 @@ public interface ApiInterface {
             @Field("full_address") String full_address,
             @Field("pincode") String pincode,
             @Field("phone_no") String phone_no,
-            @Field("payment_method") String payment_method
+            @Field("payment_method") String payment_method,
+            @Field("user_pin_code") String user_pin_code
     );
 
     @FormUrlEncoded

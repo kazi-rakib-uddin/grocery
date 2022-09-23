@@ -71,7 +71,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHo
         String pin_code = arrayList_catagory.get(position).getPin();
         String state = arrayList_catagory.get(position).getState();
 
-        holder.binding.address.setText(String.format("%s%s%s%s%s", houseNO, area, landmark, pin_code, state));
+        holder.binding.address.setText(houseNO+", "+area+", "+landmark+", "+pin_code+", "+state);
 
         holder.binding.removeBtn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -20,6 +20,7 @@ import com.example.erashop.ApiInterface.ApiInterface;
 import com.example.erashop.Model.SearchModel;
 import com.example.erashop.R;
 import com.example.erashop.Session.Session;
+import com.example.erashop.Utils.Utils;
 import com.example.erashop.databinding.CustomSearchResultBinding;
 
 import org.json.JSONException;
@@ -64,6 +65,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                 .centerCrop()
                 .placeholder(R.drawable.not_found)
                 .into(holder.binding.searchImage);
+
         holder.binding.discountPercentage.setText(String.format("%s%% Off", searchModels.get(position).getDiscount()));
 
         holder.binding.IncDec.setVisibility(View.GONE);

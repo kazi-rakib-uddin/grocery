@@ -235,7 +235,7 @@ public class CheckOutActivity extends AppCompatActivity {
     private void orderPlaced() {
         ProgressUtils.showLoadingDialog(CheckOutActivity.this);
         String address = full_name + ", " + house_no + ", " + area + ", " + landmark + ", " + state + ", " + address_type;
-        Call<String> call = apiInterface.order_placed(session.getUser_id(), total, address, pin_code, phone_number, type);
+        Call<String> call = apiInterface.order_placed(session.getUser_id(), total, address, pin_code, phone_number, type,pin_code);
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {

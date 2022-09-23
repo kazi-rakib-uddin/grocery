@@ -40,10 +40,13 @@ public class SearchActivity extends AppCompatActivity {
     ArrayList<SearchModel> searchModels2 = new ArrayList<>();
     ArrayList<SearchModel> searchModels3 = new ArrayList<>();
 
+    String img = "", price = "", OG_price = "", discount = "", quantity = "";
+    ;
+
     ApiInterface apiInterface;
     Session session;
 
-    String cat_id, sub_cat_id,source="";
+    String cat_id, sub_cat_id, source = "";
 
 
     @Override
@@ -68,12 +71,9 @@ public class SearchActivity extends AppCompatActivity {
         source = getIntent().getStringExtra("source");
 
 
-
-        if (source.equals("from_sub_Cat")){
+        if (source.equals("from_sub_Cat")) {
             ShowProductList();
-        }
-
-        else if(source.equals("from_home_fragment")){
+        } else if (source.equals("from_home_fragment")) {
             binding.lottie.setVisibility(View.GONE);
             binding.lottieTXT.setVisibility(View.GONE);
             binding.searchEdittext.clearFocus();
@@ -87,22 +87,21 @@ public class SearchActivity extends AppCompatActivity {
 
                 @Override
                 public boolean onQueryTextChange(String newText) {
-                    if(!newText.equals("")) {
+                    if (!newText.equals("")) {
                         SearchProducts2(newText);
-                    }else{
+                    } else {
                         binding.rvSearch.setVisibility(View.GONE);
                     }
                     return true;
                 }
             });
 
-        }
-
-        else{
+        } else {
             Toast.makeText(this, "Something went wrong!", Toast.LENGTH_SHORT).show();
         }
 
     }
+
 
     private void ShowProductList() {
         ProgressUtils.showLoadingDialog(this);
@@ -117,18 +116,18 @@ public class SearchActivity extends AppCompatActivity {
                         if (jsonArray.length() != 0) {
                             binding.lottie.setVisibility(View.GONE);
                             binding.lottieTXT.setVisibility(View.GONE);
+                            searchModels.clear();
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                                 searchModels.add(new SearchModel(
-                                        cat_id,sub_cat_id,
+                                        cat_id, sub_cat_id,
                                         jsonObject.getString("id"),
                                         jsonObject.getString("product_name"),
-                                        jsonObject.getString("discounted_price"),
-                                        jsonObject.getString("original_price"),
-                                        Utils.product_images+jsonObject.getString("image1"),
-                                        jsonObject.getString("discount_percentage"),
-                                        jsonObject.getString("quantity")
-
+                                        "540",
+                                        Utils.product_images+jsonObject.getString("product_image"),
+                                        "600",
+                                        "10",
+                                        "100g"
                                 ));
                             }
                             searchAdapter = new SearchAdapter(searchModels, SearchActivity.this);
@@ -167,32 +166,30 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 String res = response.body();
-                if (res != null){
+                if (res != null) {
                     try {
                         JSONArray jsonArray = new JSONArray(res);
-                        if (jsonArray.length()!=0){
+                        if (jsonArray.length() != 0) {
                             searchModels2.clear();
-                            for (int i=0;i<jsonArray.length();i++){
+                            for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                                 searchModels2.add(new SearchModel(
                                         jsonObject.getString("category_id"),
                                         jsonObject.getString("sub_category_id"),
                                         jsonObject.getString("id"),
                                         jsonObject.getString("product_name"),
-                                        jsonObject.getString("discounted_price"),
-                                        jsonObject.getString("original_price"),
-                                        Utils.product_images+jsonObject.getString("image1"),
-                                        jsonObject.getString("discount_percentage"),
-                                        jsonObject.getString("quantity")
+                                        price,
+                                        Utils.product_images+jsonObject.getString("product_image"),
+                                        OG_price, discount, quantity
 
                                 ));
                             }
 
-                            searchAdapter2 = new SearchAdapter(searchModels2,SearchActivity.this);
+                            searchAdapter2 = new SearchAdapter(searchModels2, SearchActivity.this);
                             binding.rvSearch.setAdapter(searchAdapter2);
                             binding.rvSearch.setVisibility(View.VISIBLE);
                             ProgressUtils.cancelLoading();
-                        }else{
+                        } else {
                             binding.lottie.setVisibility(View.VISIBLE);
                             binding.lottieTXT.setVisibility(View.VISIBLE);
                             Toast.makeText(SearchActivity.this, "No products found", Toast.LENGTH_SHORT).show();
@@ -203,7 +200,7 @@ public class SearchActivity extends AppCompatActivity {
                         ProgressUtils.cancelLoading();
                         Toast.makeText(SearchActivity.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                     }
-                }else{
+                } else {
 
                 }
                 ProgressUtils.cancelLoading();
@@ -211,7 +208,7 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                Toast.makeText(SearchActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(SearchActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                 ProgressUtils.cancelLoading();
 
             }
@@ -225,32 +222,29 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 String res = response.body();
-                if (res != null){
+                if (res != null) {
                     try {
                         JSONArray jsonArray = new JSONArray(res);
-                        if (jsonArray.length()!=0){
+                        if (jsonArray.length() != 0) {
                             searchModels3.clear();
-                            for (int i=0;i<jsonArray.length();i++){
+                            for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                                 searchModels3.add(new SearchModel(
                                         jsonObject.getString("category_id"),
                                         jsonObject.getString("sub_category_id"),
                                         jsonObject.getString("id"),
                                         jsonObject.getString("product_name"),
-                                        jsonObject.getString("discounted_price"),
-                                        jsonObject.getString("original_price"),
-                                        Utils.product_images+jsonObject.getString("image1"),
-                                        jsonObject.getString("discount_percentage"),
-                                        jsonObject.getString("quantity")
-
+                                        price,
+                                        Utils.product_images+jsonObject.getString("product_image"),
+                                        OG_price, discount, quantity
                                 ));
                             }
-                            searchAdapter3 = new SearchAdapter(searchModels3,SearchActivity.this);
+                            searchAdapter3 = new SearchAdapter(searchModels3, SearchActivity.this);
                             binding.rvSearch.setAdapter(searchAdapter3);
                             binding.rvSearch.setVisibility(View.VISIBLE);
                             binding.lottie.setVisibility(View.GONE);
 //                            ProgressUtils.cancelLoading();
-                        }else{
+                        } else {
                             binding.rvSearch.setVisibility(View.GONE);
                             binding.lottie.setVisibility(View.VISIBLE);
 //                            Toast.makeText(SearchActivity.this, "No products found", Toast.LENGTH_SHORT).show();
@@ -261,7 +255,7 @@ public class SearchActivity extends AppCompatActivity {
 //                        ProgressUtils.cancelLoading();
                         Toast.makeText(SearchActivity.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                     }
-                }else{
+                } else {
 
                 }
 //                ProgressUtils.cancelLoading();

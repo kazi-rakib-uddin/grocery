@@ -208,13 +208,13 @@ public class SingleProduct extends AppCompatActivity {
                     try {
                         JSONObject jsonObject = new JSONObject(res);
                         if (jsonObject.getString("rec").equals("1")) {
-                            price = jsonObject.getString("discounted_price");
-                            quantity = jsonObject.getString("quantity");
+                            //price = jsonObject.getString("discounted_price");
+                            //quantity = jsonObject.getString("quantity");
                             binding.productName.setText(jsonObject.getString("product_name"));
-                            binding.quantity.setText(quantity);
-                            binding.txtDisc.setText(String.format("₹%s", jsonObject.getString("original_price")));
-                            binding.priceTxt.setText(String.format("₹%s", price));
-                            binding.discountPercentage.setText(String.format("%s%% Off", jsonObject.getString("discount_percentage")));
+                            //binding.quantity.setText(quantity);
+                            //binding.txtDisc.setText(String.format("₹%s", jsonObject.getString("original_price")));
+                            //binding.priceTxt.setText(String.format("₹%s", price));
+                            //binding.discountPercentage.setText(String.format("%s%% Off", jsonObject.getString("discount_percentage")));
                             binding.description.setText(jsonObject.getString("description"));
                         } else {
 
@@ -252,9 +252,6 @@ public class SingleProduct extends AppCompatActivity {
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                                 images.add(new CategoryModel("", Utils.product_images + jsonObject.getString("image1")));
-                                images.add(new CategoryModel("", Utils.product_images + jsonObject.getString("image2")));
-                                images.add(new CategoryModel("", Utils.product_images + jsonObject.getString("image3")));
-                                images.add(new CategoryModel("", Utils.product_images + jsonObject.getString("image4")));
                             }
                             binding.rvImageSlide.setAdapter(new SinglePageImageAdapter(SingleProduct.this, images));
                         } else {

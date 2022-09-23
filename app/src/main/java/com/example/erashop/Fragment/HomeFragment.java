@@ -43,6 +43,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,8 +54,8 @@ import retrofit2.Response;
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
-//    private static String[] top_banner_images = new String[] {};
-//    String[] banimage = new String[]{};
+
+
 
     ArrayList<TopBannerModel> topBannerModels = new ArrayList<>();
     ArrayList<FreshFruitsModel> freshFruitsModels = new ArrayList<>();
@@ -68,14 +69,10 @@ public class HomeFragment extends Fragment {
 
     private AutoImageSliderAdapter adapter;
     private TextView[] mDots;
-//    private Runnable runnable = null;
-//    private Handler handler = new Handler();
-//    private HomeCatagoryAdapter homeCatagoryAdapter;
     private HomePopulerAdapter homePopulerAdapter;
     private HomeBannerAdapter homeBannerAdapter;
     private HomeRecomendedAdapter homeRecomendedAdapter;
     private HomeRecomendedAdapter homeRecomendedAdapter2;
-//    private HomeRecomendedAdapter homeRecomendedAdapter_oil;
     private ArrayList<HomeTrendingOfferAdapter> homeTrendingOfferAdapter=new ArrayList<>();
 
     ArrayList<BottomBannerModel> bottomBannerModels = new ArrayList<>();
@@ -85,25 +82,20 @@ public class HomeFragment extends Fragment {
     TrendingOfferAdapter trendingOfferAdapter;
 
 
-//    SearchAdapter searchAdapter;
     ArrayList<SearchModel> searchModels=new ArrayList<>();
     ArrayList<HomeCatagoryModel> TopCategory=new ArrayList<>();
+
+    ArrayList<String> arrayList = new ArrayList<>();
 
 
     AllCatagoryAdapter allCatagoryAdapter;
 
-    String cat_id, sub_cat_id;
-
-//    private List<HomeCatagoryModel> homeCatagoryModels;
-//    private ArrayList<HomeCatagoryModel> homeItemModels=new ArrayList<>();
-//    private ArrayList<HomeCatagoryModel> homeFreshFoodModel=new ArrayList<>();
-//    private ArrayList<HomeCatagoryModel> homeOilModel=new ArrayList<>();
+    String cat_id="", sub_cat_id="",price="",OG_price="",discount="",quantity="";
 
     ApiInterface apiInterface;
     Session session;
 
     ArrayList<TextView> textViews = new ArrayList<>();
-//    String[] IDs = new String[]{};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -123,15 +115,15 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Fragment newFragment = new CategoryFragment();
-                // consider using Java coding conventions (upper first char class names!!!)
+
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
-                // Replace whatever is in the fragment_container view with this fragment,
-                // and add the transaction to the back stack
+
+
                 transaction.replace(R.id.framLayout, newFragment);
                 transaction.addToBackStack(null);
 
-                // Commit the transaction
+
                 transaction.commit();
             }
         });
@@ -139,27 +131,27 @@ public class HomeFragment extends Fragment {
         binding.HomeFruitViewAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(getActivity(),SearchActivity.class);
-////                intent.putExtra("from_home_fragment","from_home_fragment");
-////                intent.putExtra("cat_id",cat_id);
-////                intent.putExtra("sub_cat_id",sub_cat_id);
-//                startActivity(intent);
+
+
+
+
+
             }
         });
         binding.HomeTeaViewAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                startActivity(new Intent(getActivity(),SearchActivity.class));
+
             }
         });
         binding.HomeOilViewAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                startActivity(new Intent(getActivity(),SearchActivity.class));
+
             }
         });
 
-//        binding.nestedScroll.setZ(-30);
+
 
         binding.searchCard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,30 +172,30 @@ public class HomeFragment extends Fragment {
 
     private void initView() {
 
-        BannerSet();//banner
+        BannerSet();
 
         Bottom_BannerSet();
 
         binding.pagerSlider.addOnPageChangeListener(listener);
 
-        fetch_categories();//cat
+        fetch_categories();
 
         homeBannerAdapter = new HomeBannerAdapter(getContext(),array_banner);
         binding.rvPopular.setAdapter(homePopulerAdapter);
 
-        ShowProductList("1");//tata tea
-
-        fetch_product_by_category("3");//fruits
-
-        fetch_product_by_category2("5");//oil
+//        ShowProductList("1");
+//
+//        fetch_product_by_category("3");
+//
+//        fetch_product_by_category2("5");
 
         trending_offers();
 
-//        binding.rvTrendingOffer.setLayoutManager(new LinearLayoutManager(getContext()));
 
 
-//        homeTrendingOfferAdapter = new HomeTrendingOfferAdapter(getContext());
-//        binding.rvTrendingOffer.setAdapter(homeTrendingOfferAdapter);
+
+
+
 
         final int[] state = new int[1];
 
@@ -231,7 +223,7 @@ public class HomeFragment extends Fragment {
                         if (jsonArray.length()>0){
                             for(int i=0;i<3;i++){
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-//                                ShowProductList(jsonObject.getString("id"));
+                                getProducts(jsonObject.getString("id"),i);
                                 fetch_category_name(textViews.get(i),jsonObject.getString("id"));
                             }
                         }else{
@@ -251,6 +243,18 @@ public class HomeFragment extends Fragment {
             }
         });
 
+    }
+
+    private void getProducts(String id,int i) {
+        if (i==0){
+            ShowProductList(id);
+        }else if (i==1){
+            fetch_product_by_category(id);
+        }else if (i==2){
+            fetch_product_by_category2(id);
+        }else{
+
+        }
     }
 
 
@@ -460,6 +464,11 @@ public class HomeFragment extends Fragment {
     }
 
 
+    public void getImages(){
+
+    }
+
+
     private void ShowProductList(String id) {
         ProgressUtils.showLoadingDialog(getContext());
         Call<String> call = apiInterface.fetch_product_by_category(id);
@@ -479,11 +488,8 @@ public class HomeFragment extends Fragment {
                                         jsonObject.getString("sub_category_id"),
                                         jsonObject.getString("id"),
                                         jsonObject.getString("product_name"),
-                                        jsonObject.getString("discounted_price"),
-                                        jsonObject.getString("original_price"),
                                         Utils.product_images+jsonObject.getString("image1"),
-                                        jsonObject.getString("discount_percentage"),
-                                        jsonObject.getString("quantity")
+                                        price,OG_price,discount,quantity
                                 ));
                             }
                             homePopulerAdapter = new HomePopulerAdapter(getContext(),searchModels);
