@@ -102,8 +102,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                                 e.printStackTrace();
                                 Toast.makeText(context, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                             }
-                        }else{
-
                         }
                     }
 
