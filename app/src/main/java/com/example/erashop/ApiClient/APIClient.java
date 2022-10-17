@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class APIClient {
-    public static final String BASE_URL = "https://skychat.easytodb.com/Dukan_wala/android_api/";
+    public static final String BASE_URL = "https://new.easytodb.com/Dukan_wala/android_api/";
 
     public static Retrofit retrofit = null;
     ApiInterface apiInterface;
